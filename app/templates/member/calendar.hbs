@@ -1,0 +1,229 @@
+{{#unless controllers.login.onDesktop}}
+  {{partial "header-mobile"}}
+{{!--
+  <div class="screenHeader">
+    <button class="btn btn-default header-btn-disabled" disabled><i class="fa fa-calendar"></i> Calendar</button>
+    {{#link-to 'member.rides' class="btn btn-default header-btn-enabled"}}Riders <i class="fa fa-plus-circle"></i>{{/link-to}}
+  </div>
+--}}
+{{/unless}}
+{{#if controllers.login.onDesktop}}
+  <div class="upperArea">
+    <div class="container">
+      <div class="row ridematchHeader">
+        <div class="col-sm-3">
+          {{#link-to 'member.profile' memberId}}
+            <img {{bind-attr src='currentMember.profilePhotoUrl'}} onerror="this.onerror=null;this.src='//hovee001.s3.amazonaws.com/profile_images/default.jpg';"  class="pull-right header-avatar profilePic" style="width: 98px; height: 98px;">
+          {{/link-to}}
+          <div class="pull-right memberName">
+            {{currentMember.firstName}}<br>
+            {{currentMember.lastName}}
+          </div>
+        </div>
+        <div class="col-sm-9">
+          <div class="infographic clearfix">
+            <div class="member-home pull-left" style="margin-right:12px; margin-top: -2px; text-align: right;">
+              <b>{{currentMember.homeLocation.name}}</b><br>
+              {{currentMember.homeLocation.homeAddress.street}}<br>
+              {{currentMember.homeLocation.homeAddress.city}}
+            </div>
+            <div class="pull-left" style="margin-right:12px;">
+              <i class="fa fa-home fa-3x"></i>
+            </div>
+            <div class="pull-left" style="margin-right:12px;">
+              <div class="distance"></div>
+            </div>
+            <div class="pull-left" style="margin-right:12px;">
+              <i class="fa fa-building-o fa-3x"></i>
+            </div>
+            <div class="member-work pull-left">
+              <b>{{currentMember.workLocation.name}}</b><br>
+              {{currentMember.workLocation.workAddress.city}}
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-9">
+          {{partial 'partials/tagline'}}
+        </div>
+      </div>
+    </div>
+  </div>
+{{/if}}
+<div class="lowerArea calendar">
+  <div class="container">
+    <div class="row findMatch">
+      <div class="col-lg-12 col-xs-12 main">
+        <div class="pull-right text-right">
+          Need to schedule a ride?&nbsp; {{#link-to "member.rides" controllers.login.memberId tagName="button" href=false class="btn btn-success"}}<i class="fa fa-users"></i>&nbsp; Find Rides{{/link-to}}
+        </div>
+      </div>
+    </div>
+    <div class="row">
+
+      <!-- main area that contains planks -->
+      <div class="col-lg-12 col-xs-12 calendarWeeks">
+
+        {{#view 'calendarweeks'}}
+          {{#each week in calendar}}
+            <div class="calendarWeek">
+              <div class="weekControls">
+                Week of {{week.displayDate}}
+                <div class="pull-right arrowHolder"><button class="btn btn-xs togglePast"><i class="fa fa-eye"></i> Show Past Days</button> <i class="fa fa-lg"></i></div>
+              </div>
+              <div class="weekDays">
+                {{#each day in week.daysOfTheWeek }}
+
+                  {{#view 'calendarday'}}
+                    <div class="calendarDay {{unbound day.inThePast}}">
+                      <div class="calendarPlankGroupHeader status{{unbound day.statusCode}} {{unbound day.isToday}}">
+                        <div class="pull-left dayTitle">
+                          {{day.id}}, {{day.displayDate}}
+                        </div>
+
+                        {{#if day.driving}}<img src="//hovee001.s3.amazonaws.com/icons/car_icon.png" width="32" class="car">{{/if}}
+                        <div class="pull-right dayStatus">
+                          {{{unbound day.status}}}
+                        </div>
+                      </div>
+                      <div class="planksContainer">
+                        {{#if day.trips}}
+                          {{#each trip in day.trips}}
+                            <div {{bind-attr class=':schedulePlank day.inThePast:true trip.isStatusDeclined:declined trip.isStatusCancelled:declined'}}>
+
+                              <!-- profile photo -->
+                              {{#if trip.partner.profilePhotoUrl}}
+                                {{#link-to "member.profile" trip.partner.id}}<img {{bind-attr src='trip.partner.profilePhotoUrl'}} onerror="this.onerror=null;this.src='//hovee001.s3.amazonaws.com/profile_images/default.jpg';"  class="headshot" width="98" height="98" title="View profile">{{/link-to}}
+                              {{else}}
+                                {{#link-to "member.profile" trip.partner.id}}<img src="//hovee001.s3.amazonaws.com/profile_images/default.jpg" class="headshot" width="98" height="98" title="View profile">{{/link-to}}
+                              {{/if}}
+
+                              <!-- name, role, etc -->
+                              <div class="nameAndRole">
+                                <h4>{{trip.partner.firstName}}{{#if controllers.application.onDesktop}} {{else}}<br>{{/if}}{{trip.partner.lastName}}</h4>
+                                <span class="role">{{trip.partner.jobHeadline}}</span>
+                              </div>
+
+                              <!-- company logo -->
+                              {{#if trip.partner.company.name}}
+                                <img {{bind-attr src='trip.partner.company.logoUrl'}} class="companyImage">
+                              {{/if}}
+
+
+
+                              <div {{bind-attr class=":actions trip.isStatusInNegotiation:negotiation trip.isStatusAccepted:accepted trip.isActionRequired:actionRequired"}}>
+                                {{#if 'controllers.login.onDesktop'}}{{!-- on desktop (not mobile): --}}
+                                  <div {{bind-attr class=":status trip.isActionRequired:actionRequired"}}>
+                                    {{#if trip.isStatusInNegotiation}}
+                                    {{!-- potential action req'd --}}
+                                      {{#if trip.isActionRequired}}
+                                        Response required!
+                                      {{else}}
+                                        Waiting for {{trip.partner.firstName}}'s response.
+                                      {{/if}}
+                                    {{else}}
+                                      {{#if trip.isStatusAccepted}}
+                                      {{!--No Action required on user's behalf--}}
+                                        Trip confirmed.
+                                      {{else}}
+                                        {{#if trip.isStatusInProgress}}
+                                          <span style="color: darkgreen">Live</span>
+                                        {{else}}
+                                          {{#if trip.isStatusComplete}}
+                                            <span style="color: darkgreen">Done</span>
+                                          {{/if}}
+                                        {{/if}}
+                                      {{/if}}
+                                    {{/if}}
+                                  </div><!-- /.status -->
+
+                                  <div class="pull-left times">
+                                  {{#if trip.isStatusDeclined}}
+                                    <strong style="color: darkred">Declined</strong>
+                                  {{else}}
+                                    {{#if trip.isStatusCancelled}}
+                                      <strong style="color: darkred">Cancelled</strong>
+                                    {{else}}
+                                      {{#if trip.isStatusExpired}}
+                                        <strong style="color: darkred">Expired</strong>
+                                      {{else}}
+                                        <strong>{{#if trip.nextTripOutbound}}{{/if}}{{trip.pickupTime}} <i class="fa fa-arrow-right"></i></strong><br>
+                                        <strong>{{#if trip.nextTripReturn}}{{/if}}{{trip.returnTime}} <i class="fa fa-arrow-left"></i></strong>
+                                      {{/if}}
+                                    {{/if}}
+                                  {{/if}}
+                                  </div><!-- /.times -->
+                                  <div class="buttons">
+                                  {{#if trip.isStatusInNegotiation}}
+                                    {{#link-to 'member.trip_proposal' trip.partner.id  trip.id 0 classNames="btn btn-warning"}}View Proposal{{/link-to}}
+                                  {{else}}
+                                    {{#link-to 'member.trip_proposal' trip.partner.id  trip.id 0 classNames="btn btn-success"}}View Trip Details{{/link-to}}
+                                    {{#unless trip.isStatusAccepted}}
+                                      {{#if trip.isStatusInProgress}}
+                                        <span style="color: darkgreen">Live</span>
+                                      {{else}}
+                                        {{#if trip.isStatusComplete}}
+                                          <span style="color: darkgreen">Done</span>
+                                        {{/if}}
+                                      {{/if}}
+                                    {{/unless}}
+                                  {{/if}}
+                                  </div><!-- /.actions -->
+
+                                {{else}}{{!-- on mobile: --}}
+                                  {{#if trip.isStatusCancelledOrDeclined}}
+                                    {{#link-to 'member.trip_proposal' trip.partner.id  trip.id 0 classNames="btn btn-default"}}Trip Details{{/link-to}}
+                                  {{else}}
+                                    {{#unless trip.status}}{{!-- if a trip is pending: --}}
+                                      {{#if trip.isActionRequired}}
+                                        {{#link-to 'member.trip_proposal' trip.partner.id  trip.id 0 classNames="btn btn-default"}}Respond{{/link-to}}
+                                      {{else}}
+                                        {{#link-to 'member.trip_proposal' trip.partner.id  trip.id 0 classNames="btn btn-default"}}Trip Details{{/link-to}}
+                                      {{/if}}
+                                    {{else}}{{!-- if a trip is confirmed or has status: --}}
+                                      {{#if trip.isRoundOrFromHome}}
+                                        {{#link-to 'member.trip_in_progress' trip.outboundTIPId trip.nextTripOutboundStr classNames="btn btn-default btn-sm"}}
+                                          {{#if trip.nextTripOutbound}}<i class="fa fa-arrow-circle-right fa-2x"></i><br>{{/if}}{{trip.pickupTime}}
+                                        {{/link-to}}
+                                        {{#if trip.workTrip}}<span style="color: #a9a9a9; font-weight: bold;">To Work</span>{{/if}}
+                                      {{/if}}
+                                      {{#if trip.isRoundOrFromWork}}
+                                        {{#link-to 'member.trip_in_progress' trip.returnTIPId trip.nextTripReturnStr classNames="btn btn-default btn-sm"}}
+                                          {{#if trip.nextTripReturn}}<i class="fa fa-arrow-circle-left fa-2x"></i><br>{{/if}}{{trip.returnTime}}
+                                        {{/link-to}}
+                                        {{#if trip.homeTrip}}<span style="color: #a9a9a9; font-weight: bold;">To Home</span>{{/if}}
+                                      {{/if}}
+                                    {{/unless}}
+                                  {{/if}}
+                                {{/if}}
+                              </div>
+                            </div><!-- /.schedulePlank -->
+                          {{/each}}
+                        {{else}}
+                          <div class="schedulePlank">
+                            {{#if day.inThePast}}
+                              <div class="emptyPlankStatus">You didn't schedule a ride on this day.</div>
+                            {{else}}
+                              <div class="emptyPlankStatus">You don't have a ride scheduled.</div>
+                              {{#if 'controllers.login.onDesktop'}}
+                                <div class="actions find">
+                                  {{#link-to "member.rides" classNames="btn btn-success"}}<i class="fa fa-users"></i>&nbsp; Find Rides{{/link-to}}
+                                </div>
+                              {{/if}}
+                            {{/if}}
+                          </div><!-- /.schedulePlank -->
+                        {{/if}}
+                      </div><!-- /.planksContainer -->
+                    </div><!-- /.calendarDay -->
+                  {{/view}}
+                {{/each}}{{!-- /day --}}
+              </div><!-- /.weekDays -->
+            </div><!-- /.calendarweek -->
+          {{/each}}{{!-- /week --}}
+        {{/view}}
+      </div><!-- /.main -->
+    </div>
+  </div>
+</div>
+{{#unless controllers.login.onDesktop}}
+  {{partial 'mobile-footer-navbar'}}
+{{/unless}}

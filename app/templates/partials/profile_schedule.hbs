@@ -1,0 +1,51 @@
+{{#if controllers.login.onDesktop}}
+  <div class="row schedule-info">
+    <div class="col-sm-9 col-sm-offset-3">
+      <h2>Your Schedule</h2>
+    </div>
+  </div>
+{{/if}}
+<div class="row schedule-info">
+  <div class="col-sm-3 description">
+    What days do you typically commute?<br>
+    <span class="dim">At least one day is required *</span>
+  </div>
+  <div class="col-sm-9" style="min-width: 330px;">
+    <div class="btn-group schedule">
+      {{toggle-button isDesktop=controllers.login.onDesktop label='Mo' value=mon}}
+      {{toggle-button isDesktop=controllers.login.onDesktop label='Tu' value=tue}}
+      {{toggle-button isDesktop=controllers.login.onDesktop label='We' value=wed}}
+      {{toggle-button isDesktop=controllers.login.onDesktop label='Th' value=thu}}
+      {{toggle-button isDesktop=controllers.login.onDesktop label='Fr' value=fri}}
+      {{toggle-button isDesktop=controllers.login.onDesktop label='Sa' value=sat}}
+      {{toggle-button isDesktop=controllers.login.onDesktop label='Su' value=sun}}
+    </div>
+  </div>
+</div>
+<div class="row schedule-info">
+  <div class="col-sm-3 description">
+    What time do you typically drive to work?
+  </div>
+  <div class="col-sm-2">
+    <div class="form-group">
+      {{#view "pickatime" onDesktop=controllers.login.onDesktop valueBinding="homeDepartureTime" class="form-control time-badge editable"}}{{/view}}
+    </div>
+  </div>
+</div>
+<div class="row schedule-info">
+  <div class="col-sm-3 description">
+    What time do you typically drive home from work?
+  </div>
+  <div class="col-sm-2">
+    <div class="form-group">
+      {{#view "pickatime" onDesktop=controllers.login.onDesktop valueBinding="workDepartureTime" class="form-control time-badge editable"}}{{/view}}
+    </div>
+  </div>
+</div>
+
+<div class="row schedule-info">
+  <div class="col-sm-6 col-sm-offset-3">
+    <button class="btn btn-lg btn-primary" {{bind-attr disabled=disableIdeal}} {{action 'ideal'}}>{{#if onBoardingProcess}}Next{{else}}Submit{{/if}}</button>
+    {{#if timesAreBad}}<br><br>Note: Drive to work time must come before drive home time.{{/if}}
+  </div>
+</div>

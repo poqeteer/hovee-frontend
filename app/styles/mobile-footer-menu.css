@@ -1,0 +1,60 @@
+/* mobile footer menu on main pages styling */
+
+.menu-footer .badge1 {
+    position:relative;
+}
+
+.menu-footer .badge1[data-badge]:after {
+    font: bold 12px/1em "Helvetica Neue", Helvetica, Arial, sans-serif;
+    content:attr(data-badge);
+    position:absolute;
+    top:-5px;
+    right:-1px;
+    #font-size:.7em;
+    background:red;
+    color:white;
+    width:18px;height:18px;
+    text-align:center;
+    line-height:18px;
+    border-radius:50%;
+    box-shadow:0 0 1px #333;
+}
+
+.menu-footer {
+    -webkit-transition: left 0.3s ease;
+    -moz-transition: left 0.3s ease;
+    transition: left 0.3s ease;
+    text-align: center;
+    background-color: #000;
+    position: fixed;
+    left: 0px;
+    bottom: 0;
+    z-index: 999;
+    width: 100%;
+    height: 70px;
+    padding: 7px;
+}
+
+.menu-footer a.btn {
+    display: inline-block;
+    border-style: none;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 18px;
+    color: #fff;
+    padding: 10px 0;
+    width: 24%;
+    height: 55px;
+    background-color: #444;
+    /*font-family: asap, "Helvetica Neue", Helvetica, Arial;*/
+}
+
+.menu-footer .title {
+    font-size: 0.5em;
+    margin-top: -1px;
+}
+
+.menu-footer .menu-footer-active {
+    color: orange;
+}

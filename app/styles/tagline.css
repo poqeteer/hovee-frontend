@@ -1,0 +1,103 @@
+/* user's tagline styling */
+
+.tagline.mine,
+.tagline .ember-text-field {
+  display: inline-block;
+  position: relative;
+  border-radius: 8px;
+  border: 1px solid #D3D3D3;
+  padding: 4px 8px;
+  background-color: #FAFAFA;
+  line-height: 1.3em;
+}
+
+.tagline .ember-text-field {
+  width: 430px;
+  margin-right: 4px;
+}
+
+.tagline .btn {
+  line-height: 1.9em;
+  padding: 0px 12px;
+  margin-right: 4px;
+}
+
+.tagline.mine a:hover {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.tagline-status {
+  display: inline-block;
+  padding-left: 5px;
+  line-height:2em;
+  color: #ACACAC;
+}
+
+/* Base plank tagline styling */
+
+.plank .tagline {
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  width: 182px;
+  /*height: 97px;*/
+  margin-right: 16px;
+  border-radius: 8px;
+  border: 1px solid #D3D3D3;
+  padding: 4px 8px;
+  background-color: #FAFAFA;
+  line-height: 1.3em;
+}
+
+/* Base plank tagline styling */
+
+.plank .tagline:after,
+.plank .tagline:before,
+.tagline.mine:after,
+.tagline.mine:before,
+.tagline .ember-text-field:after,
+.tagline .ember-text-field:before {
+  right: 100%;
+  top: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.plank .tagline:after,
+.tagline.mine:after,
+.tagline .ember-text-field:after {
+  border-color: rgba(250, 250, 250, 0);
+  border-right-color: #FAFAFA;
+  border-width: 6px;
+  margin-top: -6px;
+}
+.plank .tagline:before,
+.tagline.mine:before,
+.tagline .ember-text-field:before {
+  border-color: rgba(211, 211, 211, 0);
+  border-right-color: #D3D3D3;
+  border-width: 7px;
+  margin-top: -7px;
+}
+
+/* Base plank tagline with no content/data */
+
+.plank .tagline.no-tagline {
+  opacity: 0;
+  font-size: 0.9em;
+  font-style: italic;
+}
+
+
+/* 992 and below ----------- */
+@media only screen and (max-width : 992px) {
+
+  .tagline .ember-text-field {
+    width: 280px;
+  }
+}

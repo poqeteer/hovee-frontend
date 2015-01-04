@@ -1,0 +1,33 @@
+{{#unless controllers.application.onBinaryWebView}}
+<div id="mainHeader">
+  <div class="container">
+    {{#unless mobileHeaderString}}
+    <div class="clip_frame" id="mainLogo"><!-- image -->
+      <a href="#/members/{{unbound controllers.member.id}}/calendar">
+        <img class="block" id="u6865_img" src="//hovee001.s3.amazonaws.com/resources/hovee-logo.png" alt="Hovee Logo" width="83">
+      </a>
+    </div>
+    {{else}}
+      
+      {{#unless controllers.application.onBinaryWebView}}
+      <div class="nav-bar">
+        <a href="#" onClick="javascript:window.history.back();return false;" class="pull-left back"><i class="fa fa-chevron-left"></i></a>
+      </div>
+      {{/unless}}
+      <div class="pageHeader text-center">
+        {{mobileHeaderString}}
+        {{#if showMessageCount}}
+          {{#if controllers.login.unreadCount}}<div class="notifications-badge">{{controllers.login.unreadCount}}</div>{{/if}}
+        {{/if}}
+      </div>
+    {{/unless}}
+    {{#if 'controllers.login.loggedIn'}}
+      {{#unless controllers.application.onBinaryWebView}}
+      <div id="mainMenu">
+        <a {{action 'toggleMobileMenu'}}><i class="fa fa-bars fa-lg"></i></a>
+      </div>
+      {{/unless}}
+    {{/if}}
+  </div>
+</div>
+{{/unless}}

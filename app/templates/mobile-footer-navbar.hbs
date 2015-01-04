@@ -1,0 +1,39 @@
+{{#if controllers.application.tallEnough}}
+  <div style="padding-bottom: 70px;"><!-- Spacer for navbar --></div>
+  <div class="menu-footer top-border">
+    {{#link-to 'member.rides' class="btn btn-lg"}}
+      <div {{bind-attr class="onRideMatch:menu-footer-active"}}>
+        {{#if onRideMatch}}
+          <img src="/assets/img/nav-icon-car-selected.png" width="22">
+        {{else}}
+          <img src="/assets/img/nav-icon-car.png" width="22">
+        {{/if}}
+        <div class="title">Rides</div>
+      </div>
+    {{/link-to}}
+    {{!--#link-to 'member.calendar' class="btn btn-lg"}}
+      <div {{bind-attr class="onCalendar:active"}}>
+        <i class="fa fa-calendar"></i>
+        <div class="title">Calendar</div>
+      </div>
+    {{/link-to--}}
+    {{#link-to "member.notifications" controllers.login.memberId tagName="span" href=false}}
+      <a {{bind-attr href="view.href" data-badge=controllers.login.unreadCount}} class="btn btn-lg badge1">
+        <div {{bind-attr class="onNotifications:menu-footer-active"}}>
+          <i class="fa fa-envelope"></i>
+          <div class="title">Notifications</div>
+        </div>
+      </a>
+    {{/link-to}}
+    {{#link-to 'member.my_commute' class="btn btn-lg"}}
+      <div {{bind-attr class="onMyCommute:menu-footer-active"}}>
+        {{#if onMyCommute}}
+          <img src="/assets/img/nav-icon-commute-selected.png" width="22">
+        {{else}}
+          <img src="/assets/img/nav-icon-commute.png" width="22">
+        {{/if}}
+        <div class="title">Your Commute</div>
+      </div>
+    {{/link-to}}
+  </div>
+{{/if}}

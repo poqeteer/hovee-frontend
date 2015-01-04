@@ -1,0 +1,67 @@
+<div class="row schedule-info">
+  <div class="col-sm-9 col-sm-offset-3">
+    <h2>Your Work</h2>
+  </div>
+</div>
+<div class="row schedule-info">
+  <div class="col-sm-3 description">
+    Your Company{{#unless company}} *</p>
+    <p class="dim">We need you company name. (Must be at least 3 letters)</p>{{/unless}}
+  </div>
+  <div class="col-sm-4" style="font-size: 1.1em;">
+    {{#if company.largeLogoUrl}}
+      <img {{bind-attr src="company.largeLogoUrl"}} class="companyLogo" alt="{{unbound company.name}}">
+    {{else}}
+      {{#if company}}
+        <div class="companyName" style="padding-top: 5px;">{{company.name}}</div>
+      {{else}}
+        {{view "restrictedinput" value=companyName class="form-control" placeholder="Your company name" maxlength=64}}
+    {{/if}}
+  {{/if}}
+  </div>
+</div>
+
+{{#view 'jobheadline'}}
+<div class="row schedule-info">
+  <div class="col-sm-3 description">
+    Your job title at {{company.name}} *
+  </div>
+  <div class="col-sm-5 form-group">
+    {{view "helpfulinput" value=jobHeadline class="form-control" placeholder="Enter your job title here" id="headline" hintText="We get your title from LinkedIn, but you can change it here if you like." maxLength=64}}
+    <p class="help-block"></p>
+  </div>
+</div>
+{{/view}}
+{{!--
+<div class="row schedule-info">
+  <div class="col-sm-3 description">
+    Your company team or business unit *
+  </div>
+  <div class="col-sm-3">
+    {{view "helpfulselect" viewName="select"
+    contentBinding="company.teams"
+    optionLabelPath="content.name"
+    optionValuePath="content"
+    prompt="Choose a team"
+    selectionBinding="companyTeam"
+    class="form-control"
+    hintText="Select the item that most closely describes your team affiliation."}}
+  </div>
+</div>
+--}}
+{{#unless onBoardingProcess}}
+<div class="row schedule-info">
+  <div class="col-sm-3 description">
+    <p>Describe your job</p>
+    <p class="dim">How would you describe your work to a friend in one or two sentences?</p>
+  </div>
+  <div class="col-sm-4">
+    {{view 'restrictedtextarea' value=freeTextJob class="form-control" placeholder="Enter your job description here" id="freeTextJob" cols="80" rows="5" maxlength="200"}}
+  </div>
+</div>
+{{/unless}}
+<div class="row schedule-info">
+  <div class="col-sm-2 col-sm-offset-3">
+    <button class="btn btn-lg btn-primary" {{bind-attr disabled=disableAbout}} {{action 'about'}}>{{#if onBoardingProcess}}Next{{else}}Submit{{/if}}</button>
+  </div>
+</div>

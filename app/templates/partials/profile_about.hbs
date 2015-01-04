@@ -1,0 +1,91 @@
+{{#if controllers.login.onDesktop}}
+  <div class="row">
+    <div class="col-sm-9 col-sm-offset-3">
+      <h2>About You</h2>
+    </div>
+  </div>
+{{/if}}
+
+<div class="row schedule-info">
+  <div class="col-sm-3 description">
+    First Name *
+  </div>
+  <div class="col-sm-3">
+    {{view "restrictedinput" value=firstName class="form-control" placeholder="Your First Name" maxlength="64"}}
+  </div>
+</div>
+<div class="row schedule-info">
+  <div class="col-sm-3 description">
+    Last Name *
+  </div>
+  <div class="col-sm-3">
+    {{view "restrictedinput" value=lastName class="form-control" placeholder="Your Last Name" maxlength="64"}}
+  </div>
+</div>
+
+<div class="row schedule-info">
+  <div class="col-sm-3 description">
+    You are a *
+  </div>
+  <div class="col-sm-6">
+    {{radio-selector name="gender" isDesktop=controllers.login.onDesktop content=genderContent value=gender hintText="We use your gender selection to help match you with other riders."}}
+  </div>
+</div>
+<div class="row schedule-info">
+  <div class="col-sm-3 description">
+    You would prefer to ride with *
+  </div>
+  <div class="col-sm-6">
+    <div class="btn-group" data-toggle="gender-buttons">
+      {{radio-selector name="genderPref" isDesktop=controllers.login.onDesktop content=genderPrefContent value=genderPreference hintText="Please specify if you would prefer to ride with guys, gals, or you don't have a preference."}}
+    </div>
+  </div>
+</div>
+<div class="row schedule-info">
+  <div class="col-sm-3 description">
+    Your cell phone *<br>
+    <span class="dim">Hovee will text this number when other riders respond or your schedule changes.</span>
+  </div>
+  <div class="col-md-2 col-sm-3">
+    {{view 'numberinput' isDesktop=controllers.login.onDesktop class="form-control" name="phone" valueBinding="phoneNumber" maxlength="10" hintText='We need your cell phone number in order to connect you with other riders prior to trips.'}}
+  </div>
+</div>
+{{#unless onBoardingProcess}}
+<div class="row schedule-info">
+  <div class="col-sm-3 description">
+    What do you like to do?<br>
+    <p class="dim">Help other Members understand what kind of stuff you are into.</p>
+  </div>
+  <div class="col-sm-5">
+    {{view 'restrictedtextarea' value=freeTextPersonal class="form-control" placeholder="3 things you like to do outside of work." id="freeTextPersonal" cols="80" rows="5" maxlength="300"}}
+  </div>
+</div>
+<div class="row schedule-info">
+  <div class="col-sm-3 description">
+    What's your line?<br>
+    <p class="dim">Enter a "tag line".</p>
+  </div>
+  <div class="col-sm-5">
+    {{view "helpfulinput" value=tagLineText class="form-control" placeholder="Enter your tag line here" id="headline" hintText="Say something about yourself..."}}
+  </div>
+</div>
+<div class="row schedule-info">
+  <div class="col-sm-2 col-sm-offset-3">
+    <button class="btn btn-lg btn-primary" {{bind-attr disabled=disableDriving}} {{action 'driving'}}>Submit</button>
+  </div>
+</div>
+{{else}}
+  <div class="row schedule-info">
+    <div class="col-sm-3 description" style="margin-top: -10px">
+      Do you have a car you can use for the commute? *
+    </div>
+    <div class="col-sm-5 btn-group" data-toggle="car-buttons">
+      {{radio-selector name="aboutCar" isDesktop=controllers.login.onDesktop content=yesNoContent value=hasAnAutomobile hintText='Select “Yes” to be matched with both Drivers and Passengers, “No” with only Drivers. You can change this later in your Profile.'}}
+    </div>
+  </div>
+  <div class="row schedule-info">
+    <div class="col-sm-2 col-sm-offset-3">
+      <button class="btn btn-lg btn-primary" {{bind-attr disabled=disableDriving}} {{action 'start'}}>Next</button>
+    </div>
+  </div>
+{{/unless}}

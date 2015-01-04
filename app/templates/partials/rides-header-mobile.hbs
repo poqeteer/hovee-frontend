@@ -1,0 +1,29 @@
+{{#unless controllers.application.onBinaryWebView}}
+<div id="mainHeader">
+  <div class="container" style="padding-top: 5px;">
+    {{#unless showGoBackHeader}}
+      <div class="clip_frame" id="mainLogo"><!-- image -->
+        <a href="#/members/{{unbound controllers.member.id}}/calendar">
+          <img class="block" id="u6865_img" src="//hovee001.s3.amazonaws.com/resources/hovee-logo.png" alt="Hovee Logo" width="83">
+        </a>
+      </div>
+    {{else}}
+      <div class="pull-left" style="padding-left: 5px; font-size: 1.5em">
+        <a {{action 'backToRidesCalendar'}} class="pull-left back"><i class="fa fa-chevron-left"></i> <i class="fa fa-calendar"></i></a>
+      </div>
+    {{/unless}}
+    {{#if 'controllers.login.loggedIn'}}
+      {{#unless controllers.application.onBinaryWebView}}
+        <div class="pull-right" style="padding-right: 47px;">
+          <button class="btn btn-primary" {{action 'openHelp'}} style="border-radius: 50px; width: 35px; height: 35px; font-size: 18px; font-weight: 900;">
+            ?
+          </button>
+          <div id="mainMenu" {{action 'toggleMobileMenu'}} style="height: 45px; width: 45px; text-align: center;padding: 10px 0 0;">
+            <i class="fa fa-bars fa-lg"></i>
+          </div>
+        </div>
+      {{/unless}}
+    {{/if}}
+  </div>
+</div>
+{{/unless}}

@@ -1,0 +1,59 @@
+{{#if 'controllers.login.onDesktop'}}
+<div id="mainHeader">
+  <div class="container">
+    <div class="row">
+      <div id="mainLogo" class="col-xs-2 col-sm-3"><!-- image -->
+        <div class="pull-left">
+        {{#if 'controllers.login.displayMenu'}}
+          <a {{action 'jumpToHomePage'}} style="cursor:pointer;">
+          <img class="block" id="u6865_img" src="//hovee001.s3.amazonaws.com/resources/nav-logo.png" alt="Hovee Logo" width="99">
+          </a>
+        {{else}}
+          <img class="block" id="u6865_img" src="//hovee001.s3.amazonaws.com/resources/nav-logo.png" alt="Hovee Logo" width="99">
+        {{/if}}
+        </div>
+        {{#if 'controllers.login.onRideMatch'}}
+          {{#if 'controllers.login.showRidesBackToCalendar'}}
+            <div class="pull-right" style="padding-right: 5px; font-size: 1.5em; margin-top: -3px; cursor: pointer;">
+              <a {{action 'backToRidesCalendar'}} class="pull-left back" style="color: white;"><i class="fa fa-calendar"></i></a>
+            </div>
+          {{/if}}
+        {{/if}}
+      </div>
+      <div id="navigation" class="col-xs-8 col-sm-7">
+      {{#if 'controllers.login.displayMenu'}}
+        <ul>
+          {{#link-to "member.rides" controllers.login.memberId tagName="li" href=false}}<a {{bind-attr href="view.href"}}><img src="/assets/img/nav-icon-car.png" width="22"> Rides</a>{{/link-to}}
+          {{!--#link-to "member.calendar" controllers.login.memberId tagName="li" href=false}}<a {{bind-attr href="view.href"}}><i class="fa fa-calendar"></i> Calendar</a>{{/link-to--}}
+          {{#link-to "member.notifications" controllers.login.memberId tagName="li" href=false}}<a {{bind-attr href="view.href"}}><i class="fa fa-envelope"></i> Notifications
+            {{#if controllers.login.unreadCount}}<div class="notifications-badge">{{controllers.login.unreadCount}}</div>{{/if}}</a>
+          {{/link-to}}
+          {{#link-to "member.my_commute" controllers.login.memberId tagName="li" href=false}}<a {{bind-attr href="view.href"}}><img src="/assets/img/nav-icon-commute.png" width="22"> Your Commute</a>{{/link-to}}
+        </ul>
+      {{/if}}
+      </div>
+      <div style="width: 100px; float: right;">
+        <div id="dropdownTrigger" {{bind-attr class=":dropdown :pull-right controllers.login.loggedIn::hidden"}}>
+          <i class="fa fa-bars fa-lg"></i>
+          <div id="headerDropdown">
+            <ul>
+              {{#unless 'controllers.login.isOnBoardingProfile'}}{{#link-to "member.profile" controllers.login.memberId tagName="li" href=false}}<a {{bind-attr href="view.href"}}><i class="fa fa-user"></i> Your Profile</a>{{/link-to}}{{/unless}}
+              <li>{{partial "partials/share_email_link"}}</li>
+              <li>{{#link-to "member.help" controllers.login.memberId}}<i class="fa fa-question-circle"></i> Need Help?{{/link-to}}</li>
+              <li><a {{action 'logout'}}><i class="fa fa-sign-out"></i> Log Out</a></li>
+            </ul>
+          </div>
+        </div>
+        {{#if 'controllers.login.onRideMatch'}}
+          <div class="pull-right" style="padding-top: 7px; margin-right: -7px;">
+            <button class="btn btn-primary" {{action 'sendRidesOpenMsg'}} style="border-radius: 50px; width: 35px; height: 35px; font-size: 18px; font-weight: 900;">
+              ?
+            </button>
+            &nbsp;&nbsp;
+          </div>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+</div>
+{{/if}}

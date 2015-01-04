@@ -1,0 +1,43 @@
+  <div class="schedulematrix">
+	<!-- WEEK VIEW -->
+	<div class="weeks">
+		<table class="week top">
+			<tr>
+				<td {{bind-attr class=':day :mon currentWeekArray.0.isToday:today currentWeekArray.0.memberIsAvailable:available currentWeekArray.0.memberIsScheduled:scheduled currentWeekArray.0.hasProposedTrip:inNegotiation currentWeekArray.0.inThePast:past'}} data-day="mon">{{#if currentWeekArray.0.isToday}}<div class="todayBadge">Today</div>{{/if}}<div class="dayNumber">{{currentWeekArray.0.dayNumber}}</div></td>
+				<td {{bind-attr class=':day :tue currentWeekArray.1.isToday:today currentWeekArray.1.memberIsAvailable:available currentWeekArray.1.memberIsScheduled:scheduled currentWeekArray.1.hasProposedTrip:inNegotiation currentWeekArray.1.inThePast:past'}} data-day="tue">{{#if currentWeekArray.1.isToday}}<div class="todayBadge">Today</div>{{/if}}<div class="dayNumber">{{currentWeekArray.1.dayNumber}}</div></td>
+				<td {{bind-attr class=':day :wed currentWeekArray.2.isToday:today currentWeekArray.2.memberIsAvailable:available currentWeekArray.2.memberIsScheduled:scheduled currentWeekArray.2.hasProposedTrip:inNegotiation currentWeekArray.2.inThePast:past'}} data-day="wed">{{#if currentWeekArray.2.isToday}}<div class="todayBadge">Today</div>{{/if}}<div class="dayNumber">{{currentWeekArray.2.dayNumber}}</div></td>
+				<td {{bind-attr class=':day :thu currentWeekArray.3.isToday:today currentWeekArray.3.memberIsAvailable:available currentWeekArray.3.memberIsScheduled:scheduled currentWeekArray.3.hasProposedTrip:inNegotiation currentWeekArray.3.inThePast:past'}} data-day="thu">{{#if currentWeekArray.3.isToday}}<div class="todayBadge">Today</div>{{/if}}<div class="dayNumber">{{currentWeekArray.3.dayNumber}}</div></td>
+				<td {{bind-attr class=':day :fri currentWeekArray.4.isToday:today currentWeekArray.4.memberIsAvailable:available currentWeekArray.4.memberIsScheduled:scheduled currentWeekArray.4.hasProposedTrip:inNegotiation currentWeekArray.4.inThePast:past'}} data-day="fri">{{#if currentWeekArray.4.isToday}}<div class="todayBadge">Today</div>{{/if}}<div class="dayNumber">{{currentWeekArray.4.dayNumber}}</div></td>
+				<td {{bind-attr class=':day :sat currentWeekArray.5.isToday:today :weekend currentWeekArray.5.memberIsAvailable:available currentWeekArray.5.memberIsScheduled:scheduled currentWeekArray.5.hasProposedTrip:inNegotiation currentWeekArray.5.inThePast:past'}} data-day="sat">{{#if currentWeekArray.5.isToday}}<div class="todayBadge">Today</div>{{/if}}<div class="dayNumber">{{currentWeekArray.5.dayNumber}}</div></td>
+				<td {{bind-attr class=':day :sun currentWeekArray.6.isToday:today :weekend currentWeekArray.6.memberIsAvailable:available currentWeekArray.6.memberIsScheduled:scheduled currentWeekArray.6.hasProposedTrip:inNegotiation currentWeekArray.6.inThePast:past'}} data-day="sun">{{#if currentWeekArray.6.isToday}}<div class="todayBadge">Today</div>{{/if}}<div class="dayNumber">{{currentWeekArray.6.dayNumber}}</div></td>
+			</tr>
+		</table>
+		<table class="weekconnector">
+			<tr>
+				<td {{bind-attr class=':day :mon currentWeekArray.0.bothAreAvailable::unavailable'}}>Monday</td>
+				<td {{bind-attr class=':day :tue currentWeekArray.1.bothAreAvailable::unavailable'}}>Tuesday</td>
+				<td {{bind-attr class=':day :wed currentWeekArray.2.bothAreAvailable::unavailable'}}>Wednesday</td>
+				<td {{bind-attr class=':day :thu currentWeekArray.3.bothAreAvailable::unavailable'}}>Thursday</td>
+				<td {{bind-attr class=':day :fri currentWeekArray.4.bothAreAvailable::unavailable'}}>Friday</td>
+				<td {{bind-attr class=':day :sat currentWeekArray.5.bothAreAvailable::unavailable'}}>Saturday</td>
+				<td {{bind-attr class=':day :sun currentWeekArray.6.bothAreAvailable::unavailable'}}>Sunday</td>
+			</tr>
+		</table>
+		<table class="week bottom">
+			<tr>
+        <td {{bind-attr class=':day :mon currentWeekArray.0.isToday:today currentWeekArray.0.partnerIsAvailable:available:not currentWeekArray.0.inThePast:past'}} data-day="mon"><div class="dayNumber">{{currentWeekArray.0.dayNumber}}</div></td>
+        <td {{bind-attr class=':day :tue currentWeekArray.1.isToday:today currentWeekArray.1.partnerIsAvailable:available:not currentWeekArray.1.inThePast:past'}} data-day="tue"><div class="dayNumber">{{currentWeekArray.1.dayNumber}}</div></td>
+        <td {{bind-attr class=':day :wed currentWeekArray.2.isToday:today currentWeekArray.2.partnerIsAvailable:available:not currentWeekArray.2.inThePast:past'}} data-day="wed"><div class="dayNumber">{{currentWeekArray.2.dayNumber}}</div></td>
+        <td {{bind-attr class=':day :thu currentWeekArray.3.isToday:today currentWeekArray.3.partnerIsAvailable:available:not currentWeekArray.3.inThePast:past'}} data-day="thu"><div class="dayNumber">{{currentWeekArray.3.dayNumber}}</div></td>
+        <td {{bind-attr class=':day :fri currentWeekArray.4.isToday:today currentWeekArray.4.partnerIsAvailable:available:not currentWeekArray.4.inThePast:past'}} data-day="fri"><div class="dayNumber">{{currentWeekArray.4.dayNumber}}</div></td>
+        <td {{bind-attr class=':day :sat currentWeekArray.5.isToday:today currentWeekArray.5.partnerIsAvailable:available:not currentWeekArray.5.inThePast:past :weekend'}} data-day="sat"><div class="dayNumber">{{currentWeekArray.5.dayNumber}}</div></td>
+        <td {{bind-attr class=':day :sun currentWeekArray.6.isToday:today currentWeekArray.6.partnerIsAvailable:available:not currentWeekArray.6.inThePast:past :weekend'}} data-day="sun"><div class="dayNumber">{{currentWeekArray.6.dayNumber}}</div></td>
+			</tr>
+		</table>
+	</div>
+	<!-- END WEEK VIEW -->
+</div>
+<div class="calendartip">
+	<p class="you"></p>
+	<p class="partner"></p>
+</div>

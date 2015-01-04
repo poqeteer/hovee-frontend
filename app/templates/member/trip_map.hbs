@@ -1,0 +1,26 @@
+{{partial "header-mobile"}}
+<div class="container lightbg"">
+  <div class="trip-header">
+    <div class="pull-left partner">
+      <img style="margin-left:6px; height: 40px; width: 40px" {{bind-attr src="partner.profilePhotoUrl"}} onerror="this.onerror=null;this.src='//hovee001.s3.amazonaws.com/profile_images/default.jpg';"  class="pull-left">
+      <div class="pull-left" style="margin-left:8px;">
+        {{partner.fullName}}<br>
+        {{#unless isDriver}}<img src="/assets/img/icon-car-blue.png" width="20" height="20" style="display: inline;">{{/unless}}
+      </div>
+    </div>
+    <div class="pull-right partner">
+      <img style="margin-right:6px; height: 40px; width: 40px" {{bind-attr src="controllers.currentMember.member.profilePhotoUrl"}} onerror="this.onerror=null;this.src='//hovee001.s3.amazonaws.com/profile_images/default.jpg';"  class="pull-right">
+      <div class="pull-right" style="text-align:right; margin-right: 8px;">
+        You{{! controllers.currentMember.member.fullName}} <br>
+        {{#if isDriver}}<img src="/assets/img/icon-car-blue.png" width="20" height="20" style="display: inline;">{{/if}}
+      </div>
+    </div>
+  </div>
+  <div class="mapArea" style="height:55px; padding-top: 5px;">
+    {{firstName}} {{place}} address:<br>
+    {{to}}
+  </div>
+</div><!-- /.container -->
+<div style="height: 100%">
+  {{#view 'maproute' from=from to=to waypoints=waypoints}}{{/view}}
+</div>

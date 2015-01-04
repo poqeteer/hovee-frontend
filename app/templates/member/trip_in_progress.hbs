@@ -1,0 +1,68 @@
+{{#unless onDesktop}}
+  {{partial "header-mobile"}}
+{{/unless}}
+<div class="container lightbg">
+  <div class="trip-header">
+    <div class="pull-left partner">
+      <img style="margin-left:6px; height: 40px; width: 40px" {{bind-attr src="partner.profilePhotoUrl"}} onerror="this.onerror=null;this.src='//hovee001.s3.amazonaws.com/profile_images/default.jpg';"  class="pull-left">
+      <div class="pull-left" style="margin-left:8px;">
+        {{partner.fullName}}<br>
+        {{#unless isDriver}}<img src="/assets/img/icon-car-blue.png" width="20" height="20" style="display: inline;">{{/unless}}
+      </div>
+    </div>
+    <div class="pull-right partner">
+      <img style="margin-right:6px; height: 40px; width: 40px" {{bind-attr src="controllers.currentMember.member.profilePhotoUrl"}} onerror="this.onerror=null;this.src='//hovee001.s3.amazonaws.com/profile_images/default.jpg';"  class="pull-right">
+      <div class="pull-right" style="text-align:right; margin-right: 8px;">
+        You{{! controllers.currentMember.member.fullName}} <br>
+          {{#if isDriver}}<img src="/assets/img/icon-car-blue.png" width="20" height="20" style="display: inline;">{{/if}}
+      </div>
+    </div>
+  </div>
+  <div class="trip-footer top-border">
+    <button {{action "tripState"}}>{{currentState.text}}</button>
+
+    <!--<button {{!action 'tripMessage'}} class="message">Message</button>-->
+
+    <button {{action 'tripOptions'}} class="options">More <i class="fa fa-chevron-right"></i></button>
+  </div>
+
+  <div class="lowerArea" style="padding: 0; position: fixed; width: 100%; height: 100%;">
+    <div class="infographic">
+      <img {{bind-attr src=infographicUrl}} width="260" height="238" usemap="infographicmap">
+      <map name="infographicmap">
+        <area shape="rect" coords="30,2,   90,62" {{action 'upperLeftTap'}}>
+        <area shape="rect" coords="171,2,  231,62" {{action 'upperRightTap'}}>
+        <area shape="rect" coords="30,139, 90,199" {{action 'lowerLeftTap'}}>
+        <area shape="rect" coords="171,139,231,199" {{action 'lowerRightTap'}}>
+      </map>
+      <div class="caption d-home">
+        <div class="passenger-name">{{#if isDriver}}<b>You</b> Leave{{else}}<b>{{driverFirstName}}</b> Leaves{{/if}}</div>
+        <span class="time-badge time1">
+          {{#if isDriver}}
+            {{#if isReturnTrip}} {{workDepartureTime}} {{else}} {{homeDepartureTime}} {{/if}}
+          {{else}}
+            {{#if isReturnTrip}} {{passengerWorkPickupTime}} {{else}} {{passengerHomePickupTime}} {{/if}}
+          {{/if}}
+        </span>
+      </div>
+      <div class="caption p-home">
+        <div class="passenger-name">{{#unless isDriver}}Picks <b>You</b> Up{{else}}Pick <b>{{passengerFirstName}}</b> Up{{/unless}}</div>
+        <span class="time-badge time2">
+          {{#if isDriver}}
+            {{#if isReturnTrip}} {{passengerWorkPickupTime}} {{else}} {{passengerHomePickupTime}} {{/if}}
+          {{else}}
+            {{#if isReturnTrip}} {{workDepartureTime}} {{else}} {{homeDepartureTime}} {{/if}}
+          {{/if}}
+        </span>
+      </div>
+      <div class="caption p-work">
+        <div class="passenger-name">{{#unless isDriver}}Drops <b>You</b>{{else}}Drop <b>{{passengerFirstName}}</b>{{/unless}} Off</div>
+        <span class="time-badge time3">{{#if isReturnTrip}} {{passengerHomeDropOffTime}} {{else}} {{passengerWorkDestTime}} {{/if}}</span>
+      </div>
+      <div class="caption d-work">
+        <div class="passenger-name">{{#if isDriver}}<b>You</b> Arrive{{else}}<b>{{driverFirstName}}</b> Arrives{{/if}}</div>
+        <span class="time-badge time4">{{#if isReturnTrip}} {{driverHomeArrivalTime}} {{else}} {{driverWorkDestTime}} {{/if}}</span>
+      </div>
+    </div>
+  </div>
+</div><!-- /.container -->

@@ -1,0 +1,197 @@
+{{partial 'partials/rides_calendar_week'}}
+<div class="restrict" style="background: white; width: 100%; text-align: center; padding-bottom: 15px; border-radius: 0 0 5px 5px;">
+  <div style="height: 10%; padding-top: 2%; padding-bottom: 2%; text-align: center;">
+    <span style="font-size: 1.5em">Please confirm your commute</span>
+  </div>
+  <table style="width: 100%; max-width: 400px; margin: 0 auto;">
+    <tr>
+      <td class="time-col time-left-col" style="z-index: 1000">
+        <div class="passenger-name"><span class="time-col-titles">leave</span></div>
+        {{#if controllers.login.onDesktop}}
+          <div class="infographic input-append bootstrap-timepicker" style="display: inline;">{{#view "pickatime" onDesktop=false valueBinding="homeDepartureTime" }}{{/view}}</div>
+        {{else}}
+          {{view 'helpfulselect' content=timeArray optionValuePath="content.label" optionLabelPath="content.label" value=homeDepartureTime}}
+        {{/if}}
+      </td>
+      <td style="padding-left: 5px; width: 55%">
+        <div class="card-address option-truncate" {{action 'openHomeLocationDialog'}} style="cursor: pointer;">
+            <a style="color: #658BCA; font-weight: bold;">Home</a><br>
+            {{member.homeLocation.homeAddress.address1}}<br>
+            {{member.homeLocation.cityState}}
+        </div>
+      </td>
+      <td class="time-right-col">
+        <div class="icon-circle">
+          <a {{action 'openHomeLocationDialog'}} style="cursor: pointer;">
+            <span style="color: white; line-height: 1.3em; font-size: 2.2em;">
+              <i class="fa fa-home"></i>
+            </span>
+          </a>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="time-left-col">
+        <div class="container-line-arrows">
+          <div class="container-line-down"></div>
+          <div class="inner-triangle-down"></div>
+          <div class="outer-triangle-down"></div>
+        </div>
+      </td>
+      <td style="width: 55%; padding-bottom: 4px;">
+        <div style="position: relative; width: 100%; top: 1px; border-top: 2px #D2D9DB solid;"></div>
+        <!--div style="width: 1px; color: #D2D9DB; border: 2px #D2D9DB solid;margin-left: 24px; border-radius: 2px; line-height: .85em;">
+          &nbsp;
+        </div-->
+      </td>
+      <td class="time-right-col">
+        <div class="container-line-arrows">
+          <div class="container-line-up"></div>
+          <div class="inner-triangle-up"></div>
+          <div class="outer-triangle-up"></div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="time-left-col">
+        <div class="icon-circle">
+          <a {{action 'openWorkLocationDialog'}} style="cursor: pointer;">
+            <span style="color: white; line-height: 1.9em; font-size: 1.7em; padding-left: 2px;">
+              <i class="fa fa-briefcase"></i>
+            </span>
+          </a>
+        </div>
+      </td>
+      <td style="padding-left: 5px; width: 55%">
+        <div class="card-address option-truncate" {{action 'openWorkLocationDialog'}} style="cursor: pointer;">
+            <a style="color: #658BCA; font-weight: bold;">{{member.workLocation.name}}</a><br>
+            {{member.workLocation.workAddress.address1}}<br>
+            {{member.workLocation.cityState}}
+        </div>
+      </td>
+      <td class="time-col time-right-col">
+        <div class="passenger-name"><span class="time-col-titles">leave</span></div>
+        {{#if controllers.login.onDesktop}}
+          <div class="infographic input-append bootstrap-timepicker" style="display: inline;">{{#view "pickatime" onDesktop=false valueBinding="workDepartureTime" }}{{/view}}</div>
+        {{else}}
+          {{view 'helpfulselect' content=timeArray optionValuePath="content.label" optionLabelPath="content.label" value=workDepartureTime}}
+        {{/if}}
+      </td>
+    </tr>
+  </table>
+  <br>
+  <div class="row radioSelectorContainer center-block">
+    <div class="btn-group radioSelector">
+      <label id="drivel" for="drive"  class="btn btn-default" data-placement="bottom" {{action 'toggleTwoButtons' 'driverMode' 'driver' '#drivel' '#ridel'}}>
+        <span id="drive">I'm Driving</span>
+      </label>
+      <span style="width: 1px"></span>
+      <label id="ridel" for="ride"  class="btn btn-default" data-placement="bottom" {{action 'toggleTwoButtons' 'driverMode' 'passenger' '#ridel' '#drivel'}}>
+        <span id="ride">I Need a Ride</span>
+      </label>
+    </div>
+  </div>
+
+  <div class="radioSelectorContainer center-block">
+    <div class="btn-group radioSelector">
+      <label id="roundl" for="round"  class="btn btn-default" style="width: 33%" data-placement="bottom" {{action 'toggleThreeButtons' 'tripMode' 0 '#roundl' '#workl' '#homel'}}>
+        <span id="round">Round Trip</span>
+      </label>
+      <span style="width: 1px"></span>
+      <label id="workl" for="work"  class="btn btn-default" style="width: 34%" data-placement="bottom" {{action 'toggleThreeButtons' 'tripMode' -1 '#workl' '#roundl' '#homel'}}>
+        <span id="work">To Work</span>
+      </label>
+      <span style="width: 1px"></span>
+      <label id="homel" for="home"  class="btn btn-default" style="width: 33%" data-placement="bottom" {{action 'toggleThreeButtons' 'tripMode' -2 '#homel' '#roundl' '#workl'}}>
+        <span id="home">To Home</span>
+      </label>
+    </div>
+  </div>
+
+  <div class="center-block" style="padding: 10px 3px 0; max-width: 400px;">
+    <button class="btn btn-cancel btn-lg" style="width: 33%" {{action 'cancelOptions'}}>Cancel</button>
+    <button class="btn btn-success btn-lg" style="width: 65%" {{action 'goToRideMatch'}}><i class="fa fa-check"></i> Looks Good</button>
+  </div>
+</div>
+
+<!-- These are the address change popup -->
+
+<div id="homeLocationDialog" class="modal fade" tabindex="-1">
+  <div class="modal-dialog" style="margin-top: 10px;">
+    <div class="modal-content">
+      <div class="modal-header centerAlign">
+        <b>Where From</b><br>
+        {{member.homeLocation.nameAndAddress}}
+      </div>
+      <div class="modal-body">
+        <div class="row schedule-info">
+          <div class="col-sm-3 description">
+            Choose an Address *
+          </div>
+          <div class="col-sm-4" style="font-size: 1.1em;">
+            {{view Ember.Select viewName="select"
+            contentBinding="homeLocations"
+            optionLabelPath="content.nameAndAddress"
+            optionValuePath="content"
+            prompt="Choose a location"
+            selectionBinding="homeLocation"
+            class="form-control"
+            }}
+          </div>
+        </div>
+        <div class="row schedule-info">
+          <div class="col-sm-3 description">
+            Or
+          </div>
+          <div class="col-sm-2">
+            <button id="addHomeLocationDialogButton" class="btn btn-mini btn-primary" data-dismiss="modal">Add a new address</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-cancel btn-lg" data-dismiss="modal">Cancel</button>
+        <button id="updateHomeLocationDialogButton" class="btn btn-success btn-lg" data-dismiss="modal" {{action 'updateHomeLocation'}}><i class="fa fa-check"></i> Update</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="workLocationDialog" class="modal fade" tabindex="-1">
+  <div class="modal-dialog" style="margin-top: 10px;">
+    <div class="modal-content">
+      <div class="modal-header centerAlign">
+        <b>Where To</b><br>
+        {{member.workLocation.nameAndAddress}}
+      </div>
+      <div class="modal-body">
+        <div class="row schedule-info">
+          <div class="col-sm-3 description">
+            Choose an Address *
+          </div>
+          <div class="col-sm-4" style="font-size: 1.1em;">
+            {{view Ember.Select viewName="select"
+            contentBinding="workLocations"
+            optionLabelPath="content.nameAndAddress"
+            optionValuePath="content"
+            prompt="Choose a location"
+            selectionBinding="workLocation"
+            class="form-control"
+            }}
+          </div>
+        </div>
+        <div class="row schedule-info">
+          <div class="col-sm-3 description">
+            Or
+          </div>
+          <div class="col-sm-2">
+            <button id="addWorkLocationDialogButton" class="btn btn-mini btn-primary" data-dismiss="modal">Add a new address</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-cancel btn-lg" data-dismiss="modal">Cancel</button>
+        <button id="updateWorkLocationDialogButton" class="btn btn-success btn-lg" data-dismiss="modal" {{action 'updateWorkLocation'}}><i class="fa fa-check"></i> Update</button>
+      </div>
+    </div>
+  </div>
+</div>

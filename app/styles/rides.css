@@ -1,0 +1,487 @@
+.rides {
+}
+
+.rides table {
+    width: 100%;
+    max-width: 646px;
+    margin: auto;
+}
+
+.rides .restrict {
+    width: 100%;
+    max-width: 646px;
+    margin: auto;
+    background: white;
+}
+
+.rides .horz-border {
+    border-top: 1px #cccccc solid;
+}
+
+/***********************************/
+/* ride_calendar_week header stuff */
+/***********************************/
+.weekday-table-header {
+    background-color: #0B3144;
+    border-top: 1px #0B3144 solid;
+    width: 100%;
+}
+.weekday-header {
+    min-width: 35px;
+    text-transform: uppercase;
+    font-size: 0.7em;
+    font-weight: 900;
+    color: white;
+    text-align: center;
+}
+.weekend-day {
+    color: #799BAF;
+}
+/** create the "tab" effect **/
+.selected-day {
+    background: #F4F8F9;
+    color: #042330;
+    border-bottom: 0;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+/**********************************/
+/* ride_calendar_month cell stuff */
+/**********************************/
+.weekday-cells tr td {
+    text-align: center;
+    min-width: 35px;
+    height: 55px;
+    text-transform: uppercase;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: x-large;
+    border: 1px #808080 solid;
+}
+.weekday-cells-borderless tr td {
+    text-align: center;
+    min-width: 35px;
+    height: 55px;
+    text-transform: uppercase;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: x-large;
+    border: 1px #FFFFFF solid;
+}
+.before-today {
+    color: #B2B8BA;
+    cursor: inherit !important;
+    text-decoration: none !important;
+}
+.not-before-today {
+    color: #64686B;
+    cursor: pointer;
+}
+.not-before-today:hover {
+    text-decoration: underline;
+}
+
+/** if this is the first of the month, cell is in 2 parts **/
+.firstOfTheMonth-name {
+    height:20px;
+    text-align: center;
+    width: 100%;
+    padding-top: 5px;
+    font-size: x-small;
+    font-weight: 700;
+}
+.firstOfTheMonth-number {
+    margin-top: -6px;
+    text-align: center;
+    width: 100%;
+}
+
+/** upper right corner flag... **/
+.cell-container{
+    position: relative;
+}
+.inner-triangle{
+    border-left: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    height: 0;
+    width: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin-top: -10px;
+    z-index: 2;
+}
+.status-triangle0{
+    border-right: 10px solid #FA9900;
+}
+.status-triangle2 {
+    border-right: 10px solid #58BB66;
+}
+.outer-triangle{
+    border-left: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    height: 0;
+    width: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin-top: -10px;
+    margin-right: -1px;
+    z-index: 1;
+}
+.outer-status-triangle0{
+    border-right: 15px solid #FA9900;
+}
+.outer-status-triangle2 {
+    border-right: 15px solid #58BB66;
+}
+.status-background0{
+    background: #FA9900;
+}
+.status-background2{
+    background: #58BB66;
+}
+
+/************************************/
+/* ride_calendar_options cell stuff */
+/************************************/
+
+.time-left-col {
+    width: 80px;
+    border-right: 1px #B8B9BA solid;
+    padding: 0 2px;
+}
+.time-left-col select, option {
+    text-align:right;
+}
+.time-right-col {
+    width: 80px;
+    border-left: 1px #B8B9BA solid;
+    padding-right: 3px;
+}
+.time-col select, option {
+    text-align:right;
+    font-size: 0.9em;
+    font-weight: 400;
+    padding: 0 7px 0 0;
+    border: 1px #c0c0c0 solid;
+    border-radius: 5px;
+    height: 30px;
+    width: 91%
+}
+.time-col select {
+    direction: rtl;
+}
+.time-col option {
+    direction: ltr;
+}
+.time-col-titles {
+    font-size: .8em;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #8D9CB8;
+}
+.icon-circle {
+    border-radius: 50px;
+    background: #1A8BC3;
+    width: 45px;
+    height: 45px;
+    margin: auto;
+}
+.not-selected-cell {
+    background-color: #D8DDDF;
+    /*color: #8B9194;*/
+    cursor: pointer;
+}
+.not-selected-cell:hover {
+    text-decoration: underline;
+}
+.selected-cell {
+    background-color: #F4F8F9;
+    color: #172A6A;
+    cursor: pointer;
+}
+.selected-cell:hover {
+    text-decoration: underline;
+}
+
+.card-address {
+    text-align: left;
+    padding: 3px 0 0 5px;
+    line-height: 1em;
+    max-width: 300px;
+}
+.container-line-arrows{
+    border: 0;
+    position: relative;
+    width: 100%;
+    height: 20px;
+}
+.container-line-up {
+    border-top: 2px #D2D9DB solid;
+    position: absolute;
+    width: 100%;
+    top: 14px;
+}
+.inner-triangle-up{
+    border-left: 8px solid transparent;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid #EFF3F4;
+    border-right: 8px solid transparent;
+    height: 0;
+    width: 0;
+    position: relative;
+    left: 38%;
+    top: 1px;
+    margin-top: -12px;
+    margin-left: 2px;
+    z-index: 2;
+}
+.outer-triangle-up{
+    border-left: 10px solid transparent;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid #D2D9DB;
+    border-right: 10px solid transparent;
+    height: 0;
+    width: 0;
+    position: relative;
+    left: 38%;
+    top: 1px;
+    margin-top: -21px;
+    z-index: 1;
+}
+.container-line-down {
+    border-bottom: 2px #D2D9DB solid;
+    position: absolute;
+    width: 100%;
+    top: 8px;
+}
+.inner-triangle-down{
+    border-left: 8px solid transparent;
+    border-top: 8px solid #EFF3F4;
+    border-bottom: 8px solid transparent;
+    border-right: 8px solid transparent;
+    height: 0;
+    width: 0;
+    position: relative;
+    left: 40%;
+    top: 7px;
+    z-index: 2;
+}
+.outer-triangle-down{
+    border-left: 10px solid transparent;
+    border-top: 10px solid #D2D9DB;
+    border-bottom: 10px solid transparent;
+    border-right: 10px solid transparent;
+    height: 0;
+    width: 0;
+    position: relative;
+    left: 38%;
+    margin-top: -8px;
+    z-index: 1;
+}
+
+.rides .radioSelectorContainer {
+    padding: 0px 5px 10px;
+    margin: 0 auto;
+    max-width: 400px;
+}
+.rides .radioSelector {
+    background-color: #D8DDDF;
+    width: 100%;
+    padding: 1px;
+    border-radius: 3px;
+}
+.rides .radioSelector label{
+    height: 2.8em;
+    width: 50%;
+    padding-top: 8px;
+    background-color: #D8DDDF;
+    color: #8B9194;
+    border-color: #D8DDDF;
+}
+.rides .radioSelector label.active{
+    background-color: white;
+    color: #000000;
+    font-weight: 700;
+    border-color: #D8DDDF;
+}
+
+.rides .btn.btn-default.toggleButton{
+    height: 2.8em;
+    width: 100%;
+    padding-top: 7px;
+    background-color: #D8DDDF;
+    color: #8B9194;
+    border-color: #D8DDDF;
+}
+.rides .btn.btn-default.toggleButton.active{
+    background-color: white;
+    color: #000000;
+    font-weight: 700;
+    border-color: #D8DDDF;
+}
+
+@media only screen and (max-width : 480px) {
+    .option-truncate {
+        width: 216px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+@media only screen and (max-width : 386px) {
+    .option-truncate {
+        width: 204px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+@media only screen and (max-width : 360px) {
+    .option-truncate {
+        width: 196px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+@media only screen and (max-width : 320px) {
+    .option-truncate {
+        width: 166px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+/***********************************/
+/* rides_match_card stuff          */
+/***********************************/
+.icon-circle-match {
+    border-radius: 50px;
+    background: #7AC7ED;
+    width: 40px;
+    height: 40px;
+}
+.icon-circle-status0 {
+    background: #FA9900;
+}
+.icon-circle-status2 {
+    background: #58BB66;
+}
+.status-message {
+    font-size: .9em;
+    color: #7AC7ED;
+}
+.status-message0 {
+    font-size: .9em;
+    color: #FA9900;
+}
+.status-message2 {
+    color: #58BB66;
+}
+
+.rides .mobile-spacing {
+    padding-left: 5px;
+}
+.rides .desktop-spacing {
+    padding-left: 25px;
+}
+
+@media only screen and (max-width : 640px) {
+    .card-truncate {
+        width: 465px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+@media only screen and (max-width : 570px) {
+    .card-truncate {
+        width: 415px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+@media only screen and (max-width : 540px) {
+    .card-truncate {
+        width: 375px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+@media only screen and (max-width : 480px) {
+    .card-truncate {
+        width: 315px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+@media only screen and (max-width : 385px) {
+    .card-truncate {
+        width: 205px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+@media only screen and (max-width : 360px) {
+    .card-truncate {
+        width: 196px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+@media only screen and (max-width : 320px) {
+    .card-truncate {
+        width: 165px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+
+.title-truncate {
+    width: 400px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media only screen and (max-width : 480px) {
+    .title-truncate {
+        width: 360px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+@media only screen and (max-width : 385px) {
+    .title-truncate {
+        width: 250px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+@media only screen and (max-width : 360px) {
+    .title-truncate {
+        width: 220px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+@media only screen and (max-width : 320px) {
+    .title-truncate {
+        width: 210px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}

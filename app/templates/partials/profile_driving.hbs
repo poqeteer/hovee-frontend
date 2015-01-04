@@ -1,0 +1,170 @@
+{{#if controllers.login.onDesktop}}
+  <div class="row schedule-info">
+    <div class="col-sm-9 col-sm-offset-3">
+      <h2>Driving</h2>
+    </div>
+  </div>
+{{/if}}
+<div class="row schedule-info"> 
+  <div class="col-sm-3 description" style="margin-top: -10px">
+    Do you have valid driver’s<br>license? *
+  </div>
+  <div class="btn-group col-sm-5" data-toggle="license-buttons">
+    {{radio-selector isDesktop=controllers.login.onDesktop content=yesNoContent value=isLicensed hintText="We need to know if you have a valid driver's license in order to drive others. If you do not have a license, you can still be a Hovee rider."}}
+  </div>
+</div>
+
+{{#if hasALicense}}
+  <div class="row schedule-info"> 
+    <div class="col-sm-3 description">
+      Which state?
+    </div>
+    <div class="col-sm-3">
+      {{view 'helpfulselect' viewName="select"
+        content=unitedStates
+        optionLabelPath="content.name"
+        optionValuePath="content.id"
+        prompt="Choose a state"
+        value=licenseState
+        class="form-control"
+        hintText="If you do have a driver's license, please let us know which state issued it."}}
+    </div>
+  </div>
+  <div class="row schedule-info"> 
+    <div class="col-sm-3 description" style="margin-top: -10px">
+      Do you own a car you can use for the commute? *
+    </div>
+    <div class="col-sm-5 btn-group" data-toggle="car-buttons">
+      {{radio-selector isDesktop=controllers.login.onDesktop content=yesNoContent value=hasAnAutomobile hintText='Select “Yes” to be matched with both Drivers and Passengers, “No” with only Drivers. You can change this later in your Profile.'}}
+    </div>
+  </div>
+{{/if}}
+
+{{#if hasACar}}
+  <div class="row schedule-info"> 
+    <div class="col-sm-3 description">
+
+    </div>
+    <div class="col-sm-4">
+      <b>Tell us about your Car</b>
+    </div>
+  </div>
+
+  <div class="row schedule-info"> 
+    <div class="col-sm-3 description">
+      What is the make of your car?
+    </div>
+    <div class="col-sm-4">
+      {{view Ember.Select viewName="select"
+        contentBinding="carMakes"
+        optionLabelPath="content.make"
+        optionValuePath="content"
+        prompt="Choose a car make"
+        selectionBinding="memberCar.carMake"
+        class="form-control"}}
+    </div>
+  </div>
+  <div class="row schedule-info"> 
+    <div class="col-sm-3 description">
+      What is the model of your car?
+    </div>
+    <div class="col-sm-4">
+      {{view 'restrictedinput' value=memberCar.model class="form-control" placeholder="Enter your car's model" maxlength="100"}}
+    </div>
+
+  </div>
+  <div class="row schedule-info"> 
+    <div class="col-sm-3 description">
+      What is the year of your car?
+    </div>
+    <div class="col-sm-4">
+      {{view Ember.Select viewName="select"
+      content=yearsContent
+      optionLabelPath="content.label"
+      optionValuePath="content.value"
+      prompt="Choose a year"
+      value=memberCar.year
+      class="form-control"}}
+    </div>
+  </div>
+
+  <div class="row schedule-info"> 
+    <div class="col-sm-3 description">
+      What is color is your car?
+    </div>
+    <div class="col-sm-4">
+      {{view Ember.Select viewName="select"
+      content=colorContent
+      optionLabelPath="content.label"
+      optionValuePath="content.value"
+      prompt="Choose a color"
+      value=memberCar.color
+      class="form-control"}}
+    </div>
+  </div>
+
+  <div class="row schedule-info"> 
+    <div class="col-sm-3 description">A photo of your car</div>
+    {{#view "caruploadform"}}
+      <form action="https://hovee001.s3.amazonaws.com/" method="post">
+        <div class="col-sm-4">
+          <!--<input type="hidden" name="key" value="car-images/${filename}">-->
+          <!--<input type="hidden" name="AWSAccessKeyId" value="AKIAJUP47Q7VN6DCLKUQ">-->
+          <!--<input type="hidden" name="acl" value="public-read">-->
+          <!--<input type="hidden" name="policy"  {{bind-attr value=encodedPolicy}}>-->
+          <!--<input type="hidden" name="signature" {{bind-attr value=calculatedSignature}}>-->
+          <!--<input type="hidden" name="Content-Type" value="">-->
+          <!-- Include any additional input fields here -->
+          <!-- show car image -->
+          <img {{bind-attr src='memberCar.photoUrl'}} id="carPhoto" width="200">
+          <div class="form-group">
+            <input name="file" id="file" type="file" accept="image/*">
+            <p class="help-block"></p>
+            <input type="submit" id="uploadSubmit" value="Upload Image" class="btn btn-success btn-sm">
+          </div>
+        </div>
+      </form>
+    {{/view}}
+  </div>
+
+  <div class="row schedule-info"> 
+    <div class="col-sm-3 description">
+      Does your car have a nickname?
+    </div>
+    <div class="col-sm-4">
+      {{view 'restrictedinput' value=memberCar.nickname class="form-control" placeholder="Enter your car's nickname" maxlength="100"}}
+    </div>
+  </div>
+{{!--
+  <div class="row schedule-info"> 
+    <div class="col-sm-3 description" style="margin-top: -10px">
+      Do you have valid and up-to-date car insurance? *
+    </div>
+    <div class="btn-group col-sm-4" data-toggle="car-buttons">
+      {{radio-selector isDesktop=controllers.login.onDesktop content=yesNoContent value=isInsured}}
+    </div>
+  </div>
+
+  {{#if hasInsurance}}
+    <div class="row schedule-info"> 
+      <div class="col-sm-3 description">
+        In which state? *
+      </div>
+      <div class="col-sm-2">
+        {{view Ember.Select viewName="select"
+        content=unitedStates
+        optionLabelPath="content.name"
+        optionValuePath="content.id"
+        prompt="Choose a state"
+        value=insuranceState
+        class="form-control"}}
+      </div>
+    </div>
+  {{/if}}
+--}}
+  <div class="row schedule-info"> 
+    <div class="col-sm-2 col-sm-offset-3">
+      <button class="btn btn-lg btn-primary btn-primary" {{bind-attr disabled=disableStart}} {{action 'start'}}>{{#if onBoardingProcess}}Next{{else}}Submit{{/if}}</button>
+    </div>
+  </div>
+{{/if}}

@@ -1,0 +1,58 @@
+{{partial "header-mobile"}}
+<div class="lowerArea" style="padding-top: 10px;">
+  <div class="container">
+    {{partial "partials/my_commute_sched_time"}}
+    <br>
+    <div class="row" style="margin-right: 0">
+      <b>Commute</b><br>
+      <div class="row">
+        <div class="pull-left" style="padding: 5px 5px 0 20px;">
+          <i class="fa fa-home fa-3x"></i>
+        </div>
+        <div class="member-home pull-left">
+          <b>{{homeLocation.name}}</b><br>
+          {{#unless isPreview}}
+            {{homeLocation.homeAddress.address1}}<br>
+            {{homeLocation.homeAddress.city}}<br>
+            {{homeLocation.homeAddress.state}} {{homeLocation.homeAddress.zip}}
+          {{else}}
+            {{homeLocation.homeAddress.street}}<br>
+            {{homeLocation.homeAddress.city}}
+          {{/unless}}
+        </div>
+        <div class="pull-right">
+          {{#link-to 'member.profile_main' 'start' class='btn btn-default'}}<i class="fa fa-home"> Edit</i>{{/link-to}}
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="pull-left" style="padding: 3px 7px 0 24px;">
+          <i class="fa fa-building-o fa-3x"></i>
+        </div>
+        <div class="member-home pull-left">
+          <b>{{workLocation.name}}</b><br>
+          {{#unless isPreview}}
+            {{workLocation.workAddress.address1}}<br>
+            {{workLocation.workAddress.city}}<br>
+            {{workLocation.workAddress.state}} {{workLocation.workAddress.zip}}
+          {{else}}
+            {{workLocation.workAddress.street}}<br>
+            {{workLocation.workAddress.city}}
+          {{/unless}}
+        </div>
+        <div class="pull-right"">
+          {{#link-to 'member.profile_main' 'destination' class='btn btn-default'}}<i class="fa fa-building-o">&nbsp; Edit</i>{{/link-to}}
+        </div>
+      </div>
+      <div class="row" style="padding-bottom: 5px; padding-top: 10px; padding-left: 15px;">
+        <div style="float: left; width: 100%; height: 100%;">
+          <img src="/assets/img/transparent-map.png" {{bind-attr width=imgWidth}} style="max-height: 110px">
+        </div>
+        <div style="display: block; position: absolute; width: 100%; height: 110px;">
+          <a style="height: 100%; width: 15%; float: right;" {{action 'showMap'}}></a>
+        </div>
+      </div>
+    </div>
+  </div><!-- /.container -->
+</div><!-- /.lowerArea -->
+{{partial 'mobile-footer-navbar'}}

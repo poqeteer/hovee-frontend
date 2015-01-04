@@ -1,0 +1,101 @@
+{{#unless controllers.login.onDesktop}}
+  {{partial "header-mobile"}}
+{{/unless}}
+{{#if 'firstPage'}}
+<div class="upperArea">
+  <div class="container">
+    <div class="col-sm-9 col-sm-offset-3" style="padding-top:8px;">
+      <h3>The Real You - Profile Info from LinkedIn</h3>
+    </div>
+  </div>
+</div>
+<div class="lowerArea">
+  <div class="container onboarding" style="padding-top: 20px;">
+    <div class="row">
+      <div class="col-sm-6 col-sm-offset-3">
+        <p>We ask all members have a photo of themselves so others can know who&rsquo;s getting in their car.  And LinkedIn is the perfect place - it&rsquo;s a public profile everyone can see, and verify.</p>
+        <div class="linkedin-card">
+          <img width="98" height="98" class="avatar">
+          <div class="meta">
+            <span class="name">Your Name</span><br>
+            <span class="title">Your LinkedIn Headline</span><br>
+            <div class="label label-success hidden">Connected with LinkedIn</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-9 col-sm-offset-3">
+        {{#view "linkedinsignin"}}
+          <script type="IN/Login" data-size="large"></script>
+
+          {{#if isLinkedIn}}
+            <span class="text-muted">If the user listed above isn't you, <a {{action 'nope'}} style="cursor:pointer;">switch LinkedIn accounts.</a></span>
+          {{/if}}
+
+        <div class="panel panel-danger duplicate" style="width:50%;">
+          <div class="panel-heading">
+            <h3 class="panel-title">Account Already Connected</h3>
+          </div>
+          <div class="panel-body">
+            It looks like this LinkedIn account is already connected to an existing Hovee account.  Please try connecting with a different LinkedIn account, or log in to the Hovee account that's connected to this LinkedIn account.<br>
+            <br>
+            <a {{action 'nope'}} style="cursor:pointer;">Switch LinkedIn accounts</a>
+          </div>
+        </div>
+        {{/view}}
+
+      </div>
+    </div>
+    {{#unless isLinkedIn}}
+    <div class="row">
+      <div class="col-sm-5 col-sm-offset-3">
+        <div class="dim" style="margin-top:10px;"><small>Note: If you don't see a 'sign in with LinkedIn' button above, it may be due to ad blocking software.  If so, please disable ad blocking temporarily and then reload this page.</small></div>
+      </div>
+    </div>
+    {{/unless}}
+    <div class="row no-account">
+      <div class="col-sm-9 col-sm-offset-3">
+        Don't have a <span class="btn-link" {{action 'noLinkedIn'}}>LinkedIn account?</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-9 col-sm-offset-3">
+        {{#if isLinkedIn}}
+          {{!-- <button class="btn btn-primary" {{action 'saveLinkedIn'}}> Next</button> --}}
+          {{#link-to "member.profile_main" 'work'}}<button class="btn btn-primary" {{action 'saveLinkedIn'}}> Next</button>{{/link-to}}
+        {{else}}
+          <button class="btn btn-primary" disabled='true'> Next</button>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+</div>
+{{else}}
+<div class="upperArea">
+  <div class="container">
+    <div class="col-sm-3 text-right">
+      <h1>Don’t have a LinkedIn account?</h1>
+    </div>
+    <div class="col-sm-9" style="padding-top:8px;">
+      <h3>Now is the perfect time to create one!</h3>
+    </div>
+  </div>
+</div>
+<div class="lowerArea">
+  <div class="container onboarding" style="padding-top: 0px;">
+    <div class="row">
+      <div class="col-sm-6 col-sm-offset-3">
+        Hovee accounts are connected to LinkedIn so Hovee members can verify who they’re riding with.<br>
+        <br>
+        Go to <a href="https://www.linkedin.com/" target="_blank">linkedin.com</a> to create your LinkedIn account, then return to Hovee to fill out your profile.
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-9 col-sm-offset-3">
+        <span class="btn btn-primary" {{action 'noLinkedIn'}}>Back</span>
+      </div>
+    </div>
+  </div>
+</div>
+{{/if}}

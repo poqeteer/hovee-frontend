@@ -1,0 +1,96 @@
+<div class="row schedule-info">
+  <div class="col-sm-3 description">
+    First Name *
+  </div>
+  <div class="col-sm-3">
+    {{view "restrictedinput" value=firstName class="form-control" placeholder="Your First Name" maxlength="64"}}
+  </div>
+</div>
+<div class="row schedule-info">
+  <div class="col-sm-3 description">
+    Last Name *
+  </div>
+  <div class="col-sm-3">
+    {{view "restrictedinput" value=lastName class="form-control" placeholder="Your Last Name" maxlength="64"}}
+  </div>
+</div>
+
+<div class="row schedule-info">
+  <div class="col-sm-3 description">
+    You are a *
+  </div>
+  <div class="col-sm-6">
+    <div class="btn-group radioSelector">
+      <label id="gfl" for="gf"  class="btn btn-default" data-placement="bottom" {{action 'toggleTwoButtons' 'gender' 'female' '#gfl' '#gml'}}>
+        {{radio-button selection=gender value="female" id="gf"}}<img src="//hovee001.s3.amazonaws.com/resources/gender-female.png" style="height: 28px;">
+      </label>
+      <label id="gml" for="gm"  class="btn btn-default" data-placement="bottom" {{action 'toggleTwoButtons' 'gender' 'male' '#gml' '#gfl'}}>
+        {{radio-button selection=gender value="male" id="gm"}}<img src="//hovee001.s3.amazonaws.com/resources/gender-male.png" style="height: 28px;">
+      </label>
+    </div>
+  </div>
+</div>
+<div class="row schedule-info">
+  <div class="col-sm-3 description">
+    You would prefer to ride with *
+  </div>
+  <div class="col-sm-6">
+    <div class="btn-group radioSelector">
+      <label id="xgfl" for="xgf"  class="btn btn-default" data-placement="bottom" {{action 'toggleGenderPref' 'female' '#xgfl' '#xgml' '#xgel'}}>
+        {{radio-button selection=genderPreference value="female" id="xgf"}}<img src="//hovee001.s3.amazonaws.com/resources/gender-female.png" style="height: 28px;">
+      </label>
+      <label id="xgml" for="xgm"  class="btn btn-default" data-placement="bottom" {{action 'toggleGenderPref' 'male' '#xgml' '#xgfl' '#xgel'}}>
+        {{radio-button selection=genderPreference value="male" id="xgm"}}<img src="//hovee001.s3.amazonaws.com/resources/gender-male.png" style="height: 28px;">
+      </label>
+      <label id="xgel" for="xge"  class="btn btn-default" data-placement="bottom" {{action 'toggleGenderPref' 'either' '#xgel' '#xgfl' '#xgml'}}>
+        {{radio-button selection=genderPreference value="either" id="xem"}}<img src="//hovee001.s3.amazonaws.com/resources/gender-either.png" style="height: 28px;">
+      </label>
+    </div>
+  </div>
+</div>
+<div class="row schedule-info">
+  <div class="col-sm-3 description">
+    Your cell phone *<br>
+    <span class="dim">Hovee will text this number when other riders respond or your schedule changes.</span>
+  </div>
+  <div class="col-sm-2">
+    {{view 'numberinput' class="form-control" name="phone" valueBinding="phoneNumber" maxlength="10"}}
+  </div>
+</div>
+{{#unless onBoardingProcess}}
+<div class="row schedule-info">
+  <div class="col-sm-3 description">
+    What do you like to do?<br>
+    <p class="dim">Help other Members understand what kind of stuff you are into.</p>
+  </div>
+  <div class="col-sm-5">
+    {{view 'restrictedtextarea' value=freeTextPersonal class="form-control" placeholder="3 things you like to do outside of work." id="freeTextPersonal" cols="80" rows="5" maxlength="300"}}
+  </div>
+</div>
+<div class="row schedule-info">
+  <div class="col-sm-2 col-sm-offset-3">
+    <button class="btn btn-lg btn-primary" {{bind-attr disabled=disableDriving}} {{action 'driving'}}>Submit</button>
+  </div>
+</div>
+{{else}}
+  <div class="row schedule-info">
+    <div class="col-sm-3 description" style="margin-top: -10px">
+      Do you have a car you can use for the commute? *
+    </div>
+    <div class="col-sm-6">
+      <div class="btn-group radioSelector">
+        <label id="yl" for="y"  class="btn btn-default" data-placement="bottom" {{action 'toggleTwoButtons' 'hasAnAutomobile' 'true' '#yl' '#nl'}}>
+          {{radio-button selection=hasAnAutomobile value="true" id="y"}}Yes
+        </label>
+        <label id="nl" for="n"  class="btn btn-default" data-placement="bottom" {{action 'toggleTwoButtons' 'hasAnAutomobile' 'false' '#nl' '#yl'}}>
+          {{radio-button selection=hasAnAutomobile value="false" id="n"}}No
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="row schedule-info">
+    <div class="col-sm-2 col-sm-offset-3">
+      <button class="btn btn-lg btn-primary" {{bind-attr disabled=disableDriving}} {{action 'start'}}>Next</button>
+    </div>
+  </div>
+{{/unless}}

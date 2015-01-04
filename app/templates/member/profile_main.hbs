@@ -1,0 +1,172 @@
+{{#unless controllers.login.onDesktop}}
+  {{partial "header-mobile"}}
+  {{#if onBoardingProcess}}
+    <div class="screenHeader">Profile Setup</div>
+  {{/if}}
+{{/unless}}
+
+{{#if controllers.login.onDesktop}}
+  <div class="upperArea" id="breadcrumbsHeader">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-9 col-lg-offset-3 breadcrumbs">
+          <div class="btn-group">
+  {{#unless onBoardingProcess}}
+            <button {{bind-attr class=':btn :btn-primary linkedInState:active'}} {{action 'linkedIn'}}>LinkedIn</button>
+  {{/unless}}
+            <button {{bind-attr class=':btn :btn-primary workState:active' disabled=disableWork}} {{action 'work'}}>Your Work</button>
+            <button {{bind-attr class=':btn :btn-primary aboutState:active' disabled=disableAbout}} {{action 'about'}}>About You</button>
+  {{#unless onBoardingProcess}}
+            <button {{bind-attr class=':btn :btn-primary drivingState:active' disabled=disableDriving}} {{action 'driving'}}>Driving</button>
+  {{/unless}}
+            <button {{bind-attr class=':btn :btn-primary startState:active' disabled=disableStart}} {{action 'start'}}>Where From</button>
+            <button {{bind-attr class=':btn :btn-primary destinationState:active' disabled=disableDestination}} {{action 'destination'}}>Where To</button>
+            <button {{bind-attr class=':btn :btn-primary scheduleState:active' disabled=disableSchedule}} {{action 'schedule'}}>Your Schedule</button>
+            <button {{bind-attr class=':btn :btn-primary idealState:active' disabled=disableIdeal}} {{action 'ideal'}}>Your Interests</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lowerArea">
+    <div class="container onboarding" style="background: white; color: black; border-radius: 5px;">
+  {{#if linkedInState}}
+    {{partial "partials/profile_linkedin"}}
+  {{/if}}
+  {{#if workState}}
+    {{partial "partials/profile_work"}}
+  {{/if}}
+  {{#if aboutState}}
+    {{partial "partials/profile_about"}}
+  {{/if}}
+  {{#if drivingState}}
+    {{partial "partials/profile_driving"}}
+  {{/if}}
+  {{#if startState}}
+    {{partial "partials/profile_start"}}
+  {{/if}}
+  {{#if destinationState}}
+    {{partial "partials/profile_destination"}}
+  {{/if}}
+  {{#if scheduleState}}
+    {{partial "partials/profile_schedule"}}
+  {{/if}}
+  {{#if idealState}}
+    {{partial "partials/profile_ideal"}}
+  {{/if}}
+    </div><!-- /.container -->
+  </div><!-- /.lowerArea -->
+{{else}}
+  <div class="lowerArea calendar">
+    <div class="container onboarding">
+      <div class="panel-group" id="accordion">
+  {{#unless onBoardingProcess}}
+    {{#unless controllers.application.isIOS}}
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+               <a id="aCollapse1" data-parent="#accordion" href="#collapse1" {{bind-attr data-toggle=dataToggle1 style=disable1}}>LinkedIn</a>
+            </h4>
+          </div>
+          <div id="collapse1" class="panel-collapse collapse in">
+            <div class="panel-body">
+              {{partial "partials/mobile_profile_linkedin"}}
+            </div>
+          </div>
+        </div>
+        <div style="height: 5px"> </div>
+    {{/unless}}
+  {{/unless}}
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+               <a id="aCollapse2" data-parent="#accordion" href="#collapse2" {{bind-attr data-toggle=dataToggle2 style=disable2}}>Your Work</a>
+            </h4>
+          </div>
+          <div id="collapse2" class="panel-collapse collapse">
+            <div class="panel-body">
+              {{partial "partials/profile_work"}}
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+               <a id="aCollapse3" data-parent="#accordion" href="#collapse3" {{bind-attr data-toggle=dataToggle3 style=disable3}}>About You</a>
+            </h4>
+          </div>
+          <div id="collapse3" class="panel-collapse collapse">
+            <div class="panel-body">
+              {{partial "partials/mobile_profile_about"}}
+            </div>
+          </div>
+        </div>
+  {{#unless onBoardingProcess}}
+        <div style="height: 5px"> </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+               <a id="aCollapse4" data-parent="#accordion" href="#collapse4" {{bind-attr data-toggle=dataToggle4 style=disable4}}>Driving</a>
+            </h4>
+          </div>
+          <div id="collapse4" class="panel-collapse collapse">
+            <div class="panel-body">
+              {{partial "partials/mobile_profile_driving"}}
+            </div>
+          </div>
+        </div>
+        <div style="height: 5px"> </div>
+  {{/unless}}
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+               <a id="aCollapse5" data-parent="#accordion" href="#collapse5" {{bind-attr data-toggle=dataToggle5 style=disable5}}>Where From</a>
+            </h4>
+          </div>
+          <div id="collapse5" class="panel-collapse collapse">
+            <div class="panel-body">
+              {{partial "partials/profile_start"}}
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+               <a id="aCollapse6" data-parent="#accordion" href="#collapse6" {{bind-attr data-toggle=dataToggle6 style=disable6}}>Where To</a>
+            </h4>
+          </div>
+          <div id="collapse6" class="panel-collapse collapse">
+            <div class="panel-body">
+              {{partial "partials/profile_destination"}}
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+               <a id="aCollapse7" data-parent="#accordion" href="#collapse7" {{bind-attr data-toggle=dataToggle7 style=disable7}}>Your Schedule</a>
+            </h4>
+          </div>
+          <div id="collapse7" class="panel-collapse collapse">
+            <div class="panel-body">
+              {{partial "partials/profile_schedule"}}
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+               <a id="aCollapse8" data-parent="#accordion" href="#collapse8" {{bind-attr data-toggle=dataToggle8 style=disable8}}>Your Interests</a>
+            </h4>
+          </div>
+          <div id="collapse8" class="panel-collapse collapse">
+            <div class="panel-body">
+              {{partial "partials/profile_ideal"}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{{/if}}

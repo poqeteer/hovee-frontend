@@ -1,0 +1,57 @@
+{{#if onDesktop}}
+<div class="upperArea">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12" style="text-align: center;">
+        <h1 style="margin-bottom: 0;">Welcome to <strong>Hovee</strong></h1>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="lowerArea" style="background: ">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+{{else}}
+        <div class="mobile-splash"><img src="/assets/img/mobile-splash.png" alt="Hovee: Love Your Commute" width="216"></div>
+{{/if}}
+
+{{#unless loggedIn}}
+        <form {{action "login" on="submit"}} class="form-signin">
+          {{#if onDesktop}}
+            <h2 class="form-signin-heading">Please sign in</h2>
+          {{/if}}
+          <label class="sr-only" for="username">Username</label>
+          {{input value=username class="form-control" placeholder="you@company.com" type="email"}}
+          <label class="sr-only" for="password">Password</label>
+          {{input value=password class="form-control" placeholder="password" type="password"}}
+          {{input value="Sign in" type="submit" class="btn btn-lg btn-success btn-block"}}
+        </form>
+{{/unless}}
+
+{{#if onDesktop}}
+      </div>
+    </div><!-- /.row -->
+    <div class="row">
+      {{#unless loggedIn}}
+      <div class="col-sm-12" style="text-align: center;">
+        <div class="login-options">
+          <div class="text-left">{{#link-to 'registrants.new'}}Not on Hovee? Sign up!{{/link-to}}</div>
+          <div class="text-right">{{#link-to 'registrants.forgotten'}}Forgot Password?{{/link-to}}</div>
+        </div>
+      </div>
+      {{/unless}}
+    </div>
+  </div><!-- /.container -->
+</div><!-- /.lowerArea -->
+{{else}}
+  {{#unless loggedIn}}
+        <div class="signup">
+          <p class="text-center">or</p>
+          <div class="col-sm-12">
+              <a {{action 'signup'}} class='button'>Sign Up</a>
+          </div>
+          <p class="text-center">{{#link-to 'registrants.forgotten'}}Forgot password?{{/link-to}}</p>
+        </div>
+  {{/unless}}
+{{/if}}

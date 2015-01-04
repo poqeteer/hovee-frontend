@@ -1,0 +1,36 @@
+{{#unless controllers.login.onDesktop}}
+  {{partial "header-mobile"}}
+  <div class="screenHeader">Welcome!</div>
+{{/unless}}
+<div class="upperArea profile">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-9 col-sm-offset-3">
+        <h2>Thank You and Welcome to Hovee</h2>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="lowerArea profile">
+  <div class="container onboarding" style="padding-top: 10px;">
+    <div class="row">
+      <div class="col-sm-9 col-sm-offset-3">
+        <p>Thank you {{firstName}} for completing your Commute Profile.</p>
+        <p>From now on, you can go directly to:</p>
+        <h2 style="color: #5ea4bf; padding-left: 30px;">pilot.hovee.com</h2><br>
+        <p>to logon to Hovee and manage your commutes. Please bookmark this page for easier access.</p>
+        <p>Also, please add <b>support@hovee.com</b> to your contacts or trusted senders list so our emails don't get lost in your spam folder.</p>
+        <p>You are now ready to setup your rides!</p>
+        <p>We'll show you some fellow commuters that share your route, and might make excellent carpool partners. Take your time, take a look at their profiles, and if they seem like your kind of people, tap their name and propose a ride.</p>
+        <br>
+        <p>Enjoy Hovee!</p>
+      </div><!-- /.col-sm-9 -->
+    </div><!-- /.row -->
+    <div class="row">
+      <div class="col-sm-9 col-sm-offset-3">
+        {{#link-to 'member.rides' class="btn btn-success btn-lg"}}<i class="fa fa-users"></i>&nbsp;  Find Rides{{/link-to}}
+        <br><br>
+      </div><!-- /.col-sm-9 -->
+    </div><!-- /.row -->
+  </div><!-- /.container -->
+</div><!-- /.lowerArea -->

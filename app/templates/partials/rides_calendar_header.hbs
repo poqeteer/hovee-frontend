@@ -1,0 +1,14 @@
+{{#if controllers.login.onDesktop}}
+  <div class="restrict" style="height: 10px; width: 100%; background: white;"></div>
+{{/if}}
+<table class="weekday-table-header">
+  <thead>
+  <th {{bind-attr class=":weekday-header :weekend-day sundaySelected:selected-day"}}>SUN</th>
+  <th {{bind-attr class=":weekday-header mondaySelected:selected-day"}}>MON</th>
+  <th {{bind-attr class=":weekday-header tuesdaySelected:selected-day"}}>TUE</th>
+  <th {{bind-attr class=":weekday-header wednesdaySelected:selected-day"}}>WED</th>
+  <th {{bind-attr class=":weekday-header thursdaySelected:selected-day"}}>THU</th>
+  <th {{bind-attr class=":weekday-header fridaySelected:selected-day"}}>FRI</th>
+  <th {{bind-attr class=":weekday-header :weekend-day saturdaySelected:selected-day"}}>SAT</th>
+  </thead>
+</table>

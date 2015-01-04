@@ -1,0 +1,58 @@
+<div class="lowerArea" style="border: 0;">
+  <div class="container" style="background: white; padding-top: 5px; padding-left: 40px; border-radius: 5px;">
+    <div class="row">
+      <div class="col-sm-7 pull-left">
+        {{partial "partials/my_commute_sched_time"}}
+      </div>
+      <div class="col-sm-6 pull-left" style="display: table-cell; vertical-align: middle; padding: 10px; width: 40%">
+          <div class="row">
+            <div class="pull-left" style="padding: 10px 15px 0 24px;">
+              {{#link-to 'member.profile_main' 'start'}}<i class="fa fa-home fa-4x"></i>{{/link-to}}
+            </div>
+            <div class="member-home pull-left" style="font-size: 1.1em;">
+              <b>{{homeLocation.name}}</b><br>
+              {{#unless isPreview}}
+                {{homeLocation.homeAddress.address1}}<br>
+                {{homeLocation.homeAddress.city}}<br>
+                {{homeLocation.homeAddress.state}} {{homeLocation.homeAddress.zip}}
+              {{else}}
+                {{homeLocation.homeAddress.street}}<br>
+                {{homeLocation.homeAddress.city}}
+              {{/unless}}
+            </div>
+            <div class="pull-right" style="padding-right: 20px;">
+              {{#link-to 'member.profile_main' 'start' class='btn btn-default'}}<i class="fa fa-home"> Edit</i>{{/link-to}}
+            </div>
+          </div>
+          <p></p>
+          <div class="row">
+            <div class="pull-left" style="padding: 10px 20px 10px 27px;">
+              {{#link-to 'member.profile_main' 'destination'}}<i class="fa fa-building-o fa-4x"></i>{{/link-to}}
+            </div>
+            <div class="member-work pull-left" style="font-size: 1.1em;">
+              <b>{{workLocation.name}}</b><br>
+              {{#unless isPreview}}
+                {{workLocation.workAddress.address1}}<br>
+                {{workLocation.workAddress.city}}<br>
+                {{workLocation.workAddress.state}} {{workLocation.workAddress.zip}}
+              {{else}}
+                {{workLocation.workAddress.street}}<br>
+                {{workLocation.workAddress.city}}
+              {{/unless}}
+            </div>
+            <div class="pull-right" style="padding-right: 20px;">
+              {{#link-to 'member.profile_main' 'destination' class='btn btn-default'}}<i class="fa fa-building-o">&nbsp; Edit</i>{{/link-to}}
+            </div>
+          </div>
+      </div>
+    </div>
+    <p></p>
+    <div class="row" {{bind-attr style=mapStyle}}>
+      <div style="width: 100%; height: 100%;">
+        {{#view 'mapdirections' from=from to=to icons=icons disableControls=disableOptions layers=layers weatherZips=weatherZips weatherInfo=weatherInfo controller=here}}{{/view}}
+      </div>
+    </div>
+    <p></p>
+    <span style="font-size: .75em; font-weight: 500; color: silver">Last Traffic Update at {{trafficTime}} :: Last Weather Updated at {{weatherTime}}</span>
+  </div><!-- /.container -->
+</div><!-- /.lowerArea -->

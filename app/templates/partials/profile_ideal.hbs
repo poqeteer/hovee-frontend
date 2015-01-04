@@ -1,0 +1,42 @@
+{{#if controllers.login.onDesktop}}
+  <div class="row schedule-info">
+    <div class="col-sm-9 col-sm-offset-3">
+      <h2>Your Interests</h2>
+    </div>
+  </div>
+{{/if}}
+<div class="row schedule-info">
+  <div class="col-sm-3 description">
+    What do you <i>most</i> like to do during the drive?
+  </div>
+  <div class="col-sm-5">
+      {{#each pref in listeningPrefSettings}}
+          {{#each sub in pref}}
+            {{#if sub.display}}
+                {{toggle-button label=sub.option value=sub.isSet style='margin-bottom: 2px;'}}
+            {{else}}
+            {{/if}}
+          {{/each}}
+      {{/each}}
+  </div>
+</div>
+<div class="row schedule-info">
+  <div class="col-sm-3 description">
+    What do you like to listen to?
+  </div>
+  <div class="col-sm-5">
+      {{#each pref in musicPrefSettings}}
+          {{#each sub in pref}}
+            {{#if sub.display}}
+                {{toggle-button isDesktop=controllers.login.onDesktop label=sub.option value=sub.isSet style='margin-bottom: 2px;'}}
+            {{/if}}
+          {{/each}}
+      {{/each}}
+  </div>
+</div>
+
+<div class="row schedule-info">
+  <div class="col-sm-2 col-sm-offset-3">
+    <button class="btn btn-lg btn-primary" {{action 'saveIdeal'}}>{{#if onBoardingProcess}}Next{{else}}Submit{{/if}}</button>
+  </div>
+</div>

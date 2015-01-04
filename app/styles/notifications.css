@@ -1,0 +1,123 @@
+/* user's notifications styling */
+.notifications {
+    color: black;
+}
+
+/* customization of bootstrap's setup*/
+.notifications-badge {
+    display: inline-block;
+    min-width: 10px;
+    padding: 3px 7px;
+    font: bold 12px/1em "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    border-radius: 10px;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.29);
+    background-color: red;
+    vertical-align:super;
+}
+
+.notifications .unread-border {
+    border: 1px #a0a0a0 solid;
+}
+
+.notifications .read-border {
+    border: 1px #cccccc solid;
+}
+
+.notifications .message-col {
+    padding-left: 10px;
+    width: 80%;
+    vertical-align: text-top;
+}
+
+.notifications .message-col .message-body {
+    width: 100%;
+    height: 98px;
+    position: relative;
+}
+
+.notifications .message-col .message-footer {
+    position:absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.notifications .info-col {
+    width: 15%;
+    vertical-align: text-top;
+    text-align: right;
+}
+
+.notifications .message-mobile-col {
+    padding-left: 10px;
+    width: 100%;
+    vertical-align: text-top;
+}
+
+.notifications .info-mobile-col {
+    vertical-align: text-top;
+    text-align: right;
+}
+
+.notifications .spacer-row {
+    height: 5px;
+}
+
+.notifications .pad-top {
+    padding-top: 5px;
+}
+
+.notifications .desktop-sz-img {
+    width: 98px;
+    height: 98px;
+}
+
+.notifications .mobile-sz-img {
+    width: 60px;
+    height: 60px;
+}
+
+@media only screen and (max-width : 640px) {
+    .truncate {
+        width: 425px;
+        overflow: scroll;
+    }
+}
+@media only screen and (max-width : 570px) {
+    .truncate {
+        width: 400px;
+        overflow: scroll;
+    }
+}
+@media only screen and (max-width : 540px) {
+    .truncate {
+        width: 360px;
+        overflow: scroll;
+    }
+}
+@media only screen and (max-width : 480px) {
+    .truncate {
+        width: 300px;
+        overflow: scroll;
+    }
+}
+@media only screen and (max-width : 415px) {
+    .truncate {
+        width: 250px;
+        overflow: scroll;
+    }
+}
+@media only screen and (max-width : 385px) {
+    .truncate {
+        width: 200px;
+        overflow: scroll;
+    }
+}
+@media only screen and (max-width : 320px) {
+    .truncate {
+        width: 150px;
+        overflow: scroll;
+    }
+}

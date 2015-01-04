@@ -1,0 +1,6 @@
+{{#if isLabel}}
+  <label id="taglineInput" {{action 'labelClick'}}>{{tabline.text}}</label>
+{{else}}
+  {{view "helpfulinput" value=tagLineText class="form-control" placeholder="Enter your tag line here" id="tagline" hintText="Say something about yourself..."}}
+  <button {{action 'saveTag'}}>save</button>
+{{/if}}

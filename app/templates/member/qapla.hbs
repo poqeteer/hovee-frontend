@@ -1,0 +1,102 @@
+{{#unless controllers.login.onDesktop}}
+  {{partial "header-mobile"}}
+{{!--
+  <div class="screenHeader">
+    <button class="btn btn-default header-btn-disabled" disabled><i class="fa fa-calendar"></i> Calendar</button>
+    {{#link-to 'member.rides' class="btn btn-default header-btn-enabled"}}Riders <i class="fa fa-plus-circle"></i>{{/link-to}}
+  </div>
+--}}
+{{/unless}}
+<div class="lowerArea">
+  <div class="container"  {{bind-attr style=pageStyle}}>
+    {{#unless qapla}}
+      <div class="row">
+        <br>
+        <p>Hello {{controllers.member.firstName}},</p>
+      </div>
+      {{#unless switchOnQuestions}}
+        <div class="row">
+            <div class="pull-left col-sm-5" style="padding-right: 20px;">
+              <div>
+                <p>
+                  Are you available to give {{partner.firstName}} a ride to the office {{timeFrame}}?
+                </p>
+                <p>
+                  Pickup would be at <b><i>{{passengerHomePickupTime}}</i></b>, getting you to work around <b><i>{{driverWorkDestTime}}</i></b>.
+                </p>
+              </div>
+              <div>
+                <p>
+                  Driving with {{partner.firstName}}, you could share the gas and parking costs, and take advantage of
+                  the carpool lane. You would also earn one of 3 drive credits you need for the Monthly $50 “Driver
+                  Thank You” promo.
+                </p>
+                {{#unless controllers.login.onDesktop}}
+                  {{partial 'partials/qapla_table'}}
+                {{/unless}}
+                <p>
+                  You'll then pick up {{partner.firstName}} at <b><i>{{passengerWorkPickupTime}}</i></b> to return home.
+                </p>
+                <p>
+                  <b><i>{{matchTwo.dayOfTheWeekPickup}}, {{matchTwo.formattedMonthPickup}}
+                    {{matchTwo.datePart}}<sup>{{matchTwo.datePartSuffix}}</sup></i></b>
+                  works for both your schedules.
+                </p>
+              </div>
+
+            </div>
+            <div class="pull-left col-sm-5">
+              <div>
+                {{#if controllers.login.onDesktop}}
+                  {{partial 'partials/qapla_table'}}
+                {{/if}}
+              </div>
+            </div>
+        </div>
+        <br>
+        <div class="row" {{bind-attr style=buttonRowStyle}}>
+          {{#if disableTry}}
+            <p>Sorry but this trip is in the past. Please choose the <b>{{newButtonText}}</b> button if you
+              would still like to go on a different day.</p>
+          {{/if}}
+          {{#if controllers.login.onDesktop}}
+            <button class="btn btn-success btn-lg" {{action 'makeProposal'}} style="min-width: 175px;" {{bind-attr disabled='disableTry'}}>{{yesButtonText}}</button> &nbsp;<span style="font-size: 18px; color: grey;">{{yesButtonLabel}}</span></p>
+            <button class="btn btn-default btn-lg" {{action 'new'}} style="min-width: 175px;">{{newButtonText}}</button>  &nbsp;<span style="font-size: 18px; color: grey;">{{newButtonLabel}}</span></p>
+            <button class="btn btn-default btn-lg" {{action 'spinMe'}} style="width: 175px;">Spin Again</button> &nbsp;<span style="font-size: 18px; color: grey;">{{spinButtonLabel}}</span></p>
+          {{else}}
+            <button {{bind-attr class=":btn :btn-success bigBtn:btn-lg"}} {{action 'makeProposal'}}>{{yesButtonText}}</button>
+            <button {{bind-attr class=":btn :btn-default bigBtn:btn-lg"}} {{action 'new'}}>{{newButtonText}}</button>
+            <button {{bind-attr class=":btn :btn-default bigBtn:btn-lg"}} {{action 'spinMe'}}>Spin Again</button>
+          {{/if}}
+        </div>
+      {{else}} <!-- unless switchOnQuestions -->
+        <div class="row">
+          Sorry to hear you were unavailable to ride with <b><i>{{partner.firstName}}</i></b> on the <b><i>{{matchTwo.datePart}}<sup>{{matchTwo.datePartSuffix}}</sup></i></b>.
+        </div>
+        <div class="row schedule-info">
+          <div class="col-sm-3 description">
+            <p>Please help us improve your experience by giving us your thoughts on why this wasn't a good match for you</p>
+          </div>
+          <div class="col-sm-5">
+            {{view 'restrictedtextarea' value=thoughts class="form-control" placeholder="Please enter your thoughts here" id="thoughts" cols="80" rows="5" maxlength="300"}}
+            <br>
+            <button class="btn btn-success btn-lg" {{action 'words'}}>Submit</button>
+            <button class="btn btn-default btn-lg" {{action 'cancel'}}>Cancel</button>
+          </div>
+        </div>
+      {{/unless}} <!-- unless switchOnQuestions -->
+    {{else}} <!-- unless qapla -->
+      <div class="row">
+        <br>
+        <p>Great! We have sent <b><i>{{partner.firstName}}</i></b> an invitation for <b><i>{{matchTwo.dayOfTheWeekPickup}}, {{matchTwo.formattedMonthPickup}} {{matchTwo.datePart}}<sup>{{matchTwo.datePartSuffix}}</sup></i></b> at <b><i>{{passengerHomePickupTime}}</i></b> with the return trip starting at <b><i>{{passengerWorkPickupTime}}</i></b> </p>
+      </div>
+      <br>
+      <div class="row">
+        {{#link-to 'member.trip_proposal' partner.id  tripId 0}}<span class="btn btn-default btn-lg">{{tripDetailButton}}</span>{{/link-to}}
+      </div>
+    {{/unless}} <!-- unless qapla -->
+    <br>
+  </div>
+</div>
+
+

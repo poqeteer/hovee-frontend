@@ -1,0 +1,78 @@
+{{#if controllers.login.onDesktop}}
+  <div class="row schedule-info">
+    <div class="col-sm-9 col-sm-offset-3">
+      <h2>Where From</h2>
+    </div>
+  </div>
+{{/if}}
+{{#unless editStartLocation}}
+
+  <div class="row schedule-info">
+    <div class="col-sm-3 description">
+      Choose an Address *
+    </div>
+    <div class="col-sm-4" style="font-size: 1.1em;">
+      {{view Ember.Select viewName="select"
+        contentBinding="homeLocations"
+        optionLabelPath="content.nameAndAddress"
+        optionValuePath="content"
+        prompt="Choose a location"
+        selectionBinding="homeLocation"
+        class="form-control"
+      }}
+    </div>
+  </div>
+  <div class="row schedule-info">
+    <div class="col-sm-3 description">
+      Or
+    </div>
+    <div class="col-sm-2">
+      <button class="btn btn-mini btn-primary" {{action 'addNewHomeLocation'}}>Add a new address</button>
+    </div>
+  </div>
+{{/unless}}
+
+{{#if editStartLocation}}
+  <div class="row schedule-info"> 
+    <div class="col-sm-3 description">
+      Starting point address *<br>
+      <span class="dim">We will keep your address private, and only show it to people in your carpool after you’ve agreed to share a ride with them.</span>
+    </div>
+    <div class="col-sm-5">
+      {{view "googleautocompleteview" class="form-control" placeholder="Enter street, city, state, country" location=startLocation value=startAddress}}
+      <span class="dim">Please select an address from the list of matches. </span>
+    </div>
+  </div>
+  <div class="row schedule-info"> 
+    <div class="col-sm-3 description">
+      Area or neighborhood is in
+    </div>
+    <div class="col-sm-3">
+      {{input value=neighborhood class="form-control" disabled=true id="neighborhood"}}
+    </div>
+  </div>
+
+  <div class="row schedule-info"> 
+    <div class="col-sm-3 description">
+      Give this address a nickname *<br>
+    <span class="dim">Like “home” or “gym”</span>
+    </div>
+    <div class="col-sm-3">
+      {{view 'restrictedinput' value=startLocationNickName class="form-control" placeholder="'Home', 'Coffeeshop', etc..." id="startLocationNickname" maxlength="50"}}
+    </div>
+  </div>
+  <div class="row schedule-info"> 
+    <div class="col-sm-4 col-sm-offset-3">
+      <button class="btn btn-lg btn-primary" {{bind-attr disabled=cannotSaveAddress}} {{action 'saveStart'}}>{{#if onBoardingProcess}}Next{{else}}Save{{/if}}</button>
+      {{#unless onBoardingProcess}}
+        <button class="btn btn-lg" {{action 'cancelSaveStart'}}>Cancel</button>
+      {{/unless}}
+    </div>
+  </div>
+{{else}}
+  <div class="row schedule-info"> 
+    <div class="col-sm-2 col-sm-offset-3">
+      <button class="btn btn-lg btn-primary" {{bind-attr disabled=disableDestination}} {{action 'destination'}}>{{#if onBoardingProcess}}Next{{else}}Submit{{/if}}</button>
+    </div>
+  </div>
+{{/if}}

@@ -1,0 +1,119 @@
+{{#unless linkedInState}}
+{{#if 'firstPage'}}
+  <div class="row schedule-info">
+    <div class="col-sm-6 col-sm-offset-3">
+      <p>The Real You - Profile Info from LinkedIn</p>
+      <p>We ask all members have a photo of themselves so others can know who&rsquo;s getting in their car.  And LinkedIn is the perfect place - it&rsquo;s a public profile everyone can see, and verify.</p>
+      <div class="linkedin-card">
+        <img width="88" height="88" class="avatar">
+        <div class="meta">
+          <span class="name">Your Name</span><br>
+          <span class="title">Your LinkedIn Headline</span><br>
+          <div class="label label-success hidden">Connected with LinkedIn</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row schedule-info">
+    <div class="col-sm-9 col-sm-offset-3">
+      {{#view "linkedinsignin"}}
+        <script type="IN/Login" data-size="large"></script>
+
+        {{#if isLinkedIn}}
+          <span class="text-muted">If the user listed above isn't you, <a {{action 'nope'}} style="cursor:pointer;">switch LinkedIn accounts.</a></span>
+        {{/if}}
+
+        <div class="panel panel-danger duplicate" style="width:50%;">
+          <div class="panel-heading">
+            <h3 class="panel-title">Account Already Connected</h3>
+          </div>
+          <div class="panel-body">
+            It looks like this LinkedIn account is already connected to an existing Hovee account.  Please try connecting with a different LinkedIn account, or log in to the Hovee account that's connected to this LinkedIn account.<br>
+            <br>
+            <a {{action 'nope'}} style="cursor:pointer;">Switch LinkedIn accounts</a>
+          </div>
+        </div>
+      {{/view}}
+
+    </div>
+  </div>
+  {{#unless isLinkedIn}}
+    <div class="row schedule-info">
+      <div class="col-sm-5 col-sm-offset-3">
+        <div class="dim" style="margin-top:10px;"><small>Note: If you don't see a 'sign in with LinkedIn' button above, it may be due to ad blocking software.  If so, please disable ad blocking temporarily and then reload this page.</small></div>
+      </div>
+    </div>
+  {{/unless}}
+  <div class="row no-account">
+    <div class="col-sm-9 col-sm-offset-3">
+      Don't have a <span class="btn-link" {{action 'noLinkedIn'}}>LinkedIn account?</span>
+    </div>
+  </div>
+  <div class="row schedule-info">
+    <div class="col-sm-9 col-sm-offset-3">
+      {{#if isLinkedIn}}
+      {{!-- <button class="btn btn-primary" {{action 'saveLinkedIn'}}> Next</button> --}}
+        <button class="btn btn-lg btn-primary" {{action 'work'}}>{{#if onBoardingProcess}}Next{{else}}Submit{{/if}}</button>
+      {{else}}
+        <button class="btn btn-lg btn-primary" disabled='true'>{{#if onBoardingProcess}}Next{{else}}Submit{{/if}}</button>
+      {{/if}}
+    </div>
+  </div>
+{{else}}
+  <div class="row schedule-info">
+    <div class="col-sm-6 col-sm-offset-3">
+      Now is the perfect time to create one!<br>
+      <br>
+      Hovee accounts are connected to LinkedIn so Hovee members can verify who they’re riding with.<br>
+      <br>
+      Go to <a href="https://www.linkedin.com/" target="_blank">linkedin.com</a> to create your LinkedIn account, then return to Hovee to fill out your profile.
+    </div>
+  </div>
+  <div class="row schedule-info">
+    <div class="col-sm-9 col-sm-offset-3">
+      <span class="btn btn-lg btn-primary" {{action 'noLinkedIn'}}>Back</span>
+    </div>
+  </div>
+{{/if}}
+{{else}}{{!-- \unless linkedInState --}}
+  <div class="row schedule-info">
+    <div class="col-sm-9 col-sm-offset-3">
+
+      {{#view "linkedinphotoupdate" fName=fName lName=lName}}
+      Update your Hovee Photo from your LinkedIn Profile:<br>
+      <br>
+
+      <div class="row" style="padding-left: 15px;">
+        <div class="pull-left" style="margin-right: 40px;">
+          <span class="dim">LinkedIn photo</span><br>
+          <script type="IN/Login" data-size="large"><img src="//hovee001.s3.amazonaws.com/profile_images/default.jpg" class="linkedInPic" style="margin-bottom:8px;" width="118" height="118">
+        </script>
+        </div>
+
+        <div class="pull-left">
+          <span class="dim">Hovee photo</span><br>
+          {{#if content.profilePhotoUrl}}
+            <img {{bind-attr src='content.profilePhotoUrl'}} class="profilePic hoveePic" width="118" height="118">
+          {{else}}
+            <img src="//hovee001.s3.amazonaws.com/profile_images/default.jpg" class="profilePic hoveePic" width="118" height="118">
+          {{/if}}
+          <br>
+        </div>
+      </div>
+
+      <div class="onlyWhenConnected">
+        <div class="noPhoto">
+          <h3>Don't be a stranger!</h3>
+          <a href="http://linkedin.com" target="_blank">Visit Linkedin.com</a> to upload a photo.<br>
+          Then, refresh this page and click 'Use This'.
+        </div>
+        <a href="javascript:void(0)" class="btn btn-success useImage" style="min-width: 108px;">Use This</a><br>
+        <br><span style="font-size: 0.9em"><span class="dim">Signed in to LinkedIn as <b>{{fName}} {{lName}}</b></span>
+        <br><a href="javascript:void(0);" style="cursor:pointer;" onClick="window.IN.User.logout();">Switch LinkedIn accounts</a></span>
+      </div>
+
+      {{/view}}{{!-- /linkedinphotoupdate --}}
+
+    </div>
+  </div>
+{{/unless}}

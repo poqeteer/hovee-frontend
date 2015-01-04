@@ -1,0 +1,24 @@
+{{partial 'partials/rides_calendar_header'}}
+<table {{bind-attr class="controllers.login.onDesktop:rides :weekday-cells-borderless"}} style="border: 0; width: 100%;">
+  <tr>
+    {{#each day in selectedWeek}}
+      <td {{bind-attr class="day.selectedCell::not-selected-cell day.before:before-today day.selectedCell:selected-cell"}}>
+        <div {{action 'selectDate' day.timestamp day.before selectedWeek day}}>
+          {{#if day.month}}
+            {{view 'ridescalendarmonthcellview' statusCode=day.statusCode month=day.month date=day.date}}
+          {{else}}
+            {{#if day.selectedCell}}
+              {{view 'ridescalendarmonthcellview' statusCode=day.statusCode month=day.selectMonth date=day.date}}
+            {{else}}
+              <div class="cell-container">
+                {{day.date}}
+                <div class="inner-triangle status-triangle{{unbound day.statusCode}}"></div>
+                <div class="outer-triangle outer-status-triangle{{unbound day.statusCode}}"></div>
+              </div>
+            {{/if}}
+          {{/if}}
+        </div>
+      </td>
+    {{/each}}
+  </tr>
+</table>

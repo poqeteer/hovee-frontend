@@ -1,0 +1,55 @@
+<div class="upperArea">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12"><h1>Account Management</h1></div>
+    </div>
+  </div>
+</div>
+<div class="lowerArea">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <h3>Change your password for: {{email}}</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <form {{action "save" on="submit"}} class="form-inline">
+          <div class="row">
+            <div class="col-sm-3 description">
+              Current Password*
+            </div>
+            <div class="col-sm-3">
+              {{input type="password" id="account-old-password" valueBinding="oldPassword" class="form-control" placeholder="Enter current password here"}}
+            </div>
+          </div>
+          
+
+          <br><br>
+
+          {{partial 'partials/password_input'}}
+
+          <br><br>
+
+          <div class="row">
+            <div class="col-sm-3 description">
+
+            </div>
+            <div class="col-sm-3">
+              {{input type="submit" id="profileSubmit" class="btn btn-lg btn-success" disabled=needsRequirements value="Submit"}}
+              {{#link-to 'member.profile' class="btn btn-lg btn-default"}}Cancel{{/link-to}}
+            </div>
+          </div>
+
+          <div {{bind-attr class=":form-group hasError"}}>
+            {{#if hasError}}
+              <span class="help-block">
+                {{errorMessage}}
+              </span>
+            {{/if}}
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

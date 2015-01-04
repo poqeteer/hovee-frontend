@@ -1,0 +1,61 @@
+<div class="modal fade" id="tosModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        {{partial 'partials/terms_and_conditions'}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="ppModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        {{partial 'partials/privacy_policy'}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="faqModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        {{partial 'partials/faq'}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="mainFooter"> <!-- group -->
+  <div class="container">
+    <div class="row footer">
+      <div class="col-sm-3">
+        &copy; Hovee, Inc
+      </div>
+      <div class="col-sm-9 text-right">
+        {{#if 'controllers.login.showFooter'}}
+          <a href="javascript:void(0);" data-toggle="modal" data-target="#tosModal">Terms of Service</a>
+          <a href="javascript:void(0);" data-toggle="modal" data-target="#ppModal">Privacy Policy</a>
+          <a href="javascript:void(0);" data-toggle="modal" data-target="#faqModal">FAQ</a>
+          {{!-- <a class="nonblock" href="#/faq" target="_blank">FAQ</a> --}}
+          <!--
+            <a class="nonblock" href="#">About Hovee</a>
+            <a class="nonblock" href="#">Work With Us</a>
+          -->
+        {{/if}}
+        {{!-- <a class="nonblock" href="#/member_support" target="_blank">Member Support</a> --}}
+      </div>
+    </div>
+  </div>
+</div>

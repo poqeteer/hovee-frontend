@@ -1,0 +1,107 @@
+<div class="restrict row" style="padding-left: 5px; padding-bottom: 10px; color: black;">
+  <div class="pull-left" style="width: 90px;">
+    <!-- profile photo -->
+      <div style="cursor: pointer;" {{action 'viewProfile' recommendation.member.id tripMode selectedDate}}>
+        {{#if recommendation.member.profilePhotoUrl}}
+          <img {{bind-attr src='recommendation.member.profilePhotoUrl'}} onerror="this.onerror=null;this.src='//hovee001.s3.amazonaws.com/profile_images/default.jpg';"  class="headshot" width="90" title="View profile">
+        {{else}}
+          <img src="//hovee001.s3.amazonaws.com/profile_images/default.jpg" class="headshot" width="90" title="View profile">
+        {{/if}}
+      </div>
+    <div style="height: 5px"></div>
+    <span class="btn btn-default" style="width: 100%" {{action 'doInvite' recommendation.member.id tripMode selectedDate}}>
+      Plan Ride
+    </span>
+    <div style="height: 3px;"></div>
+    <span class="btn btn-default" style="width: 100%" {{action 'showRoute' recommendation.member 0}}>
+      View Map
+    </span>
+    {{#if isDriveMode}}
+      <div class="value card-address" style="font-size:1em;font-weight:500; text-align: center; padding-top: 5px;">
+        {{#unless recommendation.recDefaults.deflectMiles}}
+          < 1 mile
+        {{else}}
+          {{recommendation.recDefaults.deflectMiles}}
+          <span style="font-size: 1em; font-weight: 500; color: #6b6b6b;">mile{{recommendation.recDefaults.deflectMilesNounSuffix}}</span>
+        {{/unless}}
+        <br>
+        <span style="font-size: .7em; color: #6b6b6b;">out of your way</span>
+      </div>
+    {{/if}}
+  </div>
+  <div {{bind-attr class=":pull-left :card-address controllers.login.onDesktop:desktop-spacing controllers.login.onDesktop::mobile-spacing"}}>
+    {{#if recommendation.special}}
+      <div class="status-message{{unbound recommendation.statusCode}}" style="text-transform: uppercase;">{{recommendation.message}}</div>
+    {{/if}}
+    <div class="title-truncate" style="padding: 2px 0 10px">
+      <div style="padding:5px 0; font-size: 1.5em;">
+        {{#if controllers.login.onDesktop}}
+            <a style="cursor: pointer;" {{action 'viewProfile' recommendation.member.id tripMode selectedDate}}>
+              {{recommendation.member.fullName}}
+            </a>
+        {{else}}
+            {{recommendation.member.fullName}}
+        {{/if}}
+      </div><br>
+      {{recommendation.member.jobHeadline}}<br>
+      {{recommendation.member.company.name}}
+    </div>
+    <div>
+      <table>
+        <tr>
+          <td style="width: 45px; text-align: center;">
+            <div class="pull-left icon-circle-match icon-circle-status{{unbound recommendation.statusCode}}">
+            <span style="color: white; line-height: 1.3em; font-size: 2.2em;">
+              <i class="fa fa-home"></i>
+            </span>
+            </div>
+          </td>
+          <td>
+            <div class="pull-left card-truncate">
+              {{recommendation.member.homeLocation.homeAddress.street}}<br>
+              {{recommendation.member.homeLocation.homeAddress.city}}<br>
+              <span class="status-message{{unbound recommendation.statusCode}}"><i class="fa fa-share"></i> {{recommendation.homeDepartureTime}}</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="status-message{{unbound recommendation.statusCode}}" style="text-align: center; width: 40px; font-size: 1.3em;">
+            {{#if recommendation.special}}
+              <i {{bind-attr class=":fa recommendation.roundTrip:fa-arrows-v recommendation.workTrip:fa-long-arrow-down recommendation.homeTrip:fa-long-arrow-up"}} style="font-weight: 900;"></i>
+            {{else}}
+              <i {{bind-attr class=":fa roundTrip:fa-arrows-v workTrip:fa-long-arrow-down homeTrip:fa-long-arrow-up"}} style="font-weight: 900;"></i>
+            {{/if}}
+          </div></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td style="width: 45px; text-align: center;">
+            <div class="pull-left icon-circle-match icon-circle-status{{unbound recommendation.statusCode}}">
+              <span style="color: white; line-height: 1.9em; font-size: 1.6em; padding-left: 1px;">
+                <i class="fa fa-briefcase"></i>
+              </span>
+            </div>
+          </td>
+          <td>
+            <div class="pull-left card-truncate">
+              {{recommendation.member.workLocation.name}}<br>
+              {{recommendation.member.workLocation.workAddress.city}}<br>
+              <span class="status-message{{unbound recommendation.statusCode}}"><i class="fa fa-share"></i> {{recommendation.workDepartureTime}}</span>
+            </div>
+          </td>
+        </tr>
+{{!--
+        <tr>
+          <td></td>
+          <td style="color: darkblue;padding-top: 7px;">
+            <a class="map" {{action 'showRoute' recommendation.member 0}}>
+              <i class="fa fa-map-marker"></i> Map the Ride
+            </a>
+          </td>
+        </tr>
+--}}
+      </table>
+    </div>
+  </div>
+</div>
+<div class="restrict horz-border" style="height: 15px;"></div>

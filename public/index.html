@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Hovee</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="apple-mobile-web-app-capable" content="no">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-itunes-app" content="app-id=845500691">
+  <link rel="icon" type="image/x-icon" href="//hovee001.s3.amazonaws.com/resources/favicon.ico">
+  <link rel="shortcut icon" type="image/icon" href="//hovee001.s3.amazonaws.com/resources/favicon.ico">
+  <link rel="apple-touch-icon" href="/assets/img/ios-bookmark-icon.png">
+  <!-- for more details visit: https://github.com/yeoman/grunt-usemin -->
+
+
+  <!-- need the following for the bootstrap-timepicker -->
+  <link href="/vendor/pickadate/lib/themes/classic.css" rel="stylesheet" style="">
+  <link href="/vendor/pickadate/lib/themes/classic.time.css" rel="stylesheet" style="">
+  <link href="/vendor/pickadate/lib/themes/classic.date.css" rel="stylesheet" style="">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css" rel="stylesheet" style="">
+  <!--[if IE 7]>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome-ie7.min.css">
+  <![endif]-->
+
+  <!--[if !IE]> -->
+    <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,900,300italic,400italic,700italic|Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
+  <!-- <![endif]-->
+  <!--[if lte IE 10]>
+    <link href='//fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:400' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:700' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:300italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:400italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:900italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:400' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:600' rel='stylesheet' type='text/css'>
+  <![endif]-->
+
+  <link rel="stylesheet" href="/assets/app.css">
+  <link rel="stylesheet" href="/vendor/nouislider/jquery.nouislider.css">
+
+
+
+  <!--HTML Widget code-->
+
+  <style>
+    .icon-block:before, .icon-block {
+      display: block;
+    }
+  </style>
+
+  <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?client=gme-hoveeinc&sensor=false&libraries=places"></script>
+
+  <!-- build:js(.) /assets/vendor.min.js -->
+  <script src="/vendor/jquery/dist/jquery.js"></script>
+  <script src="/vendor/pickadate/lib/picker.js"></script>
+  <script src="/vendor/pickadate/lib/picker.date.js"></script>
+  <script src="/vendor/pickadate/lib/picker.time.js"></script>
+  <script src="/vendor/jquery.maskedinput/jquery.maskedinput.js"></script>
+  <script src="/vendor/handlebars/handlebars.js"></script>
+  <script src="/vendor/spinjs/spin.js"></script>
+  <script src="/vendor/ember/ember.js"></script>
+  <script src="/vendor/ember-data-shim/ember-data.js"></script>
+  <script src="/vendor/bootstrap/js/affix.js"></script>
+  <script src="/vendor/bootstrap/js/modal.js"></script>
+  <script src="/vendor/bootstrap/js/button.js"></script>
+  <script src="/vendor/bootstrap/js/tooltip.js"></script>
+  <script src="/vendor/bootstrap/js/popover.js"></script>
+  <script src="/vendor/bootstrap/js/collapse.js"></script>
+  <script src="/vendor/timezone-js/src/date.js"></script>
+  <script src="/vendor/almond.js"></script>
+  <script src="/vendor/resolver.js"></script>
+  <script src="/vendor/jquery-hoverIntent/jquery.hoverIntent.js"></script>
+  <script src="/vendor/nouislider/jquery.nouislider.js"></script>
+  <script src="/vendor/cldr/plurals.js"></script>
+  <script src="/vendor/ember-i18n/lib/i18n.js"></script>
+  <!-- endbuild -->
+
+  <script src="/assets/languages/i18n.js"></script>
+
+  <!-- build:js(tmp/public) /assets/app.min.js -->
+  <script src="/assets/app.js"></script>
+  <script src="/assets/templates.js"></script>
+  <!-- endbuild -->
+
+  <script>(function(e,t,n,r,i,s,o){e["GoogleAnalyticsObject"]=i;e[i]=e[i]||function(){(e[i].q=e[i].q||[]).push(arguments)},e[i].l=1*new Date;s=t.createElement(n),o=t.getElementsByTagName(n)[0];s.async=1;s.src=r;o.parentNode.insertBefore(s,o)})(window,document,"script","//www.google-analytics.com/analytics.js","ga");ga("create","UA-50768915-1","hovee.com");ga("send","pageview");</script>
+</head>
+<body>
+  <script>
+    window.App = require('appkit/app').create();
+  </script>
+  <script type="application/javascript">
+    // The following functions are used to make a global call to the application controller. It sends the components id.
+    // See the code in the ride_match_mixin_controller which does a simple "onclick" event to call sendAlert. This
+    // in turn call the application controller's dispatchAlert action.
+
+    // Returns the nearest controller, which is always the application controller... It's the "closest" and I haven't
+    // figured out how to find any other...
+    function getView($el){
+      return Ember.View.views[$el.closest(".ember-view").attr("id")];
+    }
+
+    // Makes the call to application controller's dispatchAlert event/action. NOTE: The "id" is the component's id value.
+    function sendAlert(el){
+      getView($(el)).get('controller').send('dispatchAlert',el.id);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<div class="restrict row" style="padding-left: 5px; padding-bottom: 10px; color: black;">
+  <div class="pull-left" style="width: 90px;">
+    <!-- profile photo -->
+    <div style="cursor: pointer;" {{action 'viewProfile' trip.partnerId tripMode selectedDate trip}}>
+      {{#if 'trip.isOwnerCurrentMember'}}
+        {{#if trip.rider.profilePhotoUrl}}
+          <img {{bind-attr src='trip.rider.profilePhotoUrl'}} onerror="this.onerror=null;this.src='//hovee001.s3.amazonaws.com/profile_images/default.jpg';"  class="headshot" width="90" title="View profile">
+        {{else}}
+          <img src="//hovee001.s3.amazonaws.com/profile_images/default.jpg" class="headshot" width="90" title="View profile">
+        {{/if}}
+      {{else}}
+        {{#if trip.owner.profilePhotoUrl}}
+          <img {{bind-attr src='trip.owner.profilePhotoUrl'}} onerror="this.onerror=null;this.src='//hovee001.s3.amazonaws.com/profile_images/default.jpg';"  class="headshot" width="90" title="View profile">
+        {{else}}
+          <img src="//hovee001.s3.amazonaws.com/profile_images/default.jpg" class="headshot" width="90" title="View profile">
+        {{/if}}
+      {{/if}}
+    </div>
+    <div style="height: 5px"></div>
+    {{#link-to 'member.trip_proposal' trip.partnerId trip.id selectedDate}}
+      <span class="btn btn-default" style="width: 100%">
+        {{#if trip.isStatusInNegotiation}}
+        {{!-- potential action req'd --}}
+          {{#if trip.isActionRequired}}
+            Respond!
+          {{else}}
+            Review
+          {{/if}}
+        {{else}}
+          {{#if trip.isStatusAccepted}}
+          {{!--No Action required on user's behalf--}}
+            Trip Details
+          {{else}}
+            {{#if trip.isStatusInProgress}}
+              <span style="color: darkgreen">Live</span>
+            {{else}}
+              {{#if trip.isStatusComplete}}
+                <span style="color: darkgreen">Done</span>
+              {{/if}}
+            {{/if}}
+          {{/if}}
+        {{/if}}
+      </span>
+    {{/link-to}}
+    <div style="height: 3px;"></div>
+    {{#if controllers.login.onDesktop}}
+      <span class="btn btn-default" {{action 'showRoute' trip trip.id }} style="width: 100%">View Map</span>
+    {{else}}
+      {{#if trip.isStatusAccepted}}
+        <a {{bind-attr href='trip.partnerMobilePhoneLink'}}><span class="btn btn-default" style="width: 100%">Call</span></a>
+      {{else}}
+        <span class="btn btn-default" {{action 'showRoute' trip trip.id }} style="width: 100%">View Map</span>
+      {{/if}}
+    {{/if}}
+    {{#if trip.isDriver}}
+      <div class="value card-address" style="font-size:1em;font-weight:500; text-align: center; padding-top: 5px;">
+        {{#if 'trip.isRoundOrFromHome'}}
+          {{#unless trip.outboundLeg.deflectMiles}}
+            < 1 mile
+          {{else}}
+            {{trip.outboundLeg.deflectMiles}}
+            <span style="font-size: 1em; font-weight: 500; color: #6b6b6b;">mile{{trip.outboundLeg.deflectMilesNounSuffix}}</span>
+          {{/unless}}
+        {{else}}
+          {{#unless trip.returnLeg.deflectMiles}}
+            < 1 mile
+          {{else}}
+            {{trip.returnLeg.deflectMiles}}
+            <span style="font-size: 1em; font-weight: 500; color: #6b6b6b;">mile{{trip.returnLeg.deflectMilesNounSuffix}}</span>
+          {{/unless}}
+        {{/if}}
+        <br>
+        <span style="font-size: .7em; color: #6b6b6b;">out of your way</span>
+      </div>
+    {{/if}}
+
+  </div>
+  <div {{bind-attr class=":pull-left :card-address controllers.login.onDesktop:desktop-spacing controllers.login.onDesktop::mobile-spacing"}}>
+    <div class="status-message{{unbound trip.statusCode}}" style="text-transform: uppercase;">{{trip.message}}</div>
+    <div class="title-truncate" style="padding: 2px 0 10px">
+      <div style="padding:5px 0; font-size: 1.5em;">
+        {{#if controllers.login.onDesktop}}
+          <a style="cursor: pointer;" {{action 'viewProfile' recommendation.member.id tripMode selectedDate}}>
+            {{trip.partner.fullName}}
+          </a>
+        {{else}}
+            {{trip.partner.fullName}}
+        {{/if}}
+      </div><br>
+      {{#if 'trip.isOwnerCurrentMember'}}
+        {{trip.rider.jobHeadline}}<br>
+        {{trip.rider.company.name}}
+      {{else}}
+        {{trip.owner.jobHeadline}}<br>
+        {{trip.owner.company.name}}
+      {{/if}}
+    </div>
+    <div>
+      <table>
+        <tr>
+          <td style="width: 45px; text-align: center;">
+            <div class="pull-left icon-circle-match icon-circle-status{{unbound trip.statusCode}}">
+            <span style="color: white; line-height: 1.3em; font-size: 2.2em;">
+              <i class="fa fa-home"></i>
+            </span>
+            </div>
+          </td>
+          <td>
+            <div class="pull-left card-truncate">
+              {{#if 'trip.isOwnerCurrentMember'}}
+                {{trip.riderHomeLocation.homeAddress.street}}<br>
+                {{trip.riderHomeLocation.homeAddress.city}}<br>
+              {{else}}
+                {{trip.memberHomeLocation.homeAddress.street}}<br>
+                {{trip.memberHomeLocation.homeAddress.city}}<br>
+              {{/if}}
+              {{#if 'trip.isRoundOrFromHome'}}
+                <span class="status-message{{unbound trip.statusCode}}"><i class="fa fa-share"></i> {{trip.pickupTime}}</span>
+              {{/if}}
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><div class="status-message{{unbound trip.statusCode}}" style="text-align: center; width: 40px; font-size: 1.3em;">
+             <i {{bind-attr class=":fa trip.roundTrip:fa-arrows-v trip.workTrip:fa-long-arrow-down trip.homeTrip:fa-long-arrow-up"}} style="font-weight: 900;"></i>
+          </div></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td style="width: 45px; text-align: center;">
+            <div class="pull-left icon-circle-match icon-circle-status{{unbound trip.statusCode}}">
+              <span style="color: white; line-height: 1.9em; font-size: 1.6em; padding-left: 1px;">
+                <i class="fa fa-briefcase"></i>
+              </span>
+            </div>
+          </td>
+          <td>
+            <div class="pull-left card-truncate">
+              {{#if 'trip.isOwnerCurrentMember'}}
+                {{trip.riderWorkLocation.name}}<br>
+                {{trip.riderWorkLocation.workAddress.city}}<br>
+              {{else}}
+                {{trip.memberWorkLocation.name}}<br>
+                {{trip.memberWorkLocation.workAddress.city}}<br>
+              {{/if}}
+              {{#if 'trip.isRoundOrFromWork'}}
+                <span class="status-message{{unbound trip.statusCode}}"><i class="fa fa-share"></i> {{trip.returnTime}}</span>
+              {{/if}}
+            </div>
+          </td>
+        </tr>
+{{!--
+        <tr>
+          <td></td>
+          <td style="color: darkblue;padding-top: 7px;">
+            <a class="map" {{action 'showRoute' trip trip.id }}>
+              <i class="fa fa-map-marker"></i> Map the Ride
+            </a>
+          </td>
+        </tr>
+--}}
+      </table>
+    </div>
+  </div>
+</div>
+<div class="restrict horz-border" style="height: 15px;"></div>

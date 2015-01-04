@@ -1,0 +1,51 @@
+{{#unless controllers.application.onDesktop}}
+  {{partial "header-mobile"}}
+{{/unless}}
+<div class="upperArea help">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-9 col-sm-offset-3">
+        <h1>Hovee Help Center</h1>
+        <p>We want to help you get the most out of Hovee. Have questions?</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="lowerArea help">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-9 col-sm-offset-3">
+
+        <h2><i class="fa fa-question-circle"></i> &nbsp; Check our FAQ</h2>
+        <h4>{{#link-to "faq"}}Frequently Asked Questions{{/link-to}}</h4>
+        <p>If you don't find your answer, you have a number of options for working with our Customer Support team:</p>
+
+        <br>
+        <h2><i class="fa fa-pencil"></i> &nbsp; Write your own question</h2>
+        <h4>Topic</h4>
+        {{view Ember.Select classNames="form-control" content=availableTopics optionValuePath="content.id" optionLabelPath="content.description" value=topicId}}
+        <br>
+        <h4>Question</h4>
+        <p>{{view 'restrictedtextarea' value=userQuestion placeholder="How do I..." rows="6" maxlength="3000" class="form-control userQuestion"}}</p>
+        <button {{action "askQuestion" topicId userQuestion}} class="btn btn-default btn-sm">Ask</button>
+
+
+        <br>
+        <br>
+        <h2><i class="fa fa-paper-plane-o"></i> &nbsp; Email</h2>
+        <p>Send us your questions via email to: <a href="mailto:support@hovee.com" title="Email support@hovee.com">support@hovee.com</a></p>
+        <p>We will respond within 24 hours.</p>
+
+        <br>
+        <h2><i class="fa fa-phone"></i> &nbsp; Phone</h2>
+        <p>We are glad to talk things through on a call. The best way to do this is to <a href="mailto:support@hovee.com?subject=Please phone me" title="Email support@hovee.com">send us an email</a> describing your question, with a request for a call and <strong>*include your phone number*</strong>. Someone from our customer support team will call you back within 24 hours.</p>
+
+
+        <br>
+        <h2><i class="fa fa-bullhorn"></i> &nbsp; Feedback</h2>
+        <p>To send us product feedback and your ideas for making the service better, please send an email to <a href="mailto:feedback@hovee.com" title="Email feedback@hovee.com">feedback@hovee.com</a></p>
+
+      </div><!-- /.col-sm-9 -->
+    </div><!-- /.row -->
+  </div><!-- /.container -->
+</div><!-- /.lowerArea -->

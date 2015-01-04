@@ -1,0 +1,242 @@
+{{partial "header-mobile"}}
+<div class="container lightbg" {{bind-attr style=hght}}>
+  <div class="trip-header" style="height: 60px; text-align: center;">
+
+    {{#if editing}}
+      {{#if isTwoDrivers}}
+        <div class="rides row radioSelectorContainer center-block" style="text-align: center; width: 100%; padding-left: 5px; padding-right: 5px;">
+          <div class="btn-group radioSelector" style="width: 100%">
+            <label id="ml" for="m"  class="btn btn-default" data-placement="bottom" {{action 'toggleDriver' 'driver' '#ml' '#pl'}} style="width: 50%">
+              {{radio-button selection=direction value="driver" id="m"}}
+              {{#if 'memberIsDriver'}}<img src="//hovee001.s3.amazonaws.com/resources/car_icon.png" style="height: 16px;margin-top: -1px;">{{/if}} You're Driving
+            </label>
+            <label id="pl" for="p"  class="btn btn-default" data-placement="bottom" {{action 'toggleDriver' 'passenger' '#pl' '#ml'}} style="width: 50%;  word-wrap: break-word;">
+              {{radio-button selection=direction value="passenger" id="p"}}{{#unless 'memberIsDriver'}}<img src="//hovee001.s3.amazonaws.com/resources/car_icon.png" style="height: 16px;margin-top: -1px;">{{/unless}} {{partner.firstName}}
+            </label>
+          </div>
+        </div>
+      {{/if}}
+
+      {{#if isMemberDriver}}
+      <div style="line-height: 50px; font-size: 1.2em;">You have the Car so you are the Driver.</div>
+      {{/if}}
+
+      {{#if isPartnerDriver}}
+        <div style="line-height: 50px; font-size: 1.1em;">{{partner.firstName}} has the Car so {{#if isPartnerFemale}}she{{else}}he{{/if}} is the Driver.</div>
+      {{/if}}
+    {{else}}
+      <div style="line-height: 50px; font-size: 1.4em; font-weight: 700; color: #C2C2C2;">
+      {{#if memberIsDriver}}You are{{else}}{{partner.firstName}} is{{/if}} the driver
+      </div>
+    {{/if}}
+
+  </div>
+  <div class="infographic" style="height: 250px">
+    <img {{bind-attr src=infographicUrl}} width="260" height="238" usemap="infographicmap">
+    <map name="infographicmap">
+      <area shape="rect" coords="30,2,   90,62" {{action 'upperLeftTap'}}>
+      <area shape="rect" coords="171,2,  231,62" {{action 'upperRightTap'}}>
+      <area shape="rect" coords="30,139, 90,199" {{action 'lowerLeftTap'}}>
+      <area shape="rect" coords="171,139,231,199" {{action 'lowerRightTap'}}>
+    </map>
+    <div class="caption d-home">
+      <div class="passenger-name passenger-name-layout">
+        {{#if memberIsDriver}}
+          <b>You</b> Leave
+        {{else}}
+          <div class="pull-left truncate-name"><b>{{driverFirstName}}</b></div>
+          <div class="pull-left">&nbsp;Leaves</div><br>
+        {{/if}}
+      </div>
+      {{#if editing}}
+        <span class="time1">
+          {{#if memberIsDriver}}
+            {{#if isReturnTrip}}
+              <div class="input-append bootstrap-timepicker" style="display: inline;">{{#view "pickatime" onDesktop=false valueBinding="workDepartureTime" }}{{/view}}</div>
+            {{else}}
+              <div class="input-append bootstrap-timepicker" style="display: inline;">{{#view "pickatime" onDesktop=false valueBinding="homeDepartureTime" }}{{/view}}</div>
+            {{/if}}
+          {{else}}
+            {{#if isReturnTrip}}
+              <div class="input-append bootstrap-timepicker" style="display: inline;">{{#view "pickatime" onDesktop=false valueBinding="passengerWorkPickupTime" }}{{/view}}</div>
+            {{else}}
+              <div class="input-append bootstrap-timepicker" style="display: inline;">{{#view "pickatime" onDesktop=false valueBinding="passengerHomePickupTime" }}{{/view}}</div>
+            {{/if}}
+          {{/if}}
+        </span>
+      {{else}}
+        <span class="time-badge time1">
+          {{#if memberIsDriver}}
+            {{#if isReturnTrip}} {{workDepartureTime}} {{else}} {{homeDepartureTime}} {{/if}}
+          {{else}}
+            {{#if isReturnTrip}} {{passengerWorkPickupTime}} {{else}} {{passengerHomePickupTime}} {{/if}}
+          {{/if}}
+        </span>
+      {{/if}}
+    </div>
+    <div class="caption p-home">
+      <div class="passenger-name passenger-name-layout">
+        {{#unless memberIsDriver}}
+          Picks <b>You</b> Up
+        {{else}}
+          <div class="pull-left">Pick&nbsp;</div>
+          <div class="pull-left truncate-name"><b>{{passengerFirstName}}</b></div>
+          <div class="pull-left">&nbsp;Up</div><br>
+        {{/unless}}
+      </div>
+      {{#if editing}}
+        <span class="time2">
+          {{#if memberIsDriver}}
+            {{#if isReturnTrip}}
+              <div class="input-append bootstrap-timepicker" style="display: inline;">{{#view "pickatime" onDesktop=false valueBinding="passengerWorkPickupTime" }}{{/view}}</div>
+            {{else}}
+              <div class="input-append bootstrap-timepicker" style="display: inline;">{{#view "pickatime" onDesktop=false valueBinding="passengerHomePickupTime" }}{{/view}}</div>
+            {{/if}}
+          {{else}}
+            {{#if isReturnTrip}}
+              <div class="input-append bootstrap-timepicker" style="display: inline;">{{#view "pickatime" onDesktop=false valueBinding="workDepartureTime" }}{{/view}}</div>
+            {{else}}
+              <div class="input-append bootstrap-timepicker" style="display: inline;">{{#view "pickatime" onDesktop=false valueBinding="homeDepartureTime" }}{{/view}}</div>
+            {{/if}}
+          {{/if}}
+        </span>
+      {{else}}
+        <span class="time-badge time2">
+          {{#if memberIsDriver}}
+            {{#if isReturnTrip}} {{passengerWorkPickupTime}} {{else}} {{passengerHomePickupTime}} {{/if}}
+          {{else}}
+            {{#if isReturnTrip}} {{workDepartureTime}} {{else}} {{homeDepartureTime}} {{/if}}
+          {{/if}}
+        </span>
+      {{/if}}
+    </div>
+    <div class="caption p-work">
+      <div class="passenger-name passenger-name-layout">
+        {{#unless memberIsDriver}}
+          Drops <b>You</b> Off
+        {{else}}
+          <div class="pull-left">Drop&nbsp;</div>
+          <div class="pull-left truncate-name"><b>{{passengerFirstName}}</b></div>
+          <div class="pull-left">&nbsp;Off</div>
+        {{/unless}}
+      </div>
+      {{#if editing}}
+        <span class="time3">
+          {{#if isReturnTrip}}
+            <div class="input-append bootstrap-timepicker" style="display: inline;">{{#view "pickatime" onDesktop=false valueBinding="passengerHomeDropOffTime" }}{{/view}}</div>
+          {{else}}
+            <div class="input-append bootstrap-timepicker" style="display: inline;">{{#view "pickatime" onDesktop=false valueBinding="passengerWorkDestTime" }}{{/view}}</div>
+          {{/if}}
+        </span>
+      {{else}}
+        <span class="time-badge time3">{{#if isReturnTrip}} {{passengerHomeDropOffTime}} {{else}} {{passengerWorkDestTime}} {{/if}}</span>
+      {{/if}}
+    </div>
+    <div class="caption d-work">
+      <div class="passenger-name passenger-name-layout">
+        {{#if memberIsDriver}}
+          <b>You</b> Arrive
+        {{else}}
+          <div class="pull-left truncate-name"><b>{{driverFirstName}}</b></div>
+          <div class="pull-left">&nbsp;Arrives</div>
+        {{/if}}
+      </div>
+      {{#if editing}}
+        <span class="time4">
+          {{#if isReturnTrip}}
+            <div class="input-append bootstrap-timepicker" style="display: inline;">{{#view "pickatime" onDesktop=false valueBinding="driverHomeArrivalTime" }}{{/view}}</div>
+          {{else}}
+            <div class="input-append bootstrap-timepicker" style="display: inline;">{{#view "pickatime" onDesktop=false valueBinding="driverWorkDestTime" }}{{/view}}</div>
+          {{/if}}
+        </span>
+      {{else}}
+        <span class="time-badge time4">{{#if isReturnTrip}} {{driverHomeArrivalTime}} {{else}} {{driverWorkDestTime}} {{/if}}</span>
+      {{/if}}
+    </div>
+  </div>
+  <div class="rides row radioSelectorContainer center-block" style="max-width: 260px; text-align: center; padding-top: 20px;">
+    {{#if isRoundTrip}}
+      <div class="btn-group radioSelector">
+        <label id="ol" for="o"  class="btn btn-default active" data-placement="bottom" {{action 'toggleDirection' 'out' '#ol' '#il'}}>
+          {{radio-button selection=direction value="out" id="o"}} Go to work
+        </label>
+        <label id="il" for="i"  class="btn btn-default" data-placement="bottom" {{action 'toggleDirection' 'in' '#il' '#ol'}}>
+          {{radio-button selection=direction value="in" id="i"}} Return home
+        </label>
+      </div>
+    {{else}}
+      <span style="font-weight: 900">
+        One way trip to {{#if isWorkTrip}}work{{else}}home{{/if}}
+      </span>
+    {{/if}}
+  </div>
+  <div class="row center-block" style="text-align: center; padding-top: 5px;">
+    {{#if noteAttached.length}}
+      <button class="btn btn-default btn-md"{{action 'attachNote'}}><i class="fa fa-edit"></i> {{noteAttached}}</button>
+    {{/if}}
+  </div>
+  {{#if rinMessages.length}}
+    <div class="row center-block" style="padding: 5px 20px 80px; background-color: white;">
+      <table class="table">
+        <thead>
+        <th style="width: 75px;">Time</th><th style="width: 75px;">From</th><th>Note</th>
+        </thead>
+        <tbody>
+        {{#each message in rinMessages}}
+          <tr>
+            <td>{{message.messageDateTime}}</td>
+            <td>{{message.sender.firstName}}</td>
+            <td>{{message.rinMessage}}</td>
+          </tr>
+        {{/each}}
+        </tbody>
+      </table>
+    </div>
+  {{/if}}
+
+  <div class="trip-footer-sched top-border">
+    <!-- Okay user is looking at a proposal for review -->
+    {{#if rideProposal}}
+      <!-- is the user editing the proposed trip? -->
+      {{#if editing}}
+
+        <button class="btn btn-lg btn-success btn-64-percent" {{action 'propose'}}><i class="fa fa-check"></i> Send It</button>
+        <button class="btn btn-lg btn-primary btn-35-percent" style="background-color: #999;" {{action 'showOptions' true}}>More <i class="fa fa-chevron-right"></i></button>
+
+      {{else}} <!-- right now the user is just viewing the proposal -->
+
+        <!-- is the user viewing from the desktop? -->
+        {{!#if controllers.login.onDesktop}}
+
+        <!-- is this a live proposal? if cancelled or declined, can only exit -->
+        {{#if isCancelledOrDeclined}}
+
+          <li><button class="btn btn-lg btn-primary" {{action 'done'}}>Done</button></li>
+
+        {{else}} <!-- proposal is still live -->
+
+          {{#if isAccepted}}
+
+            <button class="btn btn-lg btn-success btn-64-percent" {{action 'sendMessage'}}><i class="fa fa-comment-o"></i> Send Message</button>
+            <button class="btn btn-lg btn-primary btn-35-percent" style="background-color: #999;" {{action 'showOptions'}}>More <i class="fa fa-chevron-right"></i></button>
+
+          {{else}}
+
+            <button {{bind-attr disabled="isWaitingForResponse" class=":btn :btn-lg isWaitingForResponse::btn-success :btn-64-percent"}} {{action 'acceptProposal'}}>
+              {{#if isWaitingForResponse}}Waiting for response{{else}}<i class="fa fa-check"></i> Accept Proposal{{/if}}
+            </button>
+            <button class="btn btn-lg btn-primary btn-35-percent" style="background-color: #999;" {{action 'showOptions' true}}>More <i class="fa fa-chevron-right"></i></button>
+
+          {{/if}}
+
+        {{/if}}{{!-- /isCancelledOrDeclined --}}
+
+      {{/if}} <!-- end if editing -->
+    {{else}}
+
+      <button class="btn btn-lg btn-success btn-64-percent" {{action 'makeProposal'}}><i class="fa fa-check"></i> Send It</button>
+      <button class="btn btn-lg btn-primary btn-35-percent" style="background-color: #999;" {{action 'showOptions' true}}>More <i class="fa fa-chevron-right"></i></button>
+
+    {{/if}}
+  </div>
+</div><!-- /.container -->  

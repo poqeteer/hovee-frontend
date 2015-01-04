@@ -1,0 +1,7 @@
+<div class="btn-group radioSelector">
+  {{#each content}}
+    <label class="btn btn-default" data-placement="bottom">
+      {{radio-button value=value selection=view.value}} {{#if 'img'}}<img {{bind-attr src='img'}} style="height: 28px;"> {{/if}}{{label}}
+    </label>
+  {{/each}}
+</div>

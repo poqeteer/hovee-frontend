@@ -1,0 +1,90 @@
+<div class="restrict">
+  {{partial 'partials/rides_calendar_header'}}
+  <table {{bind-attr class="controllers.login.onDesktop:rides :weekday-cells"}} style="width: 100%;">
+    {{#each week in cw}}
+      <tr>
+        {{#each day in week}}
+          <td {{bind-attr class="day.before::not-before-today day.before:before-today"}} style="background-color: {{unbound day.bg}};">
+            <div {{action 'selectDateFromCalendar' day.timestamp day.before week day}}>
+              {{#if day.month}}
+                {{view 'ridescalendarmonthcellview' statusCode=day.statusCode month=day.month date=day.date}}
+              {{else}}
+                <div class="cell-container">
+                  {{day.date}}
+                  <div class="inner-triangle status-triangle{{unbound day.statusCode}}"></div>
+                  <div class="outer-triangle outer-status-triangle{{unbound day.statusCode}}"></div>
+                </div>
+              {{/if}}
+            </div>
+          </td>
+        {{/each}}
+      </tr>
+    {{/each}}
+  </table>
+</div>
+
+<div class="restrict" style="background: white; width: 100%; text-align: center; color: grey; font-size: 1em; font-weight: 900; padding: 15px 0; border-radius: 0 0 5px 5px;">
+  Welcome to Hovee.{{#unless controllers.login.onDesktop}}<br>{{/unless}} Please pick a day that you'd like to commute
+</div>
+
+{{!-- #if 'onLocalHost'}}
+  <div>
+    {{#if showTripList}}
+      <table style="background: white;">
+        <thead>
+          <tr>
+            <th colspan="4" style="padding-left: 3px; padding-top: 5px;">
+              <div style="padding-top: 7px; font-size: 1.2em; font-weight: 900; float: left;">Your Trips</div>
+              <div style="padding-bottom: 7px; padding-right: 1px; float: right;">{{toggle-button label="Show Past" value=showOld}}</div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each trip in filteredTrips}}
+            {{#if trip.statusCode}}
+              <tr {{bind-attr class="trip.before::not-before-today trip.before:before-today"}} style="border-top: 1px #808080 solid; height: 40px;">
+                <td style="padding-left: 3px;">{{#if trip.hasPickupTimestamp}}{{trip.formattedMdPickup}}{{else}}{{trip.formattedMdReturn}}{{/if}}</td>
+                <td>
+                  {{#if 'trip.isOwnerCurrentMember'}}
+                    <div {{action 'viewProfile' trip.rider.id tripMode selectedDate trip}}>
+                    {{#if trip.rider.profilePhotoUrl}}
+                      <img {{bind-attr src='trip.rider.profilePhotoUrl'}} onerror="this.onerror=null;this.src='//hovee001.s3.amazonaws.com/profile_images/default.jpg';"  class="headshot" width="30" title="View profile" style="border-radius: 30px;">
+                    {{else}}
+                      <img src="//hovee001.s3.amazonaws.com/profile_images/default.jpg" class="headshot" width="30" title="View profile" style="border-radius: 30px;">
+                    {{/if}}
+                    </div>
+                  {{else}}
+                    <div {{action 'viewProfile' trip.owner.id tripMode selectedDate trip}}>
+                    {{#if trip.owner.profilePhotoUrl}}
+                      <img {{bind-attr src='trip.owner.profilePhotoUrl'}} onerror="this.onerror=null;this.src='//hovee001.s3.amazonaws.com/profile_images/default.jpg';"  class="headshot" width="30" title="View profile" style="border-radius: 30px;">
+                    {{else}}
+                      <img src="//hovee001.s3.amazonaws.com/profile_images/default.jpg" class="headshot" width="30" title="View profile" style="border-radius: 30px;">
+                    {{/if}}
+                    </div>
+                  {{/if}}
+                </td>
+                <td style="padding-left: 3px;">{{#if trip.isOwnerCurrentMember}}{{trip.rider.fullName}}{{else}}{{trip.owner.fullName}}{{/if}}</td>
+                <td>
+                  {{#link-to 'member.trip_proposal' trip.partnerId trip.id trip.selectedDate}}
+                  <button class="btn btn-default btn-lg status-background{{unbound trip.statusCode}}" style="float: right;">
+                    {{#if trip.isDriver}}
+                      <img src="/assets/img/DRIVER-black.png" width="30">
+                    {{else}}
+                      <img src="/assets/img/PASSENGER-black.png" width="30">
+                    {{/if}}
+                    <i {{bind-attr class=":fa trip.roundTrip:fa-arrows-v trip.workTrip:fa-long-arrow-down trip.homeTrip:fa-long-arrow-up"}} style=" font-weight: 900;"></i>
+                  </button>
+                  {{/link-to}}
+                </td>
+              </tr>
+            {{/if}}
+          {{/each}}
+        </tbody>
+      </table>
+    {{else}}
+      <div style="background: white; width: 100%; text-align: center; color: grey; font-size: 1em; font-weight: 900">
+          Welcome to Hovee.{{#unless controllers.login.onDesktop}}<br>{{/unless}} Please pick a day that you'd like to commute
+      </div>
+    {{/if}}
+  </div>
+{{/if--}}

@@ -1,0 +1,115 @@
+{{#unless onDesktop}}
+  {{partial "header-mobile"}}
+{{/unless}}
+
+{{#if controllers.application.onBinaryWebView}}
+  <div style="margin-top: -45px"></div>
+{{/if}}
+{{#unless isRated}}
+
+  {{#view 'trip-rating' rating=rating}}
+    <div class="upperArea" style="height: 100px">
+      <div class="container" style="height: 100%">
+        <div class="row" style="height: 50%">
+          <div class="col-sm-12">
+            <h2 class="text-center" style="margin-top: 15px">Rate your trip with {{partner.firstName}}</h2>
+          </div>
+        </div>
+        <div class="row" style="height: 50%">
+          <div class="col-sm-12">
+            <h2 class="text-center">{{ratingStatus}}</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lowerArea rating">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <div id="range-slider" style="width:100%;margin:20px auto;"></div>
+          </div>
+        </div>
+
+        <div class="row schedule-info exclude">
+          <div class="col-sm-12 text-center">
+            {{#if excluded}}
+            <h3>{{partner.firstName}} has been added your exclude list.</h3>
+            {{else}}
+            <h3>Would you like to add {{partner.firstName}} to your exclude list?</h3>
+            <i class="dim">You won't be matched with them again.</i>
+            <button class="btn btn-danger" {{action 'exclude'}} style="margin-top: 10px;">Add to Exclude List</button>
+            {{/if}}
+          </div>
+        </div>
+      </div>
+    </div>
+  {{/view}}
+  <div class="mapArea" {{bind-attr style=mapHeight}}>
+    {{#view 'maproute' from=from to=to waypoints=waypoints}}{{/view}}
+  </div>
+
+  {{#unless controllers.application.onBinaryWebView}}
+    <div class="rating-footer">
+      <button class="btn btn-primary" {{action 'sendRating'}}>Rate</button>
+    </div>
+  {{else}}
+    <div style="width: 100%; padding: 5px; background-color: #ffffff">
+      <button class="btn btn-primary btn-lg" style="width: 100%" {{action 'sendRating'}}>Rate</button>
+    </div>
+  {{/unless}}
+
+  {{else}}
+    <div class="upperArea">
+      <div class="container">
+        <div class="row" style="height: 50px; margin-top: -10px;">
+          <div class="col-sm-12">
+            <h2 class="text-center">{{ratingStatus}}</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="lowerArea rating">
+      <div class="container">
+        <div class="row schedule-info">
+          <div class="col-sm-12" style="height: 50px; margin-top: -10px;">
+            <h2 class="text-center">Thank you for rating this trip with {{partner.firstName}}</h2>
+          </div>
+        </div>
+        <div class="row schedule-info" style="margin-top: -10px">
+          <div class="col-sm-12">
+            <h2 style="height: 40px; margin-bottom: -10px;">Trip Statistics:</h2>
+            <ul class="trip-stats">
+              <li>Miles Driven: {{milesDriven}}</li>
+              <li>Total Time: {{totalTime}}</li>
+              <li>CO<sub>2</sub> Saved: {{carbs}} KG</li>
+            </ul>
+          </div>
+  <!--
+          <div class="col-sm-12">
+            <h2>Monthly Statistics:</h2>
+            <ul class="monthly-stats">
+              <li>Total Trips: {totalTrips}}</li>
+              <li>As Driver: {tripsAsDriver}}</li>
+              <li>Total Carbs Saved: {totalCarbsSaved}}</li>
+            </ul>
+          </div>
+  -->
+        </div>
+      </div>
+    </div>
+
+    <div class="mapArea" {{bind-attr style=mapHeight2}}>
+      {{#view 'maproute' from=from to=to waypoints=waypoints}}{{/view}}
+    </div>
+
+    {{#unless controllers.application.onBinaryWebView}}
+      <div class="rating-footer">
+        <button class="btn btn-primary" {{action 'exit'}}>Done</button>
+      </div>
+    {{else}}
+      <div style="width: 100%; padding: 5px; background-color: #ffffff">
+        <button class="btn btn-primary btn-lg" style="width: 100%" {{action 'exit'}}>Done</button>
+      </div>
+    {{/unless}}
+  {{/unless}}

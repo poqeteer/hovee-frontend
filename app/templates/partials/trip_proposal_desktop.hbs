@@ -1,0 +1,313 @@
+<div class="row">
+  <div class="container" style="background: white; color: black; border-radius: 5px;">
+<div class="upperArea" style="padding-top:11px;">
+  <div class="container">
+    {{#if showPickADay}}
+      <div class="row browseControls">
+        <div class="col-md-3 col-sm-2">
+        </div>
+        <div class="col-md-9 col-sm-10">
+          <button {{action 'prevweek'}} {{bind-attr class=':browseControl :prev cantRewindCalendar:disabled' disabled=cantRewindCalendar}}><i class="fa fa-angle-left"></i> Previous week</button><div class="browseControl week">{{#if weekOfDate}}Week of {{weekOfDate}}{{/if}}</div><button {{action 'nextweek'}} {{bind-attr class=':browseControl :next cantAdvanceCalendar:disabled' disabled=cantAdvanceCalendar}}>Next week <i class="fa fa-angle-right"></i></button>
+          <button {{action 'today'}} {{bind-attr class=':browseControl :today :pull-right editing::disabled' disabled=cantBrowseWeeks}}><i class="fa fa-map-marker"></i> Go to today</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3 col-sm-2">
+          <div class="memberBlock pull-right">
+            {{#link-to 'member.profile'}}
+              {{#if currentMember.profilePhotoUrl}}
+                <img {{bind-attr src='currentMember.profilePhotoUrl'}} onerror="this.onerror=null;this.src='//hovee001.s3.amazonaws.com/profile_images/default.jpg';"  class="pull-right profilePic" style="width: 98px; height: 98px;">
+              {{else}}
+                <img src="//hovee001.s3.amazonaws.com/profile_images/default.jpg" class="pull-right profilePic" style="width: 98px; height: 98px;">
+              {{/if}}
+            {{/link-to}}
+            <img {{bind-attr src="currentMember.company.logoUrl"}} width="1px" height="1px"> <!-- force the logo to load... needed if page refreshed -->
+            <div class="pull-right memberName">
+              {{currentMember.firstName}}<br>
+              {{currentMember.lastName}}
+            </div>
+          </div>
+          <div class="partnerBlock pull-right">
+            {{#link-to 'member.profile' partner.id}}
+              {{#if partner.profilePhotoUrl}}
+                <img {{bind-attr src='partner.profilePhotoUrl'}} onerror="this.onerror=null;this.src='//hovee001.s3.amazonaws.com/profile_images/default.jpg';"  class="pull-right" style="width: 98px; height: 98px;">
+              {{else}}
+                <img src="//hovee001.s3.amazonaws.com/profile_images/default.jpg" class="pull-right profilePic" style="width: 98px; height: 98px;">
+              {{/if}}
+            {{/link-to}}
+            <img {{bind-attr src="partner.company.logoUrl"}} width="1px" height="1px"> <!-- force the logo to load... needed if page refreshed -->
+            <div class="pull-right memberName">
+              {{partner.firstName}}<br>
+              {{partner.lastName}}
+            </div>
+          </div>
+        </div>
+        <div class="col-md-9 col-sm-10">
+          {{view "calendarmatrixview" selectedWeekIndex=selectedWeekIndex calendarObject=calendar currentWeekArray=currentWeekArray isNegotiatingTrip=isNegotiatingTrip isCancelledOrDeclined=isCancelledOrDeclined selectedDate=selectedDate isAccepted=isAccepted}}
+        </div>
+      </div>
+    {{else}}
+      <div class="row">
+        <div class="col-md-3 col-sm-2">
+          <div class="partnerBlock pull-right">
+            {{#link-to 'member.profile' partner.id}}
+              {{#if partner.profilePhotoUrl}}
+                <img {{bind-attr src='partner.profilePhotoUrl'}} onerror="this.onerror=null;this.src='//hovee001.s3.amazonaws.com/profile_images/default.jpg';"  class="pull-right" style="width: 98px; height: 98px;">
+              {{else}}
+                <img src="//hovee001.s3.amazonaws.com/profile_images/default.jpg" class="pull-right profilePic" style="width: 98px; height: 98px;">
+              {{/if}}
+            {{/link-to}}
+            <img {{bind-attr src="partner.company.logoUrl"}} width="1px" height="1px"> <!-- force the logo to load... needed if page refreshed -->
+            <div class="pull-right memberName" style="color: black;">
+              {{partner.firstName}}<br>
+              {{partner.lastName}}
+              {{#if 'isAccepted'}}
+                <br><span style="font-size: 15px">{{partner.formattedMobilePhone}}</span>
+              {{/if}}
+            </div>
+          </div>
+        </div>
+        <div class="col-md-9 col-sm-10" style="padding-top: 50px; color: #000000;">
+          <h1>{{selectedDate}}</h1>
+          {{!--#if trip}}
+            <h1>{{selectedDate}}</h1>
+          {{else}}
+            {{partial 'partials/rides_calendar_week'}}
+          {{/if--}}
+        </div>
+      </div>
+    {{/if}}
+  </div>
+</div>
+
+<div class="lowerArea">
+  <div class="container">
+    <div class="row schedule-info">
+      <div class="col-sm-3" style="color: #000000;">
+        {{#view 'trip_detail_buttons'}}
+        <div {{bind-attr class=":tripdetailSidebar controllers.login.onDesktop:doAffix"}}>
+          {{!-- ================ begin VOICE block ================ --}}
+          {{#unless isNoneOfTheAbove}}
+            <div class="voice">
+              {{#if rideProposal}}
+
+                {{#if editing}}
+                  Review trip details and propose changes to the ride.
+                {{else}}
+                  {{#if isCancelledOrDeclined}}
+                    This proposed ride is no longer available.
+                  {{else}}
+                    {{#if isAccepted}}
+                      You have a scheduled ride with {{partner.firstName}} on {{selectedDate}}.
+                    {{else}}
+                      {{#if isWaitingForResponse}}
+                        You are waiting for {{partner.firstName}} to respond.
+                      {{else}}
+                        Please respond to {{partner.firstName}}'s proposal
+                      {{/if}}
+                    {{/if}}
+                  {{/if}}
+                {{/if}}
+
+              {{else}}
+
+                <div {{bind-attr class="selectedDate:hidden"}}>
+                  Click on a day to schedule a trip with {{partner.firstName}}
+                </div>
+
+                <div {{bind-attr class="selectedDate::hidden"}}>
+                  Plan the Ride:
+                </div>
+
+              {{/if}}
+
+            </div><!-- /.voice -->
+          {{/unless}}
+          {{!-- ================ end VOICE block ================ --}}
+
+          <div class="row trip-buttons"><!-- begin row of buttons -->
+
+          <!-- Okay user is looking at a proposal for review -->
+          {{#if rideProposal}}
+
+            <div class="col-sm-12">
+              <ul>
+
+              <!-- is the user editing the proposed trip? -->
+              {{#if editing}}
+
+                <li><button type="button" {{bind-attr disabled="isNotDirty" class=":btn :btn-lg isNotDirty::btn-success"}} {{action 'propose'}}><i class="fa fa-check"></i> Send It</button></li>
+                <li><button type="button" class="btn btn-lg btn-default" {{action 'cancel'}}><i class="fa fa-times"></i> Cancel</button></li>
+                <li><button class="btn btn-lg btn-primary" {{action 'showRoute' true}}><i class="fa fa-map-marker"></i> Map the Ride</button></li>
+
+              {{else}} <!-- right now the user is just viewing the proposal -->
+
+                <!-- is the user viewing from the desktop? -->
+                {{!#if controllers.login.onDesktop}}
+
+                <!-- is this a live proposal? if cancelled or declined, can only exit -->
+                {{#if isCancelledOrDeclined}}
+
+                  <li><button class="btn btn-lg btn-primary" {{action 'done'}}>Done</button></li>
+
+                {{else}} <!-- proposal is still live -->
+
+                  {{#if isAccepted}}
+
+                    <li><button class="btn btn-lg btn-danger" {{action 'cancelProposal'}}><i class="fa fa-thumbs-down"></i> Cancel Trip</button></li>
+                    <li><button class="btn btn-lg btn-default" {{action 'sendMessage'}}><i class="fa fa-comment-o"></i> Send Message</button></li>
+                    <li><button class="btn btn-lg btn-primary" {{action 'showRoute'}}><i class="fa fa-map-marker"></i> Scheduled Trip Map</button></li>
+
+                  {{else}}
+
+                    <li><button {{bind-attr disabled="isWaitingForResponse" class=":btn :btn-lg isWaitingForResponse::btn-success"}} {{action 'acceptProposal'}}><i class="fa fa-check"></i> Accept Ride Proposal</button></li>
+                    <li><button {{bind-attr disabled="isWaitingForResponse" class=":btn :btn-lg isWaitingForResponse::btn-primary"}} {{action 'proposeChanges'}}><i class="fa fa-pencil"></i> Make Changes</button></li>
+                    <li><button class="btn btn-lg btn-primary" {{action 'showRoute' true}}><i class="fa fa-map-marker"></i> Map the Ride</button></li>
+
+                    <li><button class="btn btn-lg btn-danger" {{action 'declineProposal'}}><i class="fa fa-thumbs-down"></i>
+                      {{#if isCurrentMemberOwner}}
+                        {{#if isWaitingForResponse}}
+                          Cancel Ride Proposal
+                        {{else}}
+                          Decline Ride Proposal
+                        {{/if}}
+                      {{else}}
+                        Decline Ride
+                      {{/if}}
+                    </button></li>
+                  {{/if}}
+
+                {{/if}}{{!-- /isCancelledOrDeclined --}}
+
+              {{/if}} <!-- end if editing -->
+
+              </ul>
+            </div>
+
+          {{else}} <!-- This is a new ride proposal, i.e. creating one -->
+
+            <div class="col-sm-12">
+              <ul>
+              {{#if canBeProposed}}
+                <li><button type="button" class="btn btn-lg btn-success" {{action 'makeProposal'}}><i class="fa fa-check"></i> Send It</button></li>
+              {{else}}
+                <li><button type="button" class="btn btn-lg" disabled><i class="fa fa-check"></i> Send It</button></li>
+              {{/if}}
+              <li><button type="button" class="btn btn-lg btn-default" {{action 'done'}}><i class="fa fa-times"></i> Cancel</button></li>
+              <li><button class="btn btn-lg btn-primary" {{action 'showRoute' true}}><i class="fa fa-map-marker"></i> Map the Ride</button></li>
+              </ul>
+            </div>
+
+          {{/if}}
+
+        </div><!-- end row of buttons -->
+
+        </div> <!-- /.tripdetailSidebar -->
+        {{/view}}
+      </div> <!-- class="col-sm-3" -->
+
+      <!-- ======================= RIGHT SIDE: ========================== -->
+
+      <div class="col-sm-9" style="color: #000000;">
+
+        {{#unless isAccepted}}
+          <div class="row schedule-info">
+            <div class="col-sm-12">
+              <p><span style="font-size: 1.25em; font-weight: 900;">Note to {{partner.firstName}}</span></p>
+              <p>{{view 'restrictedtextarea' value=personalMessage placeholder="Enter a note..." rows="3" maxlength="300" class="form-control personalMessage"}}</p>
+            </div>
+          </div>
+        {{/unless}}
+
+        <div {{bind-attr class=":driving :form-group selectedDate::hidden"}}>
+          {{#if editing}}
+            {{#if isTwoDrivers}}
+              <div class="rides row radioSelectorContainer center-block" style="text-align: center; width: 100%; padding-bottom: 10px;">
+                <div style="float: left;font-size: 1.2em; font-weight: 900; padding: 7px 10px 0 0;">Who's Driving </div>
+                <div class="btn-group radioSelector" style="float:left; width: 350px;">
+                  <label id="ml" for="m"  class="btn btn-default" data-placement="bottom" {{action 'toggleDriver' 'driver' '#ml' '#pl'}} style="width: 50%">
+                    {{radio-button selection=direction value="driver" id="m"}}
+                    {{#if 'memberIsDriver'}}<img src="//hovee001.s3.amazonaws.com/resources/car_icon.png" style="height: 16px;margin-top: -1px;">{{/if}} You're Driving
+                  </label>
+                  <label id="pl" for="p"  class="btn btn-default" data-placement="bottom" {{action 'toggleDriver' 'passenger' '#pl' '#ml'}} style="width: 50%;  word-wrap: break-word;">
+                    {{radio-button selection=direction value="passenger" id="p"}}{{#unless 'memberIsDriver'}}<img src="//hovee001.s3.amazonaws.com/resources/car_icon.png" style="height: 16px;margin-top: -1px;">{{/unless}} {{partner.firstName}}
+                  </label>
+                </div>
+              </div>
+            {{/if}}
+
+            {{#if isMemberDriver}}
+              <div style="line-height: 50px; font-size: 1.2em;">You have the Car so you are the Driver.</div>
+            {{/if}}
+
+            {{#if isPartnerDriver}}
+              <div style="line-height: 50px; font-size: 1.1em;">{{partner.firstName}} has the Car so {{#if isPartnerFemale}}she{{else}}he{{/if}} is the Driver.</div>
+            {{/if}}
+          {{else}}
+            <div style="line-height: 50px; font-size: 1.4em; font-weight: 700;">
+              {{#if memberIsDriver}}You are{{else}}{{partner.firstName}} is{{/if}} the driver
+            </div>
+          {{/if}}
+
+          <div {{bind-attr class=":schedulingDetails selectedDate::hidden"}}>
+
+            {{#if isNoneOfTheAbove}}
+              Sorry, neither of you has a car. You cannot share a carpool at this time.
+            {{else}}
+
+              <div style="width: 97%;">
+                <ul class="nav nav-tabs">
+                  <li {{bind-attr class="isRoundTrip:active trip:disabled"}} {{action 'setTripDirection' 'isRoundTrip'}} style="cursor: pointer"><a>Round Trip</a></li>
+                  <li {{bind-attr class="isWorkTrip:active trip:disabled"}} {{action 'setTripDirection' 'isWorkTrip'}} style="cursor: pointer"><a>Only to Work</a></li>
+                  <li {{bind-attr class="isReturnTrip:active trip:disabled"}} {{action 'setTripDirection' 'isReturnTrip'}} style="cursor: pointer"><a>Only to Home</a></li>
+                </ul>
+              </div>
+
+              <div style="border: 1px #ddd solid; border-top: 0; width: 100%; padding: 20px 0 10px; width: 97%;">
+                {{render "partials/infographic-wide" controller}}
+              </div>
+
+              <div class="row schedule-info">
+                <div class="col-sm-12">
+                  {{#if isRoundOrWork}}<h4>Driver commute time to work: {{totalCommuteTime}}</h4>{{else}}<h4>...</h4>{{/if}}
+                </div>
+              </div>
+
+              {{#if 'showMap'}}
+                <div class="row schedule-info">
+                  <div style="height: 300px;">
+                    {{view 'maproute' from=from to=to waypoints=waypoints}}
+                  </div>
+                </div>
+              {{/if}}
+
+              {{#if rinMessages.length}}
+                <div class="col-sm-10">
+                  <table class="table">
+                    <thead>
+                      <th style="width: 175px;">Time</th><th style="width: 155px;">From</th><th>Note</th>
+                    </thead>
+                    <tbody>
+                      {{#each message in rinMessages}}
+                        <tr>
+                          <td>{{message.messageDateTime}}</td>
+                          <td>{{message.sender.firstName}}</td>
+                          <td>{{message.rinMessage}}</td>
+                        </tr>
+                      {{/each}}
+                    </tbody>
+                  </table>
+                </div>
+              {{/if}}
+
+            {{/if}} <!-- isNoneOfTheAbove -->
+
+          </div> {{!-- {{bind-attr class=":schedulingDetails selectedDate::hidden"}} --}}
+        </div> {{!-- {{bind-attr class=":driving :form-group selectedDate::hidden"}} --}}
+      </div> <!-- class="col-sm-9" -->
+    </div> <!-- class="row schedule-info" -->
+  </div> <!-- class="container" -->
+</div> <!-- class="lowerArea" -->
+
+  </div>
+</div>

@@ -1,0 +1,33 @@
+<div class="row">
+  {{#link-to 'member.profile_main' 'schedule'}}<b>Commute days</b><br>{{/link-to}}
+  <table class="commuteDays">
+    <tr>
+      <td style="background-color: white">Mon</td>
+      <td style="background-color: white">Tue</td>
+      <td style="background-color: white">Wed</td>
+      <td style="background-color: white">Thu</td>
+      <td style="background-color: white">Fri</td>
+      <td style="background-color: ivory">Sat</td>
+      <td style="background-color: ivory">Sun</td>
+    </tr>
+    <tr>
+      <td {{bind-attr class=":commuteDay mon:active"}}></td>
+      <td {{bind-attr class=":commuteDay tue:active"}}></td>
+      <td {{bind-attr class=":commuteDay wed:active"}}></td>
+      <td {{bind-attr class=":commuteDay thu:active"}}></td>
+      <td {{bind-attr class=":commuteDay fri:active"}}></td>
+      <td {{bind-attr class=":commuteDay sat:active"}}></td>
+      <td {{bind-attr class=":commuteDay sun:active"}}></td>
+    </tr>
+  </table>
+  <br>
+  {{#link-to 'member.profile_main' 'schedule'}}<b>Commute times</b><br>{{/link-to}}
+  {{#if hasHomeDepartureTime}}
+    <div class="pull-left" style="font-size: 1.2em; padding-left: 5px;">
+      Leave home at {{homeDepartureTime}}
+      {{#if controllers.application.onDesktop}} &nbsp;&nbsp;::&nbsp;&nbsp; {{else}} <br> {{/if}}
+      Drive back at {{workDepartureTime}}
+    </div>
+  {{/if}}
+  <div class="pull-right">{{#link-to 'member.profile_main' 'schedule' class='btn btn-default'}}Edit{{/link-to}}</div>
+</div>

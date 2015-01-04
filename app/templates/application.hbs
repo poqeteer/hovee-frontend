@@ -1,0 +1,19 @@
+
+{{view 'header'}}
+<div id="mainBody">
+  {{#if notification.message}}
+  <div class="container">
+    <div {{bind-attr class=":alert notification.type"}} id="notification">
+      <button type="button" {{action "closeNotification"}} class="close" aria-hidden="true">&times;</button>
+      {{notification.message}}
+    </div>
+  </div>
+  {{/if}}
+
+  {{outlet}}
+</div><!-- /#mainBody -->
+{{#if onDesktop}}
+  {{partial "footer"}}
+{{else}}
+  {{partial "partials/mobile-sidebar"}}
+{{/if}}

@@ -1,0 +1,21 @@
+<div class="sidebar" style="z-index: 2000;">
+  <ul>
+  {{#unless 'controllers.login.isOnBoardingProfile'}}
+    <li>{{#link-to "member.rides" controllers.login.memberId tagName="li" href=false}}<a {{bind-attr href="view.href"}}><img src="/assets/img/nav-icon-car-unselected.png" width="22">&nbsp; Rides</a>{{/link-to}}</li>
+    {{!-- <li>{{#link-to "member.calendar" controllers.login.memberId tagName="li" href=false}}<a {{bind-attr href="view.href"}}><i class="fa fa-calendar"></i> Calendar</a>{{/link-to}}</li> --}}
+    <li>
+      {{#link-to "member.notifications" controllers.login.memberId tagName="li" href=false}}
+        <a {{bind-attr href="view.href"}}><i class="fa fa-envelope"></i> Notifications
+          {{#if controllers.login.unreadCount}}
+            <div class="notifications-badge">{{controllers.login.unreadCount}}</div>
+          {{/if}}
+        </a>
+      {{/link-to}}
+    </li>
+    <li>{{#link-to "member.my_commute" controllers.login.memberId tagName="li" href=false}}<a {{bind-attr href="view.href"}}><img src="/assets/img/nav-icon-commute.png" width="18" style="opacity: .6"> &nbsp;&nbsp;Your Commute</a>{{/link-to}}</li>
+    <li>{{#link-to "member.profile" controllers.login.memberId tagName="li" href=false}}<a {{bind-attr href="view.href"}}><i class="fa fa-user"></i> Profile</a>{{/link-to}}</li>
+  {{/unless}}
+    <li>{{partial "partials/share_email_link"}}</li>
+    <li><a {{action 'mobileLogout'}} onClick="javascript:void(0);"><i class="fa fa-times"></i>&nbsp; Log Out</a></li>
+  </ul>
+</div>

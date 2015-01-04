@@ -1,0 +1,228 @@
+<div class="upperArea">
+  <div class="container">
+    <div class="row ridematchHeader">
+      <div class="col-sm-9" {{bind-attr style=mapStyle}}>
+        <div id="map_recommendations" style="width: 100%; height: 100%; background-color: silver;"></div>
+      </div>
+
+      <div class="col-sm-3" style="padding-top: 10px;">
+        <div class="pull-left">
+          {{#link-to 'member.profile' currentMember.id}}
+            <img {{bind-attr src='currentMember.profilePhotoUrl'}} onerror="this.onerror=null;this.src='//hovee001.s3.amazonaws.com/profile_images/default.jpg';"  class="pull-right header-avatar profilePic" style="width: 60px; height: 60px;">
+          {{/link-to}}
+        </div>
+      </div>
+      <div class="col-sm-6" style="padding-top: 10px;">
+        <div class="infographic clearfix">
+          <div class="member-home pull-left" style="margin-right:12px; margin-top: -2px; text-align: right;">
+            <b>{{currentMember.homeLocation.name}}</b><br>
+            {{currentMember.homeLocation.homeAddress.street}}<br>
+            {{currentMember.homeLocation.homeAddress.city}}
+          </div>
+          <div class="pull-left" style="margin-right:12px;">
+            <i class="fa fa-home fa-3x"></i>
+          </div>
+          <div class="pull-left" style="margin-right:12px;">
+            <div class="distance"></div>
+          </div>
+          <div class="pull-left" style="margin-right:12px;">
+            <i class="fa fa-building-o fa-3x"></i>
+          </div>
+          <div class="member-work pull-left">
+            <b>{{currentMember.workLocation.name}}</b><br>
+            {{currentMember.workLocation.workAddress.city}}
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3" style="padding-top: 10px;">
+        <div class="pull-right">
+          <div class="btn-group" data-toggle="ride-buttons">
+            {{radio-selector name="rideType" isDesktop=controllers.login.onDesktop content=rideContent value=rideTypeValue hintText=""}}
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-9">
+        {{partial 'partials/tagline'}}
+      </div>
+    </div>
+  </div>
+</div>
+<div class="lowerArea">
+  <div class="container">
+    <div class="row">
+      {{#view 'ridematchfilters'}}
+        <!-- smaller sidebar that contains filters (hides on smaller screens) -->
+        <div class="col-xs-2 visible-lg sidebar">
+          {{!--
+                    <div class="filters">
+                      <h3>Filter By</h3>
+                      <div class="filterHeader">
+                        <h4>Driver or Passenger</h4><i class="fa fa-caret-down pull-right"></i>
+                      </div>
+                      {{#if currentMember.hasCar}}
+                        <ul class="drivertype">
+                          <li>
+                            <label>
+                              {{view "radiobutton" name="selectionRideType" selectionBinding="rideType" selection=rideType value="either"}}
+                              Drivers and Passengers
+                            </label>
+                          </li>
+                          <li>
+                            <label>
+                              {{view "radiobutton" name="selectionRideType" selectionBinding="rideType" selection=rideType value="driver"}}
+                              Drivers Only
+                            </label>
+                          </li>
+                          <li>
+                            <label>
+                              {{view "radiobutton" name="selectionRideType" selectionBinding="rideType" selection=rideType value="passenger"}}
+                              Passengers Only
+                            </label>
+                          </li>
+                        </ul>
+                      {{else}}
+                        <ul class="drivertype">
+                          <li>
+                            <label>
+                              <input type="radio" disabled> Drivers and Passengers
+                            </label>
+                          </li>
+                          <li>
+                            <label>
+                              <input type="radio" disabled checked> Drivers Only
+                            </label>
+                          </li>
+                        </ul>
+
+                      {{/if}}
+                      <div class="filterHeader">
+                        <h4>During the Drive</h4>
+                        <i class="fa fa-caret-down pull-right"></i>
+                      </div>
+                      <ul class="company">
+                        {{#each listeningPrefOption in listeningPrefOptions}}
+                          <li><label>{{view Em.Checkbox checkedBinding="listeningPrefOption.checked" nameBinding="listeningPrefOption.name" name=listeningPrefOption.name}} {{unbound listeningPrefOption.name}}</label></li>
+                        {{/each}}
+                      </ul>
+                    </div><!-- /.filters -->
+          --}}
+                  </div><!-- /.sidebar -->
+                {{/view}}
+      <!-- main area that contains planks -->
+      <div class="col-md-12 col-lg-9 main">
+        <div class="rideType pull-left">
+          Showing {{filteredRecommendations.length}}
+          {{!--
+          {{view Ember.Select viewName="select"
+            contentBinding="rideTypes"
+            optionLabelPath="content.name"
+            optionValuePath="content.value"
+            selectionBinding="rideType"
+            value="either"}}
+          --}}
+          sorted by
+        </div>
+        <div class="sorting pull-left" style="margin-top: -5px; padding-bottom: 5px;">
+          {{view Ember.Select viewName="select"
+          contentBinding="sortOrder"
+          optionLabelPath="content.name"
+          optionValuePath="content.value"
+          selectionBinding="selectedSort"
+          value="matchScore"}}<br>
+        </div>
+        {{#view 'ridematchplanks'}}
+          {{#each recommendation in filteredRecommendations}}
+            {{#view 'plank'}}
+              <div class="plank">
+                <!-- profile photo -->
+                {{#if recommendation.member.profilePhotoUrl}}
+                  {{#link-to "member.profile" recommendation.member.id}}<img {{bind-attr src='recommendation.member.profilePhotoUrl'}} onerror="this.onerror=null;this.src='//hovee001.s3.amazonaws.com/profile_images/default.jpg';"  class="headshot" width="98" height="98" title="View profile">{{/link-to}}
+                {{else}}
+                  {{#link-to "member.profile" recommendation.member.id}}<img src="//hovee001.s3.amazonaws.com/profile_images/default.jpg" class="headshot" width="98" height="98" title="View profile">{{/link-to}}
+                {{/if}}
+                <!-- profile Link -->
+                {{#link-to "member.profile" recommendation.member.id classNames="linkedInLink"}}View Profile{{/link-to}}
+
+                <!-- name, role, etc -->
+                <div class="nameAndRole">
+                  <h4>{{#link-to "member.profile" recommendation.member.id}}{{recommendation.member.fullName}}{{/link-to}}</h4>
+                  <p>{{recommendation.member.jobHeadline}}</p>
+                  <p>{{recommendation.member.company.name}}</p>
+                </div>
+
+                <div {{bind-attr class=":tagline recommendation.member.tagline.text::no-tagline"}}>
+                  {{#if recommendation.member.tagline.text}}
+                    &ldquo;{{recommendation.member.tagline.text}}&rdquo;
+                  {{/if}}
+                </div>
+
+                <div class="ridePrefs">
+                  <img src="//hovee001.s3.amazonaws.com/resources/car_icon.png" width="17px" height="14"></i>
+                  {{#if recommendation.member.hasCar}}
+                    {{#if recommendation.member.car}}
+                      {{recommendation.member.car.fullCar}}
+                    {{else}}
+                      Has A Car
+                    {{/if}}
+                  {{else}}
+                    <span class="dim">Passenger</span>
+                  {{/if}}
+                  <br>
+                  <i class="fa fa-volume-up fa-fw"></i> {{recommendation.member.musicPrefsList}}
+                  <div style="display: none">
+                    {{#each pref in recommendation.member.musicPrefs}}
+                      {{pref.id}}
+                    {{/each}}
+                  </div>
+                </div>
+                <!-- home location -->
+                <div class="homeicon">
+                  <i class="fa fa-home fa-2x"></i>
+                </div>
+                <div class="location">
+                  {{recommendation.member.homeLocation.homeAddress.street}}<br>
+                  {{recommendation.member.homeLocation.homeAddress.city}}<br>
+                  {{recommendation.homeDepartureTime}}
+                </div>
+
+                <div class="metrics">
+                  <div class="value">
+                  <span class="bigNumber">{{#unless recommendation.recDefaults.deflectMiles}}0{{else}}{{recommendation.recDefaults.deflectMiles}}</span><br>Mile{{recommendation.recDefaults.deflectMilesNounSuffix}}{{/unless}}
+                  </div>
+                  <div class="planktip milestip"><p>If you were {{recommendation.member.firstName}}'s {{recommendation.recDefaults.role}}, the route would go {{unbound recommendation.recDefaults.deflectMiles}} mile{{unbound recommendation.recDefaults.deflectMilesNounSuffix}} out of your way.</p></div>
+                </div>
+
+                <div class="workLocation">
+                  <div class="connector"></div>
+                  <div class="workicon">
+                    <i class="fa fa-building-o fa-2x"></i>
+                  </div>
+                  <div class="location">
+                    {{recommendation.member.workLocation.name}}<br>
+                    {{recommendation.member.workLocation.workAddress.city}}<br>
+                    {{recommendation.workDepartureTime}}
+                  </div>
+                </div>
+
+                <div class="actions">
+                  {{!--{{#link-to "member.trip_proposal" recommendation.member.id '0' 0 classNames="btn btn-block btn-success schedule"}}<i class="fa fa-calendar"></i> &nbsp;Pick a Day{{/link-to}}--}}
+                  <div class="buttonShuttle">
+                    <a class="map" {{action 'showRoute' recommendation.member 0}} onclick="window.ga('send', 'event', 'button', 'RideMatch', 'Route Map');"><i class="fa fa-map-marker fa-2x"></i> Map the Ride</a>
+                    <a class="arrow" onclick="window.ga('send', 'event', 'button', 'RideMatch', 'Plank Expanded');"><i class="fa fa-caret-down fa-2x"></i> More Info</a>
+                    {{#link-to "member.profile" recommendation.member.id}}<i class="fa fa-user fa-lg"></i> Profile{{/link-to}}
+                    {{#link-to "member.trip_proposal" recommendation.member.id '0' 0}}<i class="fa fa-calendar fa-lg" style="line-height:13px;"></i> Pick a Day{{/link-to}}
+                  </div>
+                </div>
+              </div>
+            {{/view}}{{!--plank--}}
+          {{/each}}
+        {{/view}}{{!--ridematchplanks--}}
+      </div>
+    </div>
+    <!--
+        <div class="row">
+          <div class="col-sm-9 col-sm-offset-3"><br><span class="dim">version}}</span></div>
+        </div>
+    -->
+  </div><!-- /.container -->
+</div><!-- /.lowerArea -->

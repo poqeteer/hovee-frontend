@@ -1,0 +1,24 @@
+{{#if editingTagline}}
+  <div class="pull-left tagline">
+    {{view 'focusedrestrictedinput' value=taglineText maxlength=100}}<button class="btn btn-primary" {{action 'saveTagline'}}>Save</button><button class="btn btn-default" {{action 'cancelTagline'}}>Cancel</button>
+  </div>
+  <div class="pull-left tagline-status">{{textLenCountDown}} characters left</div>
+{{else}}
+
+  {{#if currentMember.tagline}}
+    {{#if isTextEmpty}}
+      <div class="tagline mine">
+        <a {{action 'clickTaglineLabel'}} title="Click to edit your tagline">&nbsp;&nbsp;&nbsp;</a>
+      </div>
+    {{else}}
+      <div class="tagline mine">
+        <a {{action 'clickTaglineLabel'}} title="Click to edit your tagline">{{taglineText}}</a>
+      </div>
+    {{/if}}
+  {{else}}
+    <div class="tagline mine">
+      <a {{action 'clickTaglineLabel'}}>Click to add your tagline!</a>
+    </div>
+    <div class="tagline-status">For example: "Let's go EARLY and beat traffic. Tue Thu best days. Starbucks a must."</div>
+  {{/if}}
+{{/if}}

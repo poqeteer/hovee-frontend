@@ -1,0 +1,377 @@
+{{#unless controllers.application.onDesktop}}
+  {{partial "header-mobile"}}
+{{/unless}}
+<div class="upperArea profile">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-3 col-xs-4">
+        {{#if profilePhotoUrl}}
+        <img style="height: auto; width: 100%" class="profilePic" {{bind-attr src="profilePhotoUrl"}} onerror="this.onerror=null;this.src='//hovee001.s3.amazonaws.com/profile_images/default.jpg';" >
+        {{else}}
+        <img style="height: auto; width: 100%" class="profilePic" src="//hovee001.s3.amazonaws.com/profile_images/default.jpg">
+        {{/if}}
+      </div>
+      <div class="col-sm-9" style="border-radius: 5px; background: white; color: black; padding-bottom: 10px;">
+        <div class="row">
+          <div class="col-sm-11">
+            <h1>{{firstName}}{{#if controllers.application.onDesktop}} {{else}}<br>{{/if}}{{lastName}}</h1>
+          </div>
+          <div class="col-sm-1">
+            {{#if controllers.application.onDesktop}}
+              {{#unless isPreview}}
+              <div class="pull-right edit">
+                {{#link-to "member.profile_main" 'linkedIn' class="btn btn-sm btn-default"}}<i class="fa fa-pencil"></i>&nbsp; Edit Personal Info{{/link-to}}
+              </div>
+              {{/unless}}
+            {{/if}}
+          </div>
+        </div>
+        <div class="row" style="padding-bottom: 10px;">
+          <div class="col-sm-12">
+            {{#unless isPreview}}
+              {{#if controllers.application.onDesktop}}
+                {{partial 'partials/tagline'}}
+              {{/if}}
+            {{else}}
+              {{#unless isTextEmpty}}
+                  <div class="tagline mine">
+                    <span>&ldquo;{{taglineText}}&rdquo;</span>
+                  </div>
+              {{/unless}}
+            {{/unless}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-5">
+            <i class="fa fa-briefcase"></i> {{jobHeadline}}<br>
+            <i class="fa fa-building-o"></i> <span class="dim">at</span> {{company.name}}<br>
+{{!--            <i class="fa fa-users"></i> {{companyTeam.name}}<br> --}}
+            <br>
+            {{#unless isPreview}}
+              <i class="fa fa-envelope-o"></i> {{email}}<br>
+              <i class="fa fa-phone"></i> {{mobilePhone}}<br>
+              <br>
+            {{/unless}}
+            {{#if linkedInProfileUrl}}
+              <i class="fa fa-linkedin-square"></i>&nbsp; <a {{bind-attr href="linkedInProfileUrl"}} target="_blank">View profile on LinkedIn</a> <small class="dim"><i class="fa fa-external-link"></i></small>
+            {{/if}}
+          </div>
+          <div class="col-sm-7">
+            <b>What I do at work</b><br>
+            {{freeTextJob}}<br>
+            <br>
+            <b>More about me</b><br>
+            {{freeTextPersonal}}
+            <br>
+            {{#if controllers.application.onDesktop}}
+              {{#unless isPreview}}
+                {{#link-to 'member.account_management' class="btn btn-primary"}}Change Password{{/link-to}}
+              {{/unless}}
+            {{/if}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="lowerArea profile">
+  <div class="container">
+    <div class="row" style="background: white; color: black; border-radius: 5px;">
+      <div class="col-sm-3">
+        <br>
+        {{#if controllers.application.onDesktop}}
+          {{#if isMembersProfile}}
+            <button {{action 'togglePreview'}} class="btn btn-default">
+              {{#if isPreview}}
+                See Private Version
+              {{else}}
+                See Public Version
+              {{/if}}
+            </button>
+          {{else}}
+            {{#if controllers.application.onDesktop}}
+              <p><a class="btn btn-lg btn-primary" style="width: 212px" {{action 'showRoute'}}><i class="fa fa-map-marker"></i>&nbsp; Map the Ride</a></p>
+              {{#if 'isTrip'}}
+                <p><button  class="btn btn-lg btn-default" {{action 'schedule'}} style="width: 212px;">
+                  {{#if tripMode.isStatusInNegotiation}}
+                  {{!-- potential action req'd --}}
+                    {{#if tripMode.isActionRequired}}
+                      Respond!
+                    {{else}}
+                      Review Trip
+                    {{/if}}
+                  {{else}}
+                    {{#if tripMode.isStatusAccepted}}
+                    {{!--No Action required on user's behalf--}}
+                      Trip Confirmed
+                    {{else}}
+                      {{#if tripMode.isStatusInProgress}}
+                        <span style="color: darkgreen">Trip Live</span>
+                      {{else}}
+                        {{#if tripMode.isStatusComplete}}
+                          <span style="color: darkgreen">Trip Done</span>
+                        {{/if}}
+                      {{/if}}
+                    {{/if}}
+                  {{/if}}
+                </button></p>
+              {{else}}
+                <p><button class="btn btn-lg btn-success" style="width: 212px" {{action 'schedule'}}><i class="fa fa-calendar"></i>&nbsp;
+                  {{#if 'isSelectedDate'}}
+                    Plan Ride
+                  {{else}}
+                    Pick a Day
+                  {{/if}}
+                </button></p>
+              {{/if}}
+              <p><button class="btn btn-lg btn-success" style="width: 212px" {{action 'rideMatches'}}><i class="fa fa-users"></i>&nbsp; Find Rides</button></p>
+              <p><button class="btn btn-lg btn-default" style="width: 212px" {{action 'sendMessage'}}><i class="fa fa-comment-o"></i>&nbsp; Message {{firstName}}</button></p>
+
+              <!-- force Ember to load the current member's address -->
+              <input type="hidden" {{bind-attr value=currentMember.homeLocation.addressCityState}}>
+              <input type="hidden" {{bind-attr value=currentMember.workLocation.addressCityState}}>
+            {{/if}}
+          {{/if}}
+        {{/if}}
+      </div>
+      <div class="col-sm-9" style="border-radius: 5px; background: #ffffff; color: black; padding-bottom: 10px;">
+        <div class="row">
+          <div class="col-sm-3">
+            <h2>Commute</h2>
+          </div>
+          <div class="col-sm-9">
+          {{#if controllers.application.onDesktop}}
+            {{#unless isPreview}}
+              <div class="pull-right edit">
+                {{#link-to "member.profile_main" 'start' class="btn btn-sm btn-default"}}<i class="fa fa-pencil"></i>&nbsp; Edit Commute{{/link-to}}
+              </div>
+            {{/unless}}
+          {{/if}}
+          </div>
+        </div>
+        <div class="row">
+{{#if controllers.application.onDesktop}}
+          <div class="col-sm-6 hidden-xs">
+            <div class="infographic">
+              <i class="fa fa-home fa-3x"></i>
+              <span class="distance"></span>
+              <i class="fa fa-building-o fa-3x"></i><br>
+{{else}}
+          <div class="col-sm-6">
+            <div class="row">
+              <div class="pull-left" style="padding: 5px 5px 0 20px;">
+                <i class="fa fa-home fa-3x"></i>
+              </div>
+{{/if}}
+              <div class="member-home pull-left">
+                <b>{{homeLocation.name}}</b><br>
+                {{#unless isPreview}}
+                  {{homeLocation.homeAddress.address1}}<br>
+                  {{homeLocation.homeAddress.city}}<br>
+                  {{homeLocation.homeAddress.state}} {{homeLocation.homeAddress.zip}}
+                {{else}}
+                  {{homeLocation.homeAddress.street}}<br>
+                  {{homeLocation.homeAddress.city}}
+                {{/unless}}
+              </div>
+{{#unless controllers.application.onDesktop}}
+            </div>
+            <br>
+            <div class="row">
+              <div class="pull-left" style="padding: 3px 7px 0 24px;">
+                <i class="fa fa-building-o fa-3x"></i>
+              </div>
+              <div class="member-home pull-left">
+{{else}}
+              <div class="member-work pull-right">
+{{/unless}}
+                <b>{{workLocation.name}}</b><br>
+                {{#unless isPreview}}
+                  {{workLocation.workAddress.address1}}<br>
+                  {{workLocation.workAddress.city}}<br>
+                  {{workLocation.workAddress.state}} {{workLocation.workAddress.zip}}
+                {{else}}
+                  {{workLocation.workAddress.street}}<br>
+                  {{workLocation.workAddress.city}}
+                {{/unless}}
+              </div>
+            </div>
+          </div>
+{{#unless controllers.application.onDesktop}}
+          <br>
+{{/unless}}
+          <div class="col-sm-6">
+              <b>Commute times</b><br>
+              {{#if hasHomeDepartureTime}}
+                {{homeDepartureTime}} to {{workDepartureTime}}<br>
+              {{/if}}
+              <br>
+              <b>Commute days</b><br>
+              <table class="commuteDays">
+                <tr>
+                  <td {{bind-attr class=":commuteDay mon:active"}}>Mon</td>
+                  <td {{bind-attr class=":commuteDay tue:active"}}>Tue</td>
+                  <td {{bind-attr class=":commuteDay wed:active"}}>Wed</td>
+                  <td {{bind-attr class=":commuteDay thu:active"}}>Thu</td>
+                  <td {{bind-attr class=":commuteDay fri:active"}}>Fri</td>
+                  <td {{bind-attr class=":commuteDay sat:active"}}>Sat</td>
+                  <td {{bind-attr class=":commuteDay sun:active"}}>Sun</td>
+                </tr>
+              </table>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-sm-3">
+            <h2>Cars</h2>
+          </div>
+          <div class="col-sm-9">
+          {{#if controllers.application.onDesktop}}
+            {{#unless isPreview}}
+              <div class="pull-right edit">
+                {{#link-to "member.profile_main" 'driving' class="btn btn-sm btn-default"}}<i class="fa fa-pencil"></i>&nbsp; Edit Cars{{/link-to}}
+              </div>
+            {{/unless}}
+          {{/if}}
+          </div>
+        </div><!-- /.row -->
+
+        {{#if hasCar}}
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="pull-left" style="padding-right: 5px; text-align: right;">
+                {{#if car}}
+                  <b>{{car.nickname}}</b><br>
+                  {{car.year}}<br>
+                  {{car.carMake.make}}<br>
+                  {{car.model}}
+                {{else}}
+                  {{#unless isPreview}}
+                    Have
+                  {{else}}
+                    Has
+                  {{/unless}}
+                    A Car
+                {{/if}}
+              </div>
+              {{#if car.photoUrl}}
+              <div class="pull-left" style="border: 2px solid #808080; border-radius: 4px">
+                <img {{bind-attr src='car.photoUrl'}} data-toggle="modal" data-target="#carModal" id="carPhoto" width="125">
+              </div>
+              {{/if}}
+            </div>
+          </div><!-- /.row -->
+          {{!-- begin car image modal - bootstrap's default modal with header/footer removed --}}
+          <div class="modal fade" id="carModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-body">
+                  <img {{bind-attr src='car.photoUrl'}} width="100%">
+                </div>
+              </div>
+            </div>
+          </div>
+          {{!-- end car image modal --}}
+        {{else}}
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="pull-left" style="padding-right: 5px; text-align: right;">
+                <span class="dim">Passenger Only</span>
+              </div>
+            </div>
+          </div><!-- /.row -->
+        {{/if}}
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-3">
+            <h2>Interests</h2>
+          </div>
+          <div class="col-sm-9">
+          {{#if controllers.application.onDesktop}}
+            {{#unless isPreview}}
+              <div class="pull-right edit">
+                {{#link-to "member.profile_main" 'ideal' class="btn btn-sm btn-default"}}<i class="fa fa-pencil"></i>&nbsp; Edit Interests{{/link-to}}
+              </div>
+            {{/unless}}
+          {{/if}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <b>What do you <i>most</i> like to do during the drive?</b><br>
+            {{#if listeningPreferences}}
+              {{#each listening in listeningPreferences}}
+                <span class="btn btn-primary" disabled="disabled">{{listening.pref}}</span>&nbsp;
+              {{/each}}
+            {{else}}
+              <span class="dim">No Preference</span>
+            {{/if}}
+            <br>
+            <b>Music I like</b><br>
+            {{#if musicPreferences}}
+              {{#each music in musicPreferences}}
+                <span class="btn btn-primary" disabled="disabled">{{music.pref}}</span>&nbsp;
+              {{/each}}
+            {{else}}
+              <span class="dim">No Preference</span>
+            {{/if}}
+          </div>
+        </div>
+{{#unless controllers.application.onDesktop}}
+<div class="row" style="padding-bottom: 60px"></div>
+{{/unless}}
+
+  </div><!-- /.col-sm-9 -->
+    </div><!-- /.row -->
+  </div><!-- /.container -->
+</div><!-- /.lowerArea -->
+
+{{#unless controllers.application.onDesktop}}
+  <div class="lowerArea" style="height: 50px; color: #ffffff;"><span>spacer</span> </div>
+  {{#unless isMembersProfile}}
+    <div class="trip-footer top-border">
+      {{#if 'isTrip'}}
+        <button  class="btn btn-lg btn-69-percent" {{action 'schedule'}} style="background: white; color: black; border: 1px #cccccc solid;">
+          {{#if tripMode.isStatusInNegotiation}}
+          {{!-- potential action req'd --}}
+            {{#if tripMode.isActionRequired}}
+              Respond!
+            {{else}}
+              Review Trip
+            {{/if}}
+          {{else}}
+            {{#if tripMode.isStatusAccepted}}
+            {{!--No Action required on user's behalf--}}
+              Trip Confirmed
+            {{else}}
+              {{#if tripMode.isStatusInProgress}}
+                <span style="color: darkgreen">Trip Live</span>
+              {{else}}
+                {{#if tripMode.isStatusComplete}}
+                  <span style="color: darkgreen">Trip Done</span>
+                {{/if}}
+              {{/if}}
+            {{/if}}
+          {{/if}}
+        </button>
+      {{else}}
+        {{#if 'isSelectedDate'}}
+          <button class="btn btn-lg btn-success btn-69-percent" {{action 'schedule'}}>Plan Ride</button>
+        {{else}}
+          <button class="btn btn-lg btn-success btn-69-percent" {{action 'pickADay'}}>Pick a Day</button>
+        {{/if}}
+      {{/if}}
+      <button class="btn btn-lg btn-29-percent" style="background-color: #999;" {{action 'showOptions'}}>More ></button>
+    </div>
+
+    <!-- force Ember to load the current member's address -->
+    <input type="hidden" value={{currentMember.homeLocation.addressCityState}}>
+    <input type="hidden" value={{currentMember.workLocation.addressCityState}}>
+    {{else}}
+      <div class="trip-footer top-border">
+        <button class="btn btn-lg btn-success btn-69-percent" {{action 'editProfile'}}><i class="fa fa-pencil"></i>&nbsp; Edit Profile</button>
+        <button class="btn btn-lg btn-29-percent" style="background-color: #999;" {{action 'showMemberOptions'}}>More ></button>
+      </div>
+  {{/unless}}
+{{/unless}}

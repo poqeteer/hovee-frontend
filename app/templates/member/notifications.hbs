@@ -1,0 +1,65 @@
+{{#unless controllers.login.onDesktop}}
+  {{partial "header-mobile"}}
+{{/unless}}
+<div class="lowerArea" style="border: 0;">
+  <div class="container">
+    <div class="row notifications">
+
+      <!-- main area that contains planks -->
+      <div class="col-lg-12 col-xs-12" style="background: white;padding-top: 5px; border-radius: 5px;">
+        {{#if hasMessages}}
+
+          {{partial 'partials/notifications_header_footer'}}
+          <table {{bind-attr cellpadding=tableCellPadding style=tableStyle}}>
+            <tbody>
+            {{#each message in messages}}
+              <tr {{bind-attr class="message.isUnread::read-border message.isUnread:unread-border"}}>
+                <td style="vertical-align: top">
+                  <img {{bind-attr src='message.sender.profilePhotoUrl'}}
+                      onerror="this.onerror=null;this.src='//hovee001.s3.amazonaws.com/profile_images/default.jpg';"
+                    {{bind-attr class=":pull-right :profilePic controllers.login.onDesktop::mobile-sz-img controllers.login.onDesktop:desktop-sz-img"}}>
+                </td>
+                <td {{bind-attr class=":message-col controllers.login.onDesktop::message-mobile-col"}}>
+                  <span style="font-size: 1.25em; font-weight: 700">{{message.sender.fullName}}</span><br>
+                  <div class="truncate">{{message.message}}</div><br>
+                  {{msg-action-button style='vertical-align: bottom' action='clickNotice' msgTypes=msgTypes messageId=message.id unread=message.isUnread msgTypeId=message.msgTypeId tripId=message.trip.id senderId=message.sender.id parentTripId=message.trip.parentTripId actionLink=message.actionLink}}
+                <td {{bind-attr class=":info-col controllers.login.onDesktop::info-mobile-col"}}>
+                  {{#if controllers.login.onDesktop}}
+                    <label class="dim" {{bind-attr title=message.prettyDateTimeSent}}>{{message.relativeTime}}</label>
+                    {{#if message.isUnread}}
+                      &nbsp;
+                      <div class="notifications-badge">
+                        New
+                      </div>
+                    {{/if}}
+                    &nbsp;
+                  {{else}}
+                    <div style="width: 55px; text-align: right;">
+                      <span class="dim">{{message.simpleRelativeTime}}</span>
+                      {{#if message.isUnread}}
+                        <div class="notifications-badge">
+                          New
+                        </div>
+                      {{/if}}
+                    </div>
+                  {{/if}}
+                </td>
+              </tr>
+              <tr class="spacer-row"></tr>
+            {{/each}}
+            </tbody>
+          </table>
+          {{partial 'partials/notifications_header_footer'}}
+
+        {{else}} <!-- if messages -->
+
+          <h3>You have no notifications at this time.</h3>
+
+        {{/if}}
+      </div>
+    </div>
+  </div>
+</div>
+{{#unless controllers.login.onDesktop}}
+  {{partial 'mobile-footer-navbar'}}
+{{/unless}}

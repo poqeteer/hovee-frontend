@@ -1,0 +1,43 @@
+{{#unless controllers.login.onDesktop}}
+  {{partial "header-mobile"}}
+{{/unless}}
+<div class="upperArea">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <h1>Your Communication Settings</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="lowerArea">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12" style="padding-top:16px;">
+        <p><span style="font-size: 1.2em;">Thanks for letting us know you’d like to change your communication settings with Hovee. Here is how your settings are configured by default:</span></p>
+        <ul>
+          <li>Product Updates - we send periodic product updates, news about the service to you via eMail. Frequency: every few weeks to weekly</li>
+          <li>Ride Suggestions - our intelligent Match engine will alert you if there are new riders or drivers near you, and suggest people who might be good commute partners.</li>
+          <li>Invitations and Alerts - these come from other Members inviting you to share a ride, or from our system with schedule changes and notifications of upcoming rides, sent by eMail and SMS text. Frequency: not scheduled, depending on your ride activity</li>
+        </ul>
+        <br>
+        <form>
+          <p><span style="font-size: 1.2em;">Which of these would you like to stop or change:</span></p>
+          <div style="padding-left: 20px">
+            {{input type="checkbox" name="isProduct" checked=isProduct}} &nbsp;Product Updates<br>
+            {{input type="checkbox" name="isRide" checked=isRide}} &nbsp;Ride Suggestions<br>
+            {{input type="checkbox" name="isInvite" checked=isInvite}} &nbsp;Invitations and Alerts<br>
+          </div>
+          <br>
+          <p><span style="font-size: 1.2em;">Reason for Changing</span></p>
+          <div style="padding-left: 20px;">
+            {{textarea value=reason cols="80" rows="6" placeholder="Please tell us your reason for changing or give us any other suggestions how we can serve you better."}}
+          </div>
+          <br>
+          <p><span style="font-size: 1.2em;">Thanks for telling us. We are always looking to make the service and your experience better.</span></p>
+          <div class="pull-left"><button class="btn btn-primary btn-lg" {{action 'submit'}}>Send</button></div> <div class=" pull-left dim" style="padding: 12px 15px;">This will open you email client. Please send the message to update your settings.</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

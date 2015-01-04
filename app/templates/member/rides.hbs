@@ -1,0 +1,43 @@
+{{#if showLoading}}
+  <div style="width: 100%; height: 100%; padding-top:20px; text-align: center; color: #ffffff; text-shadow: #808080;"><h2>Loading...</h2></div>
+{{else}}
+  <div class="rides">
+    {{#unless controllers.login.onDesktop}}
+      {{partial "partials/rides-header-mobile"}}
+    {{/unless}}
+    {{#unless showMatches}}
+      {{partial 'partials/rides_calendar_month'}}
+    {{else}}
+      {{#unless showOptions}}
+        {{partial 'partials/rides_matches'}}
+      {{else}}
+        {{partial 'partials/rides_options'}}
+      {{/unless}}
+    {{/unless}}
+    {{#unless controllers.login.onDesktop}}
+      {{partial 'mobile-footer-navbar'}}
+    {{/unless}}
+  </div>
+{{/if}}
+
+<div id="ridesHelpDialog" class="modal fade" tabindex="-1">
+  <div class="vertical-alignment-helper">
+    <div class="modal-dialog vertical-align-center">
+      <div class="modal-content" style="width: 90%; margin: 0 auto; max-width: 500px;">
+        <div class="modal-body" style="text-align: center;">
+          <div {{bind-attr style=ridesHelpDialogStyle}}>
+            <table style="width: 100%; border-collapse: separate; border-spacing: 5px; line-height: 1.2em;">
+              {{#each line in ridesHelpDialogText}}
+                <tr><td>{{line}}</td></tr>
+              {{/each}}
+            </table>
+          </div>
+          <br>
+          <div style="padding: 10px;">
+            <button class="btn btn-success btn-lg" style="width: 100%; "data-dismiss="modal"><i class="fa fa-check"></i> Got It</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

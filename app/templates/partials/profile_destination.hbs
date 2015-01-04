@@ -1,0 +1,74 @@
+{{#if controllers.login.onDesktop}}
+  <div class="row schedule-info">
+    <div class="col-sm-9 col-sm-offset-3">
+      <h2>Where To</h2>
+    </div>
+  </div>
+{{/if}}
+{{#unless editDestinationLocation}}
+
+  <div class="row schedule-info">
+    <div class="col-sm-3 description">
+      Which {{company.name}} office do you typically work from? *
+    </div>
+    <div class="col-sm-4" style="font-size: 1.1em; padding-top: 10px;">
+      {{view Ember.Select viewName="select"
+      contentBinding="workLocations"
+      optionLabelPath="content.nameAndAddress"
+      optionValuePath="content"
+      prompt="Choose a location"
+      selectionBinding="workLocation"
+      class="form-control"
+      }}
+    </div>
+  </div>
+  <div class="row schedule-info">
+    <div class="col-sm-3 description">
+      Or
+    </div>
+    <div class="col-sm-2">
+      <button class="btn btn-mini btn-primary" {{action 'addNewWorkLocation'}}>Add a new address</button>
+    </div>
+  </div>
+{{/unless}}
+{{#if editDestinationLocation}}
+  <div class="row schedule-info">
+    <div class="col-sm-3 description">
+      Destination point address *
+    </div>
+    <div class="col-sm-4">
+      {{view "googleautocompleteview" class="form-control" placeholder="Enter street, city, state, country" location=destinationLocation value=destinationAddress}}
+      <span class="dim">Note: A full address is required. If you edit after selecting an address, you will need to reselect the address</span>
+    </div>
+  </div>
+  <div class="row schedule-info">
+    <div class="col-sm-3 description">
+      Area or neighborhood is this in
+    </div>
+    <div class="col-sm-4">
+      {{input value=destinationNeighborhood class="form-control" disabled=true id="destinationNeighborhood"}}
+    </div>
+  </div>
+
+  <div class="row schedule-info">
+    <div class="col-sm-3 description">
+      Give this address a short name *
+    </div>
+    <div class="col-sm-4">
+      {{view 'restrictedinput' value=destinationLocationNickName class="form-control" placeholder="Enter your destination short name here" id="destinationLocationNickName" }}
+    </div>
+  </div>
+  <div class="row schedule-info">
+    <div class="col-sm-4 col-sm-offset-3">
+      <button class="btn btn-lg btn-primary" {{bind-attr disabled=cannotSaveDestination}} {{action 'saveDestination'}}>Save</button>
+      <button class="btn btn-lg" {{action 'cancelSaveDestination'}}>Cancel</button>
+    </div>
+  </div>
+{{else}}
+  <div class="row schedule-info">
+    <div class="col-sm-2 col-sm-offset-3">
+      <button class="btn btn-lg btn-primary" {{bind-attr disabled=disableSchedule}} {{action "schedule"}}>{{#if onBoardingProcess}}Next{{else}}Submit{{/if}}</button>
+    </div>
+  </div>
+{{/if}}
+

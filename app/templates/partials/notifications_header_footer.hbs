@@ -1,0 +1,29 @@
+{{#if controllers.login.onDesktop}}
+  <div style="height: 3px"> </div>
+  <div class="pull-left">
+    {{startIndex}} to {{endIndex}} of {{controllers.login.totalMessageCount}}&nbsp;&nbsp;
+    <button class="btn btn-sm btn-default" title="previous" {{action 'page' 'previous'}} {{bind-attr disabled='disablePrevious'}}><i class="fa fa-caret-left"></i></button>
+    <button class="btn btn-sm btn-default" title="first" {{action 'page' 'first'}} {{bind-attr disabled='disableFirst'}}><i class="fa fa-fast-backward"></i></button>
+    <button class="btn btn-sm btn-default" title="last" {{action 'page' 'last'}} {{bind-attr disabled='disableLast'}}><i class="fa fa-fast-forward"></i></button>
+    <button class="btn btn-sm btn-default" title="next" {{action 'page' 'next'}} {{bind-attr disabled='disableNext'}}><i class="fa fa-caret-right"></i></button>
+  </div>
+  <div class="pull-right">
+    <span class="dim">{{controllers.login.unreadCount}} NEW&nbsp;&nbsp;</span>
+    <span class="dim">{{controllers.login.readCount}} READ&nbsp;&nbsp;</span>
+    {{msg-read-button label='Mark All as Read' action='markAllAsRead' disabled=disableMarkAllAsRead}}
+  </div>
+{{else}}
+  <div class="pull-left pad-top">
+    <button class="btn btn-sm btn-default" title="previous" {{action 'page' 'previous'}} {{bind-attr disabled='disablePrevious'}}><i class="fa fa-caret-left"></i></button>
+    <button class="btn btn-sm btn-default" title="first" {{action 'page' 'first'}} {{bind-attr disabled='disableFirst'}}><i class="fa fa-fast-backward"></i></button>
+    <button class="btn btn-sm btn-default" title="last" {{action 'page' 'last'}} {{bind-attr disabled='disableLast'}}><i class="fa fa-fast-forward"></i></button>
+    <button class="btn btn-sm btn-default" title="next" {{action 'page' 'next'}} {{bind-attr disabled='disableNext'}}><i class="fa fa-caret-right"></i></button>
+  </div>
+  <div class="pull-right">
+    <span class="dim">{{controllers.login.unreadCount}} NEW&nbsp;&nbsp;</span>
+    <span class="dim">{{controllers.login.readCount}} READ&nbsp;&nbsp;</span>
+    <br>
+    {{startIndex}} to {{endIndex}} of {{controllers.login.totalMessageCount}}
+  </div>
+{{/if}}
+<br><br>

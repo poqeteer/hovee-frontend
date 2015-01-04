@@ -1,0 +1,181 @@
+{{#view 'infographic-wide'}}{{!-- controller is member/trip_proposal --}}
+<div class="infographic-caption" style="height: 40px;">
+  <!-- driver home -->
+  <div class="i-caption">
+    {{#if isRoundOrWork}}
+    <span {{bind-attr class=":time-badge editing:editable"}}>
+      {{#if editing}}
+        {{#if memberIsDriver}}
+          {{#view "pickatime" valueBinding="homeDepartureTime"}}{{/view}}
+        {{else}}
+          {{#view "pickatime" valueBinding="passengerHomePickupTime"}}{{/view}}
+        {{/if}}
+      {{else}}
+        {{#if memberIsDriver}}
+          {{homeDepartureTime}}
+        {{else}}
+          {{passengerHomePickupTime}}
+        {{/if}}
+      {{/if}}
+      <i class="fa fa-arrow-right"></i>
+    </span>
+    {{/if}}
+  </div>
+
+  <!-- passenger home -->
+  <div class="i-caption">
+  {{#if isRoundOrWork}}
+    <span {{bind-attr class=":time-badge editing:editable"}}>
+      {{#if editing}}
+        {{#if memberIsDriver}}
+          {{#view "pickatime" valueBinding="passengerHomePickupTime"}}{{/view}}
+        {{else}}
+          {{#view "pickatime" valueBinding="homeDepartureTime"}}{{/view}}
+        {{/if}}
+      {{else}}
+        {{#if memberIsDriver}}
+          {{passengerHomePickupTime}}
+        {{else}}
+          {{homeDepartureTime}}
+        {{/if}}
+      {{/if}}
+      <i class="fa fa-arrow-right"></i>
+    </span>
+  {{/if}}
+  </div>
+  <!-- passenger work -->
+  <div class="i-caption">
+  {{#if isRoundOrWork}}
+	  <span {{bind-attr class=":time-badge editing:editable"}}>
+      {{#if editing}}
+          {{#view "pickatime" valueBinding="passengerWorkDestTime"}}{{/view}}
+      {{else}}
+        {{passengerWorkDestTime}}
+      {{/if}}
+      <i class="fa fa-arrow-right"></i></span>
+  {{/if}}
+  </div>
+  <!-- driver work -->
+  <div class="i-caption">
+    {{#if isRoundOrWork}}
+      <span {{bind-attr class=":time-badge editing:editable"}}>
+        {{#if editing}}
+          {{#view "pickatime" valueBinding="driverWorkDestTime"}}{{/view}}
+        {{else}}
+          {{driverWorkDestTime}}
+        {{/if}}
+        {{#if isRoundTrip}}
+        <i class="fa fa-arrow-down"></i>
+        {{else}}
+          <i class="fa fa-circle"></i>
+        {{/if}}
+      </span>
+    {{/if}}
+  </div>
+</div>
+<div class="infographic-wide">
+  <span class="fa-stack fa-3x">
+    <i class="fa fa-square-o fa-stack-2x"></i>
+    <i class="fa fa-home fa-stack-1x"></i>
+  </span>
+  <!-- distance between driver's and passenger's homes -->
+  <span class="distance">{{timeDriverHomeToPassengerHome}} min</span>
+  <span class="fa-stack fa-3x">
+    <i class="fa fa-square-o fa-stack-2x"></i>
+    <i class="fa fa-home fa-stack-1x"></i>
+  </span>
+  <!-- name of major road and distance between passenger's home and passenger's work -->
+  <span class="distance middle">{{timePassengerHomeToPassengerWork}} min</span>
+  <span class="fa-stack fa-3x">
+    <i class="fa fa-square-o fa-stack-2x"></i>
+    <i class="fa fa-building-o fa-stack-1x" style="line-height:78px;"></i>
+  </span>
+  <!-- distance between driver's and passenger's works -->
+  <span class="distance">{{timePassengerWorkToDriverWork}} min</span>
+  <span class="fa-stack fa-3x">
+    <i class="fa fa-square-o fa-stack-2x"></i>
+    <i class="fa fa-building-o fa-stack-1x" style="line-height:78px;"></i>
+  </span>
+</div>
+<div class="infographic-caption">
+  <!-- driver home -->
+  <div class="i-caption"><span class="passenger-name">{{driverFirstName}}'s Home</span><br>
+    <b>{{#if isAccepted}}{{driverHomeAddress}}{{else}}{{driverHomeHood}}{{/if}}</b><br>
+    {{driverHomeCity}}<br>
+    <br>
+{{#if isRoundOrReturn}}
+    <span class="time-badge"><i class="fa fa-circle"></i>
+      {{#if editing}}
+          {{#view "pickatime" valueBinding="driverHomeArrivalTime"}}{{/view}}
+      {{else}}
+        {{driverHomeArrivalTime}}
+      {{/if}}
+    </span>
+{{/if}}
+  </div>
+  <!-- passenger home -->
+  <div class="i-caption"><span class="passenger-name">{{passengerFirstName}}'s Home</span><br>
+    <b>{{#if isAccepted}}{{passengerHomeAddress}}{{else}}{{passengerHomeHood}}{{/if}}</b><br>
+    {{passengerHomeCity}}<br>
+    <br>
+  {{#if isRoundOrReturn}}
+    <span class="time-badge"><i class="fa fa-arrow-left"></i>
+      {{#if editing}}
+          {{#view "pickatime" valueBinding="passengerHomeDropOffTime"}}{{/view}}
+      {{else}}
+        {{passengerHomeDropOffTime}}
+      {{/if}}
+    </span>
+  {{/if}}
+  </div>
+  <!-- passenger work -->
+  <div class="i-caption"><span class="passenger-name">{{passengerFirstName}}'s Work</span><br>
+    <b>{{#if isAccepted}}{{passengerWorkName}}<br>{{passengerWorkAddress}}{{else}}{{passengerWorkName}}{{/if}}</b><br>
+    {{passengerWorkCity}}<br>
+    <br>
+    {{#if isRoundOrReturn}}
+    <span class="time-badge"><i class="fa fa-arrow-left"></i>
+      {{#if editing}}
+        {{#if memberIsDriver}}
+          {{#view "pickatime" valueBinding="passengerWorkPickupTime"}}{{/view}}
+        {{else}}
+          {{#view "pickatime" valueBinding="workDepartureTime"}}{{/view}}
+        {{/if}}
+      {{else}}
+        {{#if memberIsDriver}}
+          {{passengerWorkPickupTime}}
+        {{else}}
+          {{workDepartureTime}}
+        {{/if}}
+      {{/if}}
+    </span>
+    {{/if}}
+  </div>
+  <!-- driver work -->
+  <div class="i-caption"><span class="passenger-name">{{driverFirstName}}'s Work</span><br>
+    <b>{{#if isAccepted}}{{driverWorkName}}<br>{{driverWorkAddress}}{{else}}{{driverWorkName}}{{/if}}</b><br>
+    {{driverWorkCity}}<br>
+    <br>
+      {{#if isRoundOrReturn}}
+    <span class="time-badge"><i class="fa fa-arrow-left"></i>
+      {{#if editing}}
+        {{#if memberIsDriver}}
+          {{#view "pickatime" valueBinding="workDepartureTime"}}{{/view}}
+        {{else}}
+          {{#view "pickatime" valueBinding="passengerWorkPickupTime"}}{{/view}}
+        {{/if}}
+      {{else}}
+        {{#if memberIsDriver}}
+          {{workDepartureTime}}
+        {{else}}
+          {{passengerWorkPickupTime}}
+        {{/if}}
+      {{/if}}
+    </span>
+      {{/if}}
+  </div>
+</div>
+{{/view}}
+<!--<br>
+    <br>
+    <div {{! bind-attr class=":infographic-sprite memberSchedule.showCar:member partnerSchedule.showCar:partner"}}></div> -->
